@@ -76,7 +76,7 @@ export default function Login() {
   }
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-start py-5 md:py-0">
+    <div className="min-h-screen flex flex-col items-center justify-start py-5 md:py-0" style={{background:'linear-gradient(to right, #3B82F6, #4C1D95'}}>
       <div className="container mx-auto flex justify-center items-center min-h-screen ">
         <div className="w-full md:w-2/3 lg:w-1/2 xl:w-2/5 bg-white rounded-lg shadow-lg">
           <div className="px-8 py-8">

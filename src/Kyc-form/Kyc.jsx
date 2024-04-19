@@ -4,7 +4,7 @@ import ProgressStepper from './ProgressStepper'
 function Kyc() {
   return (
     <>
-      <div className="w-full bg-white flex justify-between items-center">
+      <div className="w-full bg-white flex justify-between items-center">  
         <ProgressStepper />
       </div>
     </>
