@@ -33,23 +33,23 @@ export default function Info() {
   }, []);
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-start py-5 md:py-0" style={{background:'linear-gradient(to right, #3B82F6, #4C1D95'}}>
-      <div className="container mx-auto flex justify-center items-center min-h-screen">
-        <div className="w-full md:w-2/3 lg:w-1/2 xl:w-2/5 bg-white rounded-lg shadow-lg">
+    <div className=" w-full min-h-screen flex flex-col items-center justify-center py-5 md:py-0" style={{background:'linear-gradient(to right, #3B82F6, #4C1D95'}}>
+      <div className="flex justify-center items-center">
+        <div className="w-full md:w-2/3 lg:w-1/2 xl:w-2/5 bg-white rounded-lg shadow-lg  ">
           <div className="md:w-full bg-white-500">
             <div className="text-center p-5">
               <img
                 src="/applogo.png"
                 alt="Your Logo"
                 className="mt-0 mb-5 mx-auto"
-                width="350"
-                height="350"
+                width="250"
+                height="250"
               />
-              <h1 className="text-main font-bold text-blue-900 text-3xl">
+              <h1 className="text-main font-bold text-blue-900 text-xl sm:text-3xl">
                 Welcome to AGR Group of Companies!
               </h1>
               <br></br>
-              <p className="mb-4">
+              <p className="mb-2 sm:mb-4 text-sm sm:text-lg">
                 AGR Group of Companies, founded by Ln. Adalur G. Ramamoorthy,
                 aims to uplift the community by fulfilling the dreams and goals
                 of its members while emphasizing the importance of humanity in
