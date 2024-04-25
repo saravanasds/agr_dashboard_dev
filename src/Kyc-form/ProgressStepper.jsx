@@ -139,10 +139,7 @@ const ProgressStepper = () => {
   return (
     <div className="mx-auto w-full flex justify-center items-center min-h-screen">
       <div className="bg-white w-full lg:w-3/4 pt-4 pb-4 mb-2">
-        <div>
-          {/* <div className="text-xs uppercase font-bold text-gray-500 tracking-widest">
-            Step {currentStep} of {steps.length}
-          </div> */}
+        <div className='px-2'>
           <div className="flex items-center mt-1 justify-around">
             {steps.map((step) => (
               <div
@@ -162,7 +159,7 @@ const ProgressStepper = () => {
             <div className="w-full flex flex-col items-center justify-start py-4 md:py-0">
               <div className="container mx-auto flex justify-center">
                 <div className="w-full bg-white">
-                  <div className="px-8 py-6">
+                  <div className="md:px-8 py-6">
                     <h1 className="text-center text-3xl font-bold text-gray-800 mb-4">
                       KYC Form
                     </h1>
