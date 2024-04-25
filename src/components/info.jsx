@@ -42,14 +42,14 @@ export default function Info() {
                 src="/applogo.png"
                 alt="Your Logo"
                 className="mt-0 mb-5 mx-auto"
-                width="250"
-                height="250"
+                width="150"
+                height="150"
               />
-              <h1 className="text-main font-bold text-blue-900 text-xl sm:text-3xl">
+              <h1 className="text-main font-bold text-blue-900 text-xl sm:text-2xl">
                 Welcome to AGR Group of Companies!
               </h1>
               <br></br>
-              <p className="mb-2 sm:mb-4 text-sm sm:text-lg">
+              <p className="mb-2 sm:mb-4 text-sm sm:text-sm">
                 AGR Group of Companies, founded by Ln. Adalur G. Ramamoorthy,
                 aims to uplift the community by fulfilling the dreams and goals
                 of its members while emphasizing the importance of humanity in
