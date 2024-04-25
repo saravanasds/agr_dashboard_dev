@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useFormik } from "formik";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Oval } from "react-loader-spinner";
 import { Link, useNavigate } from "react-router-dom";
 import * as yup from "yup";
@@ -13,6 +13,14 @@ export default function Register() {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
+  useEffect(() => {
+    // Apply overflow: hidden to prevent scrolling
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = "unset";
+    };
+  }, []);
+
   const validation = yup.object({
     firstName: yup.string().required("Enter First Name"),
     email: yup
@@ -21,6 +29,7 @@ export default function Register() {
       .email("Email is not valid"),
     password: yup.string().required("Password is required"),
   });
+
   async function sendData(values) {
     setLoading(true);
     try {
@@ -63,6 +72,7 @@ export default function Register() {
       });
     }
   }
+
   const formik = useFormik({
     initialValues: {
       username: "",
@@ -72,12 +82,14 @@ export default function Register() {
     validationSchema: validation,
     onSubmit: sendData,
   });
+
   function changeBgRegister() {
     document.getElementById("changeR").classList.add("auth");
   }
+
   return (
     <>
-      <div className="w-full min-h-screen flex flex-col justify-center items-center m-auto" style={{background:'linear-gradient(to right, #3B82F6, #4C1D95'}}>
+      <div className="w-full min-h-screen flex flex-col justify-center items-center m-auto" style={{ background: 'linear-gradient(to right, #3B82F6, #4C1D95' }}>
         <div className="w-full flex flex-col items-center justify-start py-5 md:py-0">
           <div className="container mx-auto flex justify-center">
             <div className="w-full md:w-2/3 lg:w-1/2 xl:w-2/5 bg-white rounded-lg shadow-lg">

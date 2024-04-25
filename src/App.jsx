@@ -17,15 +17,13 @@ import Rewards from './pages/Rewards';
 function App() {
   return (
     <Router>
-
       <Routes>
         <Route path="/" element={<Info />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/login" element={<Login />} />
       </Routes>
       <Sidebar>
         <Routes>
-          <Route path="/kyc" element={<Kyc />} />
-          <Route path="/login" element={<Login />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/level" element={<Level />} />

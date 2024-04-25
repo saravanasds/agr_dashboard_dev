@@ -24,6 +24,14 @@ export default function Info() {
     return () => clearTimeout(timeout);
   }, [navigate]);
 
+  // Apply overflow: hidden to prevent scrolling
+  useEffect(() => {
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = "unset";
+    };
+  }, []);
+
   return (
     <div className="min-h-screen flex flex-col items-center justify-start py-5 md:py-0" style={{background:'linear-gradient(to right, #3B82F6, #4C1D95'}}>
       <div className="container mx-auto flex justify-center items-center min-h-screen">

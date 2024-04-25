@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useFormik } from "formik";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Oval } from "react-loader-spinner";
 import { Link, useNavigate } from "react-router-dom";
 import * as yup from "yup";
@@ -12,6 +12,14 @@ export default function Login() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    // Apply overflow: hidden to prevent scrolling
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = "unset";
+    };
+  }, []);
 
   const validation = yup.object({
     email: yup
@@ -76,7 +84,7 @@ export default function Login() {
   }
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-start py-5 md:py-0" style={{background:'linear-gradient(to right, #3B82F6, #4C1D95'}}>
+    <div className="min-h-screen flex flex-col items-center justify-start py-5 md:py-0" style={{ background: 'linear-gradient(to right, #3B82F6, #4C1D95' }}>
       <div className="container mx-auto flex justify-center items-center min-h-screen ">
         <div className="w-full md:w-2/3 lg:w-1/2 xl:w-2/5 bg-white rounded-lg shadow-lg">
           <div className="px-8 py-8">
@@ -149,11 +157,8 @@ export default function Login() {
                   "Login"
                 )}
               </button>
-              <p className="text-center mb-4">
-                {/* Demo info: Email: learnwithanandh@gmail.com | Password:
-                Anandh1234 */}
-              </p>
-              <div className="text-center">
+
+              <div className="text-center mb-4">
                 <Link
                   to="/forgotPassword"
                   className="text-blue-500 hover:underline"
@@ -165,7 +170,7 @@ export default function Login() {
           </div>
         </div>
       </div>
-      <div className="text-center text-white mt-4">
+      <div className="text-center text-white">
         <p>
           Need An Account?{" "}
           <Link to="/register" className="font-bold hover:underline">
