@@ -13,6 +13,7 @@ import Wallet from './pages/Wallet.jsx';
 import WithdrawRequest from './pages/WithdrawRequest.jsx';
 import PaymentHistory from './pages/PaymentHistory.jsx';
 import Rewards from './pages/Rewards';
+import ForgotPassword from './components/forgotPassword'
 
 function App() {
   return (
@@ -21,9 +22,11 @@ function App() {
         <Route path="/" element={<Info />} />
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/forgotPassword" element={<ForgotPassword />} />
       </Routes>
       <Sidebar>
         <Routes>
+          <Route path="/kyc" element={<Kyc />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/level" element={<Level />} />

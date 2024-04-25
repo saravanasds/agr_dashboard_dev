@@ -301,8 +301,8 @@ const ProgressStepper = () => {
                               {formik.errors.mobileNumber}
                             </p>
                           )}
- 
-                            {/* Agreement Checkbox */}
+
+                          {/* Agreement Checkbox */}
                           <label className="flex items-center py-3">
                             <input
                               type="checkbox"
@@ -322,7 +322,7 @@ const ProgressStepper = () => {
                         {/* Input field for Mobile Number upload */}
                         <div className='w-full md:w-1/2 p-5'>
 
-                        <div className="mb-4">
+                          <div className="mb-4">
                             <input
                               type="number"
                               className="w-full bg-gray-200 rounded-lg py-3 px-4"
@@ -464,7 +464,7 @@ const ProgressStepper = () => {
             <div className="flex flex-col items-center justify-center py-5 md:py-0">
               <div className="container mx-auto flex items-center justify-start">
                 <div className=" w-full bg-white p-8">
-                  <h1 className="text-3xl font-bold text-gray-800 mb-16">
+                  <h1 className="text-3xl font-bold text-gray-800 mb-16 text-center">
                     Account Details
                   </h1>
                   <form onSubmit={handleSubmited}>
@@ -534,6 +534,18 @@ const ProgressStepper = () => {
                             {formik.errors.ifsc}
                           </p>
                         )}
+
+                        <div className="mb-4">
+                          <input
+                            type="text"
+                            className="w-full bg-gray-200 rounded-lg py-3 px-4"
+                            placeholder="UPI ID"
+                            name="ifsc"
+                            onChange={formik.handleChange}
+                            onBlur={formik.handleBlur}
+                            value={formik.values.ifsc}
+                          />
+                        </div>
 
 
                       </div>
