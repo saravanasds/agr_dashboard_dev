@@ -74,14 +74,14 @@ const Sidebar = ({children}) => {
             <div style={{ width: isOpen ? "250px" : "40px", minWidth: isOpen ? "250px" : "40px" }} className="sidebar bg-black min-h-screen text-white transition-all duration-500 fixed">
                 <div className="top_section flex items-center py-[20px] " style={{ marginBottom: isOpen ? "15px" : "60px" }}>
                     <img src="src/assets/agr logo.png" alt="" style={{ display: isOpen ? "block" : "none" }} className="logo w-[85px] sm:w-[100px] ml-14 sm:ml-16 mt-5" />
-                    <div style={{ marginTop: isOpen ? "15px" : "20px", fontSize: isOpen? "30px" : "25px", marginLeft: isOpen ? "16px" : "8px" }} className="bars flex justify-center items-center text-3xl cursor-pointer hover:text-blue-400 absolute ">
+                    <div style={{ marginTop: isOpen ? "15px" : "20px", fontSize: isOpen? "30px" : "25px", marginLeft: isOpen ? "16px" : "7px" }} className="bars flex justify-center items-center text-3xl cursor-pointer hover:text-blue-400 absolute ">
                         <FaBars onClick={toggle}/>
                     </div>
                 </div>
                 {
                     menuItem.map((item, index)=>(
                         <NavLink to={item.path} key={index} className="link flex items-center py-[10px] px-[18px] gap-[15px] text-green-300 hover:bg-green-400 hover:text-[#000] transition-all duration-500 mb-5 " activeclassName="active" style={{ justifyContent: isOpen? "start" : "center" }}>
-                            <div className="icon" style={{ fontSize: isOpen? "25px" : "20px" }} >{item.icon}</div>
+                            <div className="icon" style={{ fontSize: isOpen? "25px" : "20px"}} >{item.icon}</div>
                             <div style={{ display: isOpen ? "block" : "none" }} className="link_text text-md text-white font-semibold hover:text-black">{item.name}</div>
                         </NavLink>
                     ))

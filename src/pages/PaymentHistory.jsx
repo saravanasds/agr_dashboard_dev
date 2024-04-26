@@ -14,11 +14,11 @@ const PaymentHistory = () => {
             <div>
                 <Header />
             </div>
-            <div className="max-w-3xl mx-auto mt-8">
+            <div className="w-[90%] sm:w-[80%] mx-auto mt-8">
                 <h2 className="text-2xl font-semibold mb-4">Payment History</h2>
-                <div className="overflow-hidden border border-gray-200 rounded-lg">
+                <div className="overflow-auto border border-gray-300 rounded-lg">
                     <table className="min-w-full">
-                        <thead className="bg-gray-100">
+                        <thead className="bg-gray-200">
                             <tr>
                                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Sl.no</th>
                                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>

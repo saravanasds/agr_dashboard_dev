@@ -15,19 +15,19 @@ const WithdrawRequestTable = () => {
                 <Header />
             </div>
 
-            <div className="max-w-3xl mx-auto mt-8">
+            <div className="w-[90%] sm:w-[80%] mx-auto mt-8">
                 <div className='py-10'>
-                    <h1 className="text-2xl font-semibold mb-4">Withdraw Request</h1>
-                    <form className='flex justify-between items-center border-2 p-4 rounded-lg'>
-                        <label htmlFor="" className='text-xl font-semibold'>Withdrawable Amount:</label>
-                        <input type="text" Value={'INR-2500.00'} className='border-2 p-2 rounded-lg'/>
-                        <button type='submit' className=' p-2 px-4 rounded-lg bg-green-700 text-white'>Send request</button>
+                    <h1 className="text-xl sm:text-2xl font-semibold mb-4">Withdraw Request</h1>
+                    <form className='flex flex-col lg:flex-row justify-between items-center border-2 p-4 rounded-lg gap-3'>
+                        <label htmlFor="" className='w-full lg:w-auto text-md font-semibold'>Withdrawable Amount:</label>
+                        <input type="text" Value={'INR-2500.00'} className='w-full lg:w-1/3 border-2 p-2 rounded-lg'/>
+                        <button type='submit' className='w-full lg:w-auto p-2 px-4 rounded-lg bg-green-700 text-white'>Send request</button>
                     </form>
 
                 </div>
-                <h2 className="text-2xl font-semibold mb-4">Withdraw Request Status</h2>
+                <h2 className="text-xl sm:text-2xl font-semibold mb-4">Withdraw Request Status</h2>
                 {requests.length > 0 ? (
-                    <div className="overflow-hidden border border-gray-200 rounded-lg">
+                    <div className="overflow-auto border border-gray-200 rounded-lg">
                         <table className="min-w-full">
                             <thead className="bg-gray-100">
                                 <tr>
