@@ -1,11 +1,11 @@
 import React from 'react'
-import ProgressStepper from './ProgressStepper'
+import DummySidebar from '../components/DummySidebar'
 
 function Kyc() {
   return (
     <>
-      <div className="w-full bg-white flex justify-between items-center">  
-        <ProgressStepper />
+      <div className="w-full bg-white flex justify-center items-center">  
+        <DummySidebar/>
       </div>
     </>
   )

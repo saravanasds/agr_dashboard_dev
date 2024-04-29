@@ -21,12 +21,12 @@ function App() {
       <Routes>
         <Route path="/" element={<Info />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/kyc" element={<Kyc />} />
         <Route path="/login" element={<Login />} />
         <Route path="/forgotPassword" element={<ForgotPassword />} />
       </Routes>
       <Sidebar>
-        <Routes>
-          <Route path="/kyc" element={<Kyc />} />
+        <Routes> 
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/level" element={<Level />} />
