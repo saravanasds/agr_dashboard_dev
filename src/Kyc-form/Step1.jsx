@@ -13,12 +13,12 @@ const Step1 = ({ nextStep, formData = {}, updateFormData }) => {
     const validationSchema = yup.object({
         name: yup.string().required("Name is required"),
         guardian: yup.string().required("Guardian is required"),
-        addressProof: yup.string().required("Address proof is required"),
+        adharProof: yup.string().required("Address proof is required"),
         photo: yup.string().required("Photo upload is required"),
         mobileNumber: yup.number().required("Mobile Number is required"),
         aadharNo: yup.number().required("Aadhar Number is required"),
-        nomineeDetail: yup.string().required("Nominee detail is required"),
-        nomineeRelation: yup.string().required("Nominee Relationship is required"),
+        nomineeName: yup.string().required("Nominee detail is required"),
+        nomineeRelationship: yup.string().required("Nominee Relationship is required"),
     });
 
     const formik = useFormik({
@@ -31,10 +31,10 @@ const Step1 = ({ nextStep, formData = {}, updateFormData }) => {
             mobileNumber: formData.mobileNumber || "",
             alternateMobileNumber: formData.alternateMobileNumber || "",
             aadharNo: formData.aadharNo || "",
-            addressProof: formData.addressProof || "",
+            adharProof: formData.adharProof || "",
             photo: formData.photo || "",
-            nomineeDetail: formData.nomineeDetail || "",
-            nomineeRelation: formData.nomineeRelation || "",
+            nomineeName: formData.nomineeName || "",
+            nomineeRelationship: formData.nomineeRelationship || "",
             agree: formData.agree || false, // Add this line for agreement checkbox
         },
         validationSchema,
@@ -214,27 +214,27 @@ const Step1 = ({ nextStep, formData = {}, updateFormData }) => {
 
                                 {/* Input field for address proof upload */}
                                 <div className="mb-4">
-                                    <label htmlFor="addressProof" className="block text-gray-700 font-semibold mb-1 text-left">
+                                    <label htmlFor="adharProof" className="block text-gray-700 font-semibold mb-1 text-left">
                                         Upload Aadhar proof:
                                     </label>
                                     <input
                                         type="file"
                                         accept="application/pdf"
-                                        id="addressProof"
+                                        id="adharProof"
                                         className="w-full bg-gray-200 rounded-lg py-0 px-4"
-                                        name="addressProof"
+                                        name="adharProof"
                                         onChange={(event) => {
                                             formik.setFieldValue(
-                                                "addressProof",
+                                                "adharProof",
                                                 event.currentTarget.files[0]
                                             );
                                         }}
                                     />
                                 </div>
                                 {/* Display error message if touched and there's an error */}
-                                {formik.touched.addressProof && formik.errors.addressProof && (
+                                {formik.touched.adharProof && formik.errors.adharProof && (
                                     <p className="text-red-500 mb-4">
-                                        {formik.errors.addressProof}
+                                        {formik.errors.adharProof}
                                     </p>
                                 )}
 
@@ -264,16 +264,16 @@ const Step1 = ({ nextStep, formData = {}, updateFormData }) => {
                                         type="text"
                                         className="w-full bg-gray-200 rounded-lg py-3 px-4"
                                         placeholder="Enter Nominee Name"
-                                        name="nomineeDetail"
+                                        name="nomineeName"
                                         onChange={formik.handleChange}
                                         onBlur={formik.handleBlur}
-                                        value={formik.values.nomineeDetail}
+                                        value={formik.values.nomineeName}
                                     />
                                 </div>
                                 {/* Display error message if touched and there's an error */}
-                                {formik.touched.nomineeDetail && formik.errors.nomineeDetail && (
+                                {formik.touched.nomineeName && formik.errors.nomineeName && (
                                     <p className="text-red-500 mb-4">
-                                        {formik.errors.nomineeDetail}
+                                        {formik.errors.nomineeName}
                                     </p>
                                 )}
 
@@ -281,7 +281,7 @@ const Step1 = ({ nextStep, formData = {}, updateFormData }) => {
                                     type="text"
                                     className="w-full bg-gray-200 rounded-lg py-3 px-4 mb-4"
                                     placeholder="Nominee Relationship"
-                                    name="nomineeRelation"
+                                    name="nomineeRelationship"
                                     onChange={formik.handleChange}
                                     onBlur={formik.handleBlur}
                                     value={formik.values.relation}

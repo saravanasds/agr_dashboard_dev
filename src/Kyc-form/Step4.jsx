@@ -25,6 +25,7 @@ const Step4 = ({ nextStep, prevStep, formData = {}, updateFormData, sendData }) 
             nextStep();
         }
     });
+    console.log(formData)
 
     return (
         <>
