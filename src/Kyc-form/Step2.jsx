@@ -2,7 +2,7 @@ import React from 'react';
 import { useFormik } from "formik";
 import * as yup from "yup";
 
-const Step2 = ({ nextStep, prevStep }) => {
+const Step2 = ({ nextStep, prevStep, formData = {}, updateFormData }) => {
 
     const validationSchema = yup.object({
         bankAcno: yup.string().required("Account number is required"),
@@ -14,15 +14,15 @@ const Step2 = ({ nextStep, prevStep }) => {
 
     const formik = useFormik({
         initialValues: {
-            bankAcno: '',
-            bankName: '',
-            branch: '',
-            ifsc: '',
-            upiId: ''
+            bankAcno: formData.bankAcno || '',
+            bankName: formData.bankName || '',
+            branch: formData.branch || '',
+            ifsc: formData.ifsc || '',
+            upiId: formData.ifsc || ''
         },
         validationSchema,
-        onSubmit: (values) => {
-            console.log(values);
+        onSubmit: values => {
+            updateFormData(values);
             nextStep();
         }
     });
@@ -45,7 +45,7 @@ const Step2 = ({ nextStep, prevStep }) => {
                                         name="bankAcno"
                                         onChange={formik.handleChange}
                                         onBlur={formik.handleBlur}
-                                        value={formik.values.bankAcno}
+                                        value={formik.values.bankAcno} 
                                     />
                                     {formik.touched.bankAcno && formik.errors.bankAcno && (
                                         <p className="text-red-500 mb-4">

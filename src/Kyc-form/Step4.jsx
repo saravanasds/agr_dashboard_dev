@@ -1,47 +1,30 @@
-
-import React, { useState } from 'react';
+import React from 'react';
 import { useFormik } from "formik";
 import * as yup from "yup";
 
-const Step4 = ({ nextStep, prevStep }) => {
-
-    const [formData, setFormData] = useState({
-        amount: "5000", // Default Amount
-        screenshot: null,
-    });
-
-    const handleChange = (e) => {
-        const { name, value } = e.target;
-        setFormData({ ...formData, [name]: value });
-        setSelectedGender(e.target.value);
-    };
+const Step4 = ({ nextStep, prevStep, formData = {}, updateFormData, sendData }) => {
 
     const validationSchema = yup.object({
         paymentDate: yup.string().required("Payment Date is required"),
         transactionId: yup.string().required("Transaction.no is required"),
         paymentScreenshot: yup.string().required("Payment Screenshot is required"),
+        referralId: yup.string(),
     });
 
     const formik = useFormik({
         initialValues: {
-            paymentDate: '',
-            transactionId: '',
-            referralId: '',
-            paymentScreenshot: ''
+            paymentDate: formData.paymentDate || "",
+            transactionId: formData.transactionId || "",
+            referralId: formData.referralId || "",
+            amount: "5000",
+            paymentScreenshot: formData.paymentScreenshot || ""
         },
         validationSchema,
-        onSubmit: (values) => {
-            console.log(values);
+        onSubmit: values => {
+            updateFormData(values);
             nextStep();
         }
     });
-
-
-
-    const handleFileChange = (e) => {
-        setFormData({ ...formData, screenshot: e.target.files[0] });
-    };
-
 
     return (
         <>
@@ -65,16 +48,15 @@ const Step4 = ({ nextStep, prevStep }) => {
                                         type="date"
                                         id="paymentDate"
                                         name="paymentDate"
-                                        value={formData.date}
-                                        onChange={handleChange}
+                                        value={formik.values.paymentDate}
+                                        onChange={formik.handleChange}
                                         className="w-full bg-gray-200 rounded-lg py-3 px-4"
                                         required
                                     />
+                                    {formik.touched.paymentDate && formik.errors.paymentDate && (
+                                        <p className="text-red-500 mb-4">{formik.errors.paymentDate}</p>
+                                    )}
                                 </div>
-                                {/* Display error message if touched and there's an error */}
-                                {formik.touched.paymentDate && formik.errors.paymentDate && (
-                                    <p className="text-red-500 mb-4">{formik.errors.paymentDate}</p>
-                                )}
 
                                 <div className="mb-4">
                                     <label
@@ -87,15 +69,14 @@ const Step4 = ({ nextStep, prevStep }) => {
                                         type="text"
                                         id="transactionId"
                                         name="transactionId"
-                                        onChange={handleChange}
+                                        value={formik.values.transactionId}
+                                        onChange={formik.handleChange}
                                         className="w-full bg-gray-200 rounded-lg py-3 px-4"
-                                    // Make it read-only
                                     />
+                                    {formik.touched.transactionId && formik.errors.transactionId && (
+                                        <p className="text-red-500 mb-4">{formik.errors.transactionId}</p>
+                                    )}
                                 </div>
-                                {/* Display error message if touched and there's an error */}
-                                {formik.touched.transactionId && formik.errors.transactionId && (
-                                    <p className="text-red-500 mb-4">{formik.errors.transactionId}</p>
-                                )}
                             </div>
 
                             <div className='w-full sm:w-1/2 md:px-5'>
@@ -110,9 +91,8 @@ const Step4 = ({ nextStep, prevStep }) => {
                                         type="text"
                                         id="referenceId"
                                         name="referenceId"
-                                        onChange={handleChange}
+                                        onChange={formik.handleChange}
                                         className="w-full bg-gray-200 rounded-lg py-3 px-4"
-                                    // Make it read-only
                                     />
                                 </div>
                                 <div className="mb-4">
@@ -126,8 +106,8 @@ const Step4 = ({ nextStep, prevStep }) => {
                                         type="number"
                                         id="amount"
                                         name="amount"
-                                        value={formData.amount}
-                                        onChange={handleChange}
+                                        value={formik.values.amount}
+                                        onChange={formik.handleChange}
                                         className="w-full bg-gray-200 rounded-lg py-3 px-4"
                                         readOnly // Make it read-only
                                     />
@@ -146,27 +126,24 @@ const Step4 = ({ nextStep, prevStep }) => {
                                 type="file"
                                 id="paymentScreenshot"
                                 name="paymentScreenshot"
-                                onChange={handleFileChange}
+                                onChange={(event) => {
+                                    formik.setFieldValue("paymentScreenshot", event.currentTarget.files[0]);
+                                }}
                                 className="w-full bg-gray-200 rounded-lg py-0 px-4"
                                 required
                             />
+                            {formik.touched.paymentScreenshot && formik.errors.paymentScreenshot && (
+                                <p className="text-red-500 mb-4">{formik.errors.paymentScreenshot}</p>
+                            )}
                         </div>
-
-                        {/* Display error message if touched and there's an error */}
-                        {formik.touched.paymentScreenshot && formik.errors.paymentScreenshot && (
-                            <p className="text-red-500 mb-4">{formik.errors.paymentScreenshot}</p>
-                        )}
 
                         <div className='w-full flex flex-col sm:flex-row justify-center items-center gap-3'>
                             <button onClick={prevStep} className="w-full sm:w-auto bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-12 rounded-lg focus:outline-none focus:shadow-outline">Previous</button>
-                            <button type="submit" className="w-full sm:w-auto bg-blue-800 hover:bg-blue-500 text-white font-bold py-2 px-10 rounded-lg focus:outline-none focus:shadow-outline">Submit</button>
+                            <button type="submit" onClick={sendData} className="w-full sm:w-auto bg-blue-800 hover:bg-blue-500 text-white font-bold py-2 px-10 rounded-lg focus:outline-none focus:shadow-outline">Submit</button>
                             <button type="submit" onClick={nextStep} className="w-full sm:w-auto bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-10 rounded-lg focus:outline-none focus:shadow-outline">Nxt</button>
                         </div>
                     </form>
                 </div>
-
-
-
             </div>
         </>
     );

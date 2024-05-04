@@ -3,18 +3,12 @@
 import React, { useState } from 'react';
 import { useFormik } from "formik";
 import * as yup from "yup";
-import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-
-const Step1 = ({ nextStep }) => {
 
 
-    const [selectedGender, setSelectedGender] = useState('');
+    
+const Step1 = ({ nextStep, formData = {}, updateFormData }) => {
+    const [selectedGender, setSelectedGender] = useState(formData.gender || '');
     const [error, setError] = useState("");
-    const [formData, setFormData] = useState({
-        amount: "5000", // Default Amount
-        screenshot: null,
-    });
 
     const validationSchema = yup.object({
         name: yup.string().required("Name is required"),
@@ -22,39 +16,41 @@ const Step1 = ({ nextStep }) => {
         addressProof: yup.string().required("Address proof is required"),
         photo: yup.string().required("Photo upload is required"),
         mobileNumber: yup.number().required("Mobile Number is required"),
+        aadharNo: yup.number().required("Aadhar Number is required"),
         nomineeDetail: yup.string().required("Nominee detail is required"),
+        nomineeRelation: yup.string().required("Nominee Relationship is required"),
     });
 
     const formik = useFormik({
         initialValues: {
-            referenceId: "Ref123456",
-            name: "",
-            guardian: "",
-            dob: "",
-            address: "",
-            mobileNumber: "",
-            alternateMobileNumber: "",
-            addressProof: "",
-            photo: "",
-            nomineeDetail: "",
+            name: formData.name || "",
+            guardian: formData.guardian || "",
+            dob: formData.dob || "",
+            gender: formData.gender || "",
+            address: formData.address || "",
+            mobileNumber: formData.mobileNumber || "",
+            alternateMobileNumber: formData.alternateMobileNumber || "",
+            aadharNo: formData.aadharNo || "",
+            addressProof: formData.addressProof || "",
+            photo: formData.photo || "",
+            nomineeDetail: formData.nomineeDetail || "",
+            nomineeRelation: formData.nomineeRelation || "",
+            agree: formData.agree || false, // Add this line for agreement checkbox
         },
         validationSchema,
+        onSubmit: values => {
+            updateFormData(values);
+            nextStep();
+        }
     });
 
     const handleChange = (e) => {
         const { name, value } = e.target;
         formik.handleChange(e);
-        setSelectedGender(value);
-    };
-
-    const handleNext = (e) => {
-        e.preventDefault();
-        formik.handleSubmit();
-        if (formik.isValid) {
-            nextStep();
+        if (name === "gender") {
+            setSelectedGender(value);
         }
     };
-
 
 
     return (
@@ -64,7 +60,7 @@ const Step1 = ({ nextStep }) => {
                     <h1 className="text-center text-3xl font-bold text-gray-800 mb-4">
                         KYC Form
                     </h1>
-                    <form onSubmit={handleNext} className='w-full p-3'>
+                    <form onSubmit={formik.handleSubmit} className='w-full p-3'>
                         {error && (
                             <p className="text-center text-red-500 mb-4">{error}</p>
                         )}
@@ -114,6 +110,7 @@ const Step1 = ({ nextStep }) => {
                                             <input
                                                 type="radio"
                                                 value="male"
+                                                name='gender'
                                                 checked={selectedGender === 'male'}
                                                 onChange={handleChange}
                                             />
@@ -123,6 +120,7 @@ const Step1 = ({ nextStep }) => {
                                             <input
                                                 type="radio"
                                                 value="female"
+                                                name='gender'
                                                 checked={selectedGender === 'female'}
                                                 onChange={handleChange}
                                             />
@@ -142,7 +140,7 @@ const Step1 = ({ nextStep }) => {
                                         type="date"
                                         id="dob"
                                         name="dob"
-                                        value={formData.dob}
+                                        value={formik.values.dob}
                                         onChange={handleChange}
                                         className="w-full bg-gray-200 rounded-lg py-3 px-4"
                                         required
@@ -160,7 +158,7 @@ const Step1 = ({ nextStep }) => {
                                     <textarea
                                         id="address"
                                         name="address"
-                                        value={formData.address}
+                                        value={formik.values.address}
                                         onChange={handleChange}
                                         className="w-full bg-gray-200 rounded-lg py-3 px-4"
                                         required
@@ -283,7 +281,7 @@ const Step1 = ({ nextStep }) => {
                                     type="text"
                                     className="w-full bg-gray-200 rounded-lg py-3 px-4 mb-4"
                                     placeholder="Nominee Relationship"
-                                    name="relation"
+                                    name="nomineeRelation"
                                     onChange={formik.handleChange}
                                     onBlur={formik.handleBlur}
                                     value={formik.values.relation}
@@ -292,34 +290,6 @@ const Step1 = ({ nextStep }) => {
                             </div>
                         </div>
 
-                        {/* <div className='flex justify-center items-center'>
-                                            {currentStep < steps.length && (
-                                                <button
-                                                    type="submit"
-                                                    onClick={handleNext}
-                                                    className="bg-green-500 hover:bg-green-700 text-white font-bold py-3 px-10 rounded-lg focus:outline-none focus:shadow-outline -mt-3"
-                                                >
-                                                    {loading ? (
-                                                        <div className="flex justify-center">
-                                                            <Oval
-                                                                height={30}
-                                                                width={30}
-                                                                color="#fff"
-                                                                wrapperStyle={{}}
-                                                                wrapperClass=""
-                                                                visible={true}
-                                                                ariaLabel="oval-loading"
-                                                                secondaryColor="#86b7fe"
-                                                                strokeWidth={2}
-                                                                strokeWidthSecondary={2}
-                                                            />
-                                                        </div>
-                                                    ) : (
-                                                        "Next"
-                                                    )}
-                                                </button>
-                                            )}
-                                        </div> */}
 
                         {/* Agreement Checkbox */}
                         <label className="flex items-center py-3">
