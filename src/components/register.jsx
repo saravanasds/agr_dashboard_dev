@@ -8,7 +8,7 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { togglePasswordVisibility } from "../utils/utils";
 
-export default function Register({ formData }) {
+export default function Register() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
@@ -22,7 +22,7 @@ export default function Register({ formData }) {
   }, []);
 
   const validation = yup.object({
-    name: yup.string().required("Enter Your Name"),
+    firstName: yup.string().required("Enter First Name"),
     email: yup
       .string()
       .required("Email is required")
@@ -33,23 +33,14 @@ export default function Register({ formData }) {
   async function sendData(values) {
     setLoading(true);
     try {
-      // Combine form data received as props with registration values
-      const userData = {
-        ...formData, // Existing form data
-        username: values.name,
-        email: values.email,
-        password: values.password
-      };
-      
       const response = await axios.post(
         `https://agr-backend-m85q.onrender.com/api/auth/register`,
-        userData // Send combined data to the backend
+        values
       );
       const data = response.data;
 
-      
       setLoading(false);
-  
+
       // Handle successful registration
       toast.success("Register Successfull. Reset Email Send.", {
         position: "top-right",
@@ -61,14 +52,14 @@ export default function Register({ formData }) {
         progress: undefined,
         theme: "colored",
       });
-  
+
       navigate("/kyc");
     } catch (err) {
       // Handle errors
       setLoading(false);
       const errorMessage = err.response?.data?.error || "Internal Server Error";
       setError(errorMessage);
-  
+
       toast.error(errorMessage, {
         position: "top-right",
         autoClose: 1500,
@@ -81,13 +72,12 @@ export default function Register({ formData }) {
       });
     }
   }
-  
 
   const formik = useFormik({
     initialValues: {
-      username: "", 
-      email: "", 
-      password: "", 
+      username: "",
+      email: "",
+      password: "",
     },
     validationSchema: validation,
     onSubmit: sendData,
@@ -118,10 +108,10 @@ export default function Register({ formData }) {
                     type="text"
                     className="w-full bg-gray-200 rounded-lg py-3 px-4 mb-4"
                     placeholder="Enter Your Name"
-                    name="name"
+                    name="firstName"
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
-                    value={formik.values.name}
+                    value={formik.values.firstName}
                   />
                   {error ? (
                     <p className="text-center text-red-500 mb-4">{error}</p>

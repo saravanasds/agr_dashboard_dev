@@ -11,7 +11,7 @@ const Step1 = ({ nextStep, formData = {}, updateFormData }) => {
     const [error, setError] = useState("");
 
     const validationSchema = yup.object({
-        name: yup.string().required("Name is required"),
+        firstName: yup.string().required("Name is required"),
         guardian: yup.string().required("Guardian is required"),
         adharProof: yup.string().required("Address proof is required"),
         photo: yup.string().required("Photo upload is required"),
@@ -23,7 +23,7 @@ const Step1 = ({ nextStep, formData = {}, updateFormData }) => {
 
     const formik = useFormik({
         initialValues: {
-            name: formData.name || "",
+            firstName: formData.name || "",
             guardian: formData.guardian || "",
             dob: formData.dob || "",
             gender: formData.gender || "",
@@ -72,15 +72,15 @@ const Step1 = ({ nextStep, formData = {}, updateFormData }) => {
                                         type="text"
                                         className="w-full bg-gray-200 rounded-lg py-3 px-4"
                                         placeholder="Enter Name"
-                                        name="name"
+                                        name="firstName"
                                         onChange={formik.handleChange}
                                         onBlur={formik.handleBlur}
-                                        value={formik.values.name}
+                                        value={formik.values.firstName}
                                     />
                                     {/* Display error message if touched and there's an error */}
-                                    {formik.touched.name && formik.errors.name && (
+                                    {formik.touched.firstName && formik.errors.firstName && (
                                         <p className="text-red-500 text-left mb-4">
-                                            {formik.errors.name}
+                                            {formik.errors.firstName}
                                         </p>
                                     )}
                                 </div>
