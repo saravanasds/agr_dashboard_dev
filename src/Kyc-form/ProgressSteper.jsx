@@ -36,16 +36,13 @@ const ProgressSteper = () => {
 
   async function sendData() {
     setLoading(true);
-
     try {
       // Flatten the nested formData object
       const flattenedFormData = Object.keys(formData).reduce((acc, key) => {
         return { ...acc, ...formData[key] };
       }, {});
-      console.log(flattenedFormData)
       const response = await axios.post(
         `https://agr-backend-m85q.onrender.com/api/kyc/kycUpdate`,
-        // `http://localhost:9000/api/kyc/kycUpdate`,
         flattenedFormData
       );
       setLoading(false);
@@ -59,7 +56,7 @@ const ProgressSteper = () => {
       // You can handle the error response here if needed
     }
   }
-
+  
 
   const nextStep = () => {
     setCurrentStep(currentStep + 1);
@@ -81,7 +78,7 @@ const ProgressSteper = () => {
       {currentStep === 1 && <Step1 nextStep={nextStep} formData={formData} updateFormData={updateFormData} />}
       {currentStep === 2 && <Step2 nextStep={nextStep} prevStep={prevStep} formData={formData} updateFormData={updateFormData} />}
       {currentStep === 3 && <Step3 nextStep={nextStep} prevStep={prevStep} formData={formData} updateFormData={updateFormData} />}
-      {currentStep === 4 && <Step4 nextStep={nextStep} prevStep={prevStep} formData={formData} updateFormData={updateFormData} sendData={sendData} />}
+      {currentStep === 4 && <Step4 nextStep={nextStep} prevStep={prevStep} formData={formData} updateFormData={updateFormData} sendData={sendData}/>}
       {currentStep === 5 && <Step5 prevStep={prevStep} />}
     </div>
   );
