@@ -1,16 +1,20 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import Step1 from './Step1';
-import Step2 from './Step2';
-import Step3 from './Step3';
-import Step4 from './Step4';
-import Step5 from './Step5';
+import Step1 from './Step1'
+import Step2 from './Step2'
+import Step3 from './Step3'
+import Step4 from './Step4'
+import Step5 from './Step5'
+import Step6 from './step6'
+
 
 const ProgressSteper = () => {
   const [currentStep, setCurrentStep] = useState(1);
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
-    name: "",
+    firstName: "",
+    email: "",
+    password: "",
     guardian: "",
     dob: "",
     gender: "",
@@ -38,13 +42,16 @@ const ProgressSteper = () => {
     setLoading(true);
     try {
       // Flatten the nested formData object
-      const flattenedFormData = Object.keys(formData).reduce((acc, key) => {
-        return { ...acc, ...formData[key] };
-      }, {});
+      // const flattenedFormData = Object.keys(formData).reduce((acc, key) => {
+      //   return { ...acc, ...formData[key] };
+      // }, {});
+      console.log(formData)
       const response = await axios.post(
-        `https://agr-backend-m85q.onrender.com/api/kyc/kycUpdate`,
-        flattenedFormData
+        `https://localhost:9000/api/auth/register`,
+        // 
+        formData
       );
+      const data = response.data;
       setLoading(false);
       console.log(response.data); // Log response data
       // Handle successful response
@@ -57,6 +64,7 @@ const ProgressSteper = () => {
     }
   }
   
+
 
   const nextStep = () => {
     setCurrentStep(currentStep + 1);
@@ -78,8 +86,9 @@ const ProgressSteper = () => {
       {currentStep === 1 && <Step1 nextStep={nextStep} formData={formData} updateFormData={updateFormData} />}
       {currentStep === 2 && <Step2 nextStep={nextStep} prevStep={prevStep} formData={formData} updateFormData={updateFormData} />}
       {currentStep === 3 && <Step3 nextStep={nextStep} prevStep={prevStep} formData={formData} updateFormData={updateFormData} />}
-      {currentStep === 4 && <Step4 nextStep={nextStep} prevStep={prevStep} formData={formData} updateFormData={updateFormData} sendData={sendData}/>}
-      {currentStep === 5 && <Step5 prevStep={prevStep} />}
+      {currentStep === 4 && <Step4 nextStep={nextStep} prevStep={prevStep} formData={formData} updateFormData={updateFormData}/>}
+      {currentStep === 5 && <Step5 nextStep={nextStep} prevStep={prevStep} formData={formData} updateFormData={updateFormData} sendData={sendData} />}
+      {currentStep === 6 && <Step6 prevStep={prevStep} />}
     </div>
   );
 };

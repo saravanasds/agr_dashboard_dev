@@ -1,34 +1,136 @@
 import React from 'react';
-import "react-toastify/dist/ReactToastify.css";
+import { useFormik } from "formik";
+import * as yup from "yup";
 
-const Step3 = ({ nextStep, prevStep }) => {
+const Step3 = ({ nextStep, prevStep, formData = {}, updateFormData }) => {
 
+    const validationSchema = yup.object({
+        bankAcno: yup.string().required("Account number is required"),
+        bankName: yup.string().required("Bank Name is required"),
+        branch: yup.string().required("Branch is required"),
+        ifsc: yup.string().required("IFSC code is required"),
+        upiId: yup.string().required("UPI ID is required"),
+    });
+
+    const formik = useFormik({
+        initialValues: {
+            bankAcno: formData.bankAcno || '',
+            bankName: formData.bankName || '',
+            branch: formData.branch || '',
+            ifsc: formData.ifsc || '',
+            upiId: formData.ifsc || ''
+        },
+        validationSchema,
+        onSubmit: values => {
+            updateFormData(values);
+            nextStep();
+        }
+    });
 
     return (
         <>
-            <div className="mx-auto w-full flex justify-center items-center min-h-screen flex-col p-3">
+            <div className="mx-auto w-full flex justify-center items-center min-h-screen">
+                <div className="w-full px-3 py-6">
+                    <h1 className="text-3xl font-bold text-gray-800 mb-16 text-center">
+                        Account Details
+                    </h1>
+                    <form onSubmit={formik.handleSubmit}>
+                        <div className='flex flex-col items-center justify-center sm:flex-row w-full text-start'>
+                            <div className='w-full lg:w-2/3  md:px-5'>
+                                <div className="mb-4">
+                                    <input
+                                        type="text"
+                                        className="w-full bg-gray-200 rounded-lg py-3 px-4"
+                                        placeholder="Enter Bank Account No"
+                                        name="bankAcno"
+                                        onChange={formik.handleChange}
+                                        onBlur={formik.handleBlur}
+                                        value={formik.values.bankAcno} 
+                                    />
+                                    {formik.touched.bankAcno && formik.errors.bankAcno && (
+                                        <p className="text-red-500 mb-4">
+                                            {formik.errors.bankAcno}
+                                        </p>
+                                    )}
+                                </div>
 
-                <div className="flex flex-col md:flex-row justify-center mb-4 border-2 ">
-                    <img
-                        src="./QR.jpeg"
-                        alt="Sample QR Code"
-                        className="w-80"
-                    />
-                    <div className='border-2 p-10 text-left leading-10'>
-                        <h1 className='text-2xl font-bold text-gray-800 mb-8'>Account Details</h1>
-                        <span><span className='font-bold mr-3'>Name:</span> Aandhakumar</span><br />
-                        <span><span className='font-bold mr-3'>Bank:</span> State Bank Of India</span><br />
-                        <span><span className='font-bold mr-3'>Ac.no:</span> 8457962145</span><br />
-                        <span><span className='font-bold mr-3'>Branch:</span> Palani</span><br />
-                        <span><span className='font-bold mr-3'>IFSC Code:</span> SBIN0002240</span>
-                    </div>
+                                <div className="mb-4">
+                                    <input
+                                        type="text"
+                                        className="w-full bg-gray-200 rounded-lg py-3 px-4"
+                                        placeholder="Bank Name"
+                                        name="bankName"
+                                        onChange={formik.handleChange}
+                                        onBlur={formik.handleBlur}
+                                        value={formik.values.bankName}
+                                    />
+                                    {formik.touched.bankName && formik.errors.bankName && (
+                                        <p className="text-red-500 mb-4">
+                                            {formik.errors.bankName}
+                                        </p>
+                                    )}
+                                </div>
+
+                                <div className="mb-4">
+                                    <input
+                                        type="text"
+                                        className="w-full bg-gray-200 rounded-lg py-3 px-4"
+                                        placeholder="Branch"
+                                        name="branch"
+                                        onChange={formik.handleChange}
+                                        onBlur={formik.handleBlur}
+                                        value={formik.values.branch}
+                                    />
+                                    {formik.touched.branch && formik.errors.branch && (
+                                        <p className="text-red-500 mb-4">
+                                            {formik.errors.branch}
+                                        </p>
+                                    )}
+                                </div>
+
+                                <div className="mb-4">
+                                    <input
+                                        type="text"
+                                        className="w-full bg-gray-200 rounded-lg py-3 px-4"
+                                        placeholder="IFSC Code"
+                                        name="ifsc"
+                                        onChange={formik.handleChange}
+                                        onBlur={formik.handleBlur}
+                                        value={formik.values.ifsc}
+                                    />
+                                    {formik.touched.ifsc && formik.errors.ifsc && (
+                                        <p className="text-red-500 mb-4">
+                                            {formik.errors.ifsc}
+                                        </p>
+                                    )}
+                                </div>
+
+                                <div className="mb-4">
+                                    <input
+                                        type="text"
+                                        className="w-full bg-gray-200 rounded-lg py-3 px-4"
+                                        placeholder="UPI ID"
+                                        name="upiId"
+                                        onChange={formik.handleChange}
+                                        onBlur={formik.handleBlur}
+                                        value={formik.values.upiId}
+                                    />
+                                    {formik.touched.upiId && formik.errors.upiId && (
+                                        <p className="text-red-500 mb-4">
+                                            {formik.errors.upiId}
+                                        </p>
+                                    )}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className='w-full flex flex-col sm:flex-row justify-center items-center gap-3'>
+                            <button onClick={prevStep} className="w-full sm:w-auto bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-12 rounded-lg focus:outline-none focus:shadow-outline">Previous</button>
+                            <button type="submit" className="w-full sm:w-auto bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-10 rounded-lg focus:outline-none focus:shadow-outline">Next</button>
+                            <button type="submit" onClick={nextStep} className="w-full sm:w-auto bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-10 rounded-lg focus:outline-none focus:shadow-outline">Nxt</button>
+                        </div>
+                    </form>
                 </div>
-
-                <div className='w-full flex flex-col sm:flex-row justify-center items-center gap-3'>
-                    <button onClick={prevStep} className="w-full sm:w-auto bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-12 rounded-lg focus:outline-none focus:shadow-outline">Previous</button>
-                    <button onClick={nextStep} className="w-full sm:w-auto bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-10 rounded-lg focus:outline-none focus:shadow-outline">Next</button>
-                </div>
-
             </div>
         </>
     );

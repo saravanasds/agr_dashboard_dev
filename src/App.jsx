@@ -2,7 +2,6 @@ import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Login from "./components/login";
 import Info from "./components/info";
-import Register from "./components/register";
 import "./App.css";
 import Kyc from "./Kyc-form/Kyc";
 import Dashboard from './pages/Dashboard.jsx';
@@ -20,8 +19,7 @@ function App() {
     <Router>
       <Routes>
         <Route path="/" element={<Info />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/kyc" element={<Kyc />} />
+        <Route path="/register" element={<Kyc />} />
         <Route path="/login" element={<Login />} />
         <Route path="/forgotPassword" element={<ForgotPassword />} />
       </Routes>
