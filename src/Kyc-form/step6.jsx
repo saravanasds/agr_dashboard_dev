@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from "react-router-dom";
 
-const Step6 = ({ prevStep }) => {
+const Step6 = ({ prevStep, sendData }) => {
     return (
         <>
             <div className="mx-auto w-full flex justify-center items-center p-3">
@@ -13,6 +13,7 @@ const Step6 = ({ prevStep }) => {
                         </Link>
                     </div>
                     <div className='w-full flex justify-center items-center gap-3'>
+                        <button type="submit" onClick={sendData} className="w-full sm:w-auto bg-blue-800 hover:bg-blue-500 text-white font-bold py-2 px-10 rounded-lg focus:outline-none focus:shadow-outline">Submit</button>
                         <button onClick={prevStep} className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-12 rounded-lg focus:outline-none focus:shadow-outline">Previous</button>
                     </div>
                 </div>

@@ -11,8 +11,6 @@ const Step2 = ({ nextStep, prevStep, formData = {}, updateFormData }) => {
     const [error, setError] = useState("");
 
     const validationSchema = yup.object({
-        // email: yup.string().required("email is required"),
-        // firstName: yup.string().required("Name is required"),
         guardian: yup.string().required("Guardian is required"),
         adharProof: yup.string().required("Address proof is required"),
         photo: yup.string().required("Photo upload is required"),
@@ -24,8 +22,6 @@ const Step2 = ({ nextStep, prevStep, formData = {}, updateFormData }) => {
 
     const formik = useFormik({
         initialValues: {
-            // email: formData.email || "",
-            // firstName: formData.name || "",
             guardian: formData.guardian || "",
             dob: formData.dob || "",
             gender: formData.gender || "",
@@ -68,40 +64,6 @@ const Step2 = ({ nextStep, prevStep, formData = {}, updateFormData }) => {
                         )}
                         <div className='flex flex-col md:flex-row gap-8'>
                             <div className='w-full md:w-1/2'>
-{/* 
-                                <div className='mb-4'>
-                                    <input
-                                        type="email"
-                                        className="w-full bg-gray-200 rounded-lg py-3 px-4"
-                                        placeholder="Enter email"
-                                        name="email"
-                                        onChange={formik.handleChange}
-                                        onBlur={formik.handleBlur}
-                                        value={formik.values.email}
-                                    />
-                                    {formik.touched.email && formik.errors.email && (
-                                        <p className="text-red-500 text-left mb-4">
-                                            {formik.errors.email}
-                                        </p>
-                                    )}
-                                </div>
-
-                                <div className='mb-4'>
-                                    <input
-                                        type="text"
-                                        className="w-full bg-gray-200 rounded-lg py-3 px-4"
-                                        placeholder="Enter Name"
-                                        name="firstName"
-                                        onChange={formik.handleChange}
-                                        onBlur={formik.handleBlur}
-                                        value={formik.values.firstName}
-                                    />
-                                    {formik.touched.firstName && formik.errors.firstName && (
-                                        <p className="text-red-500 text-left mb-4">
-                                            {formik.errors.firstName}
-                                        </p>
-                                    )}
-                                </div> */}
 
                                 <div className='mb-4'>
                                     <input
@@ -229,6 +191,12 @@ const Step2 = ({ nextStep, prevStep, formData = {}, updateFormData }) => {
                                         value={formik.values.aadharNo}
                                     />
                                 </div>
+                                {/* Display error message if touched and there's an error */}
+                                {formik.touched.aadharNo && formik.errors.aadharNo && (
+                                    <p className="text-red-500 mb-4">
+                                        {formik.errors.aadharNo}
+                                    </p>
+                                )}
 
                                 {/* Input field for address proof upload */}
                                 <div className="mb-4">
@@ -302,8 +270,14 @@ const Step2 = ({ nextStep, prevStep, formData = {}, updateFormData }) => {
                                     name="nomineeRelationship"
                                     onChange={formik.handleChange}
                                     onBlur={formik.handleBlur}
-                                    value={formik.values.relation}
+                                    value={formik.values.nomineeRelationship}
                                 />
+                                {/* Display error message if touched and there's an error */}
+                                {formik.touched.nomineeRelationship && formik.errors.nomineeRelationship && (
+                                    <p className="text-red-500 mb-4">
+                                        {formik.errors.nomineeRelationship}
+                                    </p>
+                                )}
 
                             </div>
                         </div>

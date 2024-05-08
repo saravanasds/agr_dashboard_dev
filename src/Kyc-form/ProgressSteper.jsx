@@ -21,11 +21,11 @@ const ProgressSteper = () => {
     address: "",
     mobileNumber: "",
     alternateMobileNumber: "",
-    adharno: "",
+    aadharNo: "",
     adharProof: null,
     photo: null,
     nomineeName: "",
-    nomineeRelationshipship: "",
+    nomineeRelationship: "",
     bankAcno: "",
     bankName: "",
     branch: "",
@@ -47,8 +47,8 @@ const ProgressSteper = () => {
       // }, {});
       console.log(formData)
       const response = await axios.post(
-        `https://agr-backend-m85q.onrender.com/api/auth/register`,
-        // 
+        // `https://agr-backend-m85q.onrender.com/api/auth/register`,
+        `http://localhost:9000/api/auth/register`, 
         formData
       );
       const data = response.data;
@@ -86,9 +86,9 @@ const ProgressSteper = () => {
       {currentStep === 1 && <Step1 nextStep={nextStep} formData={formData} updateFormData={updateFormData} />}
       {currentStep === 2 && <Step2 nextStep={nextStep} prevStep={prevStep} formData={formData} updateFormData={updateFormData} />}
       {currentStep === 3 && <Step3 nextStep={nextStep} prevStep={prevStep} formData={formData} updateFormData={updateFormData} />}
-      {currentStep === 4 && <Step4 nextStep={nextStep} prevStep={prevStep} formData={formData} updateFormData={updateFormData}/>}
-      {currentStep === 5 && <Step5 nextStep={nextStep} prevStep={prevStep} formData={formData} updateFormData={updateFormData} sendData={sendData} />}
-      {currentStep === 6 && <Step6 prevStep={prevStep} />}
+      {currentStep === 4 && <Step4 nextStep={nextStep} prevStep={prevStep} formData={formData} updateFormData={updateFormData} />}
+      {currentStep === 5 && <Step5 nextStep={nextStep} prevStep={prevStep} formData={formData} updateFormData={updateFormData} />}
+      {currentStep === 6 && <Step6 prevStep={prevStep} sendData={sendData} />}
     </div>
   );
 };

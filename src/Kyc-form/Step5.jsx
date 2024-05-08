@@ -2,7 +2,7 @@ import React from 'react';
 import { useFormik } from "formik";
 import * as yup from "yup";
 
-const Step5 = ({ nextStep, prevStep, formData = {}, updateFormData, sendData }) => {
+const Step5 = ({ nextStep, prevStep, formData = {}, updateFormData }) => {
 
     const validationSchema = yup.object({
         paymentDate: yup.string().required("Payment Date is required"),
@@ -50,12 +50,16 @@ const Step5 = ({ nextStep, prevStep, formData = {}, updateFormData, sendData }) 
                                         id="paymentDate"
                                         name="paymentDate"
                                         value={formik.values.paymentDate}
+                                        onBlur={formik.handleBlur}
                                         onChange={formik.handleChange}
                                         className="w-full bg-gray-200 rounded-lg py-3 px-4"
                                         required
                                     />
+                                    {/* Display error message if touched and there's an error */}
                                     {formik.touched.paymentDate && formik.errors.paymentDate && (
-                                        <p className="text-red-500 mb-4">{formik.errors.paymentDate}</p>
+                                        <p className="text-red-500 text-left mb-4">
+                                            {formik.errors.paymentDate}
+                                        </p>
                                     )}
                                 </div>
 
@@ -72,10 +76,13 @@ const Step5 = ({ nextStep, prevStep, formData = {}, updateFormData, sendData }) 
                                         name="transactionId"
                                         value={formik.values.transactionId}
                                         onChange={formik.handleChange}
+                                        onBlur={formik.handleBlur}
                                         className="w-full bg-gray-200 rounded-lg py-3 px-4"
                                     />
                                     {formik.touched.transactionId && formik.errors.transactionId && (
-                                        <p className="text-red-500 mb-4">{formik.errors.transactionId}</p>
+                                        <p className="text-red-500 mb-4">
+                                            {formik.errors.transactionId}
+                                        </p>
                                     )}
                                 </div>
                             </div>
@@ -83,19 +90,25 @@ const Step5 = ({ nextStep, prevStep, formData = {}, updateFormData, sendData }) 
                             <div className='w-full sm:w-1/2 md:px-5'>
                                 <div className="mb-4">
                                     <label
-                                        htmlFor="referenceId"
+                                        htmlFor="referralId"
                                         className="block text-gray-700 font-semibold mb-1"
                                     >
                                         Referral ID(If any)
                                     </label>
                                     <input
                                         type="text"
-                                        id="referenceId"
-                                        name="referenceId"
+                                        id="referralId"
+                                        name="referralId"
                                         onChange={formik.handleChange}
                                         className="w-full bg-gray-200 rounded-lg py-3 px-4"
                                     />
                                 </div>
+                                {/* Display error message if touched and there's an error */}
+                                {formik.touched.referralId && formik.errors.referralId && (
+                                        <p className="text-red-500 text-left mb-4">
+                                            {formik.errors.referralId}
+                                        </p>
+                                    )}
                                 <div className="mb-4">
                                     <label
                                         htmlFor="amount"
@@ -140,7 +153,7 @@ const Step5 = ({ nextStep, prevStep, formData = {}, updateFormData, sendData }) 
 
                         <div className='w-full flex flex-col sm:flex-row justify-center items-center gap-3'>
                             <button onClick={prevStep} className="w-full sm:w-auto bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-12 rounded-lg focus:outline-none focus:shadow-outline">Previous</button>
-                            <button type="submit" onClick={sendData} className="w-full sm:w-auto bg-blue-800 hover:bg-blue-500 text-white font-bold py-2 px-10 rounded-lg focus:outline-none focus:shadow-outline">Submit</button>
+                            <button type="submit" className="w-full sm:w-auto bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-10 rounded-lg focus:outline-none focus:shadow-outline">Next</button>
                             <button type="submit" onClick={nextStep} className="w-full sm:w-auto bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-10 rounded-lg focus:outline-none focus:shadow-outline">Nxt</button>
                         </div>
                     </form>
