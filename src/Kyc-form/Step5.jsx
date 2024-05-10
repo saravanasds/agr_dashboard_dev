@@ -7,7 +7,7 @@ const Step5 = ({ nextStep, prevStep, formData = {}, updateFormData }) => {
     const validationSchema = yup.object({
         paymentDate: yup.string().required("Payment Date is required"),
         transactionId: yup.string().required("Transaction.no is required"),
-        paymentScreenshot: yup.string().required("Payment Screenshot is required"),
+        paymentScreenshot: yup.mixed().required("Payment Screenshot is required"),
         referralId: yup.string(),
     });
 

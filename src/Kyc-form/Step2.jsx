@@ -12,8 +12,8 @@ const Step2 = ({ nextStep, prevStep, formData = {}, updateFormData }) => {
 
     const validationSchema = yup.object({
         guardian: yup.string().required("Guardian is required"),
-        adharProof: yup.string().required("Address proof is required"),
-        photo: yup.string().required("Photo upload is required"),
+        adharProof: yup.mixed().required("Address proof is required"),
+        photo: yup.mixed().required("Photo upload is required"),
         mobileNumber: yup.number().required("Mobile Number is required"),
         aadharNo: yup.number().required("Aadhar Number is required"),
         nomineeName: yup.string().required("Nominee detail is required"),
