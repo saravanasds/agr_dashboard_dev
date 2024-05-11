@@ -11,23 +11,37 @@ const Step5 = ({ nextStep, prevStep, formData = {}, updateFormData }) => {
         referralId: yup.string(),
     });
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
 
-        // Validate form data
-        validationSchema.validate(formData, { abortEarly: false })
-            .then(() => {
-                // Proceed to next step if validation passes
-                nextStep();
-            })
-            .catch((validationErrors) => {
-                // Handle validation errors
-                const newErrors = {};
-                validationErrors.inner.forEach(error => {
-                    newErrors[error.path] = error.message;
-                });
-                setErrors(newErrors);
+        try {
+            // Validate form data
+            await validationSchema.validate(formData, { abortEarly: false });
+
+            // Create FormData object
+            const formDataToSend = new FormData();
+
+            // Append form data
+            Object.entries(formData).forEach(([key, value]) => {
+                formDataToSend.append(key, value);
             });
+
+            // Append file
+            formDataToSend.append('paymentScreenshot', formData.paymentScreenshot);
+
+            // Pass form data to parent component
+            updateFormData(formDataToSend);
+
+            // Proceed to next step
+            nextStep();
+        } catch (validationErrors) {
+            // Handle validation errors
+            const newErrors = {};
+            validationErrors.inner.forEach(error => {
+                newErrors[error.path] = error.message;
+            });
+            setErrors(newErrors);
+        }
     };
 
     const handleChange = (e) => {

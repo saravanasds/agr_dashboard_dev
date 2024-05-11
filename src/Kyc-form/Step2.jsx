@@ -15,23 +15,38 @@ const Step2 = ({ nextStep, prevStep, formData = {}, updateFormData }) => {
         photo: yup.mixed().required("photo is required"),
     });
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
 
-        // Validate form data
-        validationSchema.validate(formData, { abortEarly: false })
-          .then(() => {
-            // Proceed to next step if validation passes
+        try {
+            // Validate form data
+            await validationSchema.validate(formData, { abortEarly: false });
+
+            // Create FormData object
+            const formDataToSend = new FormData();
+
+            // Append form data
+            Object.entries(formData).forEach(([key, value]) => {
+                formDataToSend.append(key, value);
+            });
+
+            // Append files
+            formDataToSend.append('adharProof', formData.adharProof);
+            formDataToSend.append('photo', formData.photo);
+
+            // Pass form data to parent component
+            updateFormData(formDataToSend);
+
+            // Proceed to next step
             nextStep();
-          })
-          .catch((validationErrors) => {
+        } catch (validationErrors) {
             // Handle validation errors
             const newErrors = {};
             validationErrors.inner.forEach(error => {
                 newErrors[error.path] = error.message;
             });
             setErrors(newErrors);
-          });
+        }
     };
 
     const handleChange = (e) => {
@@ -45,6 +60,20 @@ const Step2 = ({ nextStep, prevStep, formData = {}, updateFormData }) => {
             setSelectedGender(value);
         }
         // Clear the error when the input value changes
+        setErrors({
+            ...errors,
+            [name]: ""
+        });
+    };
+
+    const handleFileChange = (e) => {
+        const { name, files } = e.target;
+        // Update form data with the selected file
+        updateFormData({
+            ...formData,
+            [name]: files[0]
+        });
+        // Clear the error when the file changes
         setErrors({
             ...errors,
             [name]: ""
@@ -188,12 +217,7 @@ const Step2 = ({ nextStep, prevStep, formData = {}, updateFormData }) => {
                                         id="adharProof"
                                         className="w-full bg-gray-200 rounded-lg py-0 px-4"
                                         name="adharProof"
-                                        onChange={(event) => {
-                                            updateFormData({
-                                                ...formData,
-                                                adharProof: event.currentTarget.files[0]
-                                            });
-                                        }}
+                                        onChange={handleFileChange}
                                     />
                                     {errors.adharProof && <p className="text-red-500 text-left mb-1">{errors.adharProof}</p>}
                                 </div>
@@ -209,12 +233,7 @@ const Step2 = ({ nextStep, prevStep, formData = {}, updateFormData }) => {
                                         id="photo"
                                         className="w-full bg-gray-200 rounded-lg py-0 px-4"
                                         name="photo"
-                                        onChange={(event) => {
-                                            updateFormData({
-                                                ...formData,
-                                                photo: event.currentTarget.files[0]
-                                            });
-                                        }}
+                                        onChange={handleFileChange}
                                     />
                                     {errors.photo && <p className="text-red-500 text-left mb-1">{errors.photo}</p>}
                                 </div>
