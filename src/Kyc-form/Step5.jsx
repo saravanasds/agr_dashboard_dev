@@ -1,31 +1,48 @@
-import React from 'react';
-import { useFormik } from "formik";
+import React, { useState } from 'react';
 import * as yup from "yup";
 
 const Step5 = ({ nextStep, prevStep, formData = {}, updateFormData }) => {
+    const [errors, setErrors] = useState({});
 
     const validationSchema = yup.object({
         paymentDate: yup.string().required("Payment Date is required"),
         transactionId: yup.string().required("Transaction.no is required"),
-        paymentScreenshot: yup.mixed().required("Payment Screenshot is required"),
+        paymentScreenshot: yup.mixed().required("Payment screenshot is required"),
         referralId: yup.string(),
     });
 
-    const formik = useFormik({
-        initialValues: {
-            paymentDate: formData.paymentDate || "",
-            transactionId: formData.transactionId || "",
-            referralId: formData.referralId || "",
-            amount: "5000",
-            paymentScreenshot: formData.paymentScreenshot || ""
-        },
-        validationSchema,
-        onSubmit: values => {
-            updateFormData(values);
-            nextStep();
-        }
-    });
-    // console.log(formData)
+    const handleSubmit = (e) => {
+        e.preventDefault();
+
+        // Validate form data
+        validationSchema.validate(formData, { abortEarly: false })
+            .then(() => {
+                // Proceed to next step if validation passes
+                nextStep();
+            })
+            .catch((validationErrors) => {
+                // Handle validation errors
+                const newErrors = {};
+                validationErrors.inner.forEach(error => {
+                    newErrors[error.path] = error.message;
+                });
+                setErrors(newErrors);
+            });
+    };
+
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        // Update form data
+        updateFormData({
+            ...formData,
+            [name]: value
+        });
+        // Clear the error when the input value changes
+        setErrors({
+            ...errors,
+            [name]: ""
+        });
+    };
 
     return (
         <>
@@ -34,7 +51,7 @@ const Step5 = ({ nextStep, prevStep, formData = {}, updateFormData }) => {
                     <h1 className="text-3xl font-bold text-gray-800 mb-16 mt-8">
                         Payment Approval Form
                     </h1>
-                    <form onSubmit={formik.handleSubmit}>
+                    <form onSubmit={handleSubmit}>
                         <div className='flex flex-col sm:flex-row w-full text-start gap-3'>
                             <div className='w-full sm:w-1/2 md:px-5'>
 
@@ -49,18 +66,12 @@ const Step5 = ({ nextStep, prevStep, formData = {}, updateFormData }) => {
                                         type="date"
                                         id="paymentDate"
                                         name="paymentDate"
-                                        value={formik.values.paymentDate}
-                                        onBlur={formik.handleBlur}
-                                        onChange={formik.handleChange}
+                                        value={formData.paymentDate}
+                                        onChange={handleChange}
                                         className="w-full bg-gray-200 rounded-lg py-3 px-4"
                                         required
                                     />
-                                    {/* Display error message if touched and there's an error */}
-                                    {formik.touched.paymentDate && formik.errors.paymentDate && (
-                                        <p className="text-red-500 text-left mb-4">
-                                            {formik.errors.paymentDate}
-                                        </p>
-                                    )}
+                                    {errors.paymentDate && <p className="text-red-500 text-left mb-1">{errors.paymentDate}</p>}
                                 </div>
 
                                 <div className="mb-4">
@@ -74,16 +85,11 @@ const Step5 = ({ nextStep, prevStep, formData = {}, updateFormData }) => {
                                         type="text"
                                         id="transactionId"
                                         name="transactionId"
-                                        value={formik.values.transactionId}
-                                        onChange={formik.handleChange}
-                                        onBlur={formik.handleBlur}
+                                        value={formData.transactionId}
+                                        onChange={handleChange}
                                         className="w-full bg-gray-200 rounded-lg py-3 px-4"
                                     />
-                                    {formik.touched.transactionId && formik.errors.transactionId && (
-                                        <p className="text-red-500 mb-4">
-                                            {formik.errors.transactionId}
-                                        </p>
-                                    )}
+                                    {errors.transactionId && <p className="text-red-500 text-left mb-1">{errors.transactionId}</p>}
                                 </div>
                             </div>
 
@@ -99,16 +105,10 @@ const Step5 = ({ nextStep, prevStep, formData = {}, updateFormData }) => {
                                         type="text"
                                         id="referralId"
                                         name="referralId"
-                                        onChange={formik.handleChange}
+                                        onChange={handleChange}
                                         className="w-full bg-gray-200 rounded-lg py-3 px-4"
                                     />
                                 </div>
-                                {/* Display error message if touched and there's an error */}
-                                {formik.touched.referralId && formik.errors.referralId && (
-                                        <p className="text-red-500 text-left mb-4">
-                                            {formik.errors.referralId}
-                                        </p>
-                                    )}
                                 <div className="mb-4">
                                     <label
                                         htmlFor="amount"
@@ -120,8 +120,8 @@ const Step5 = ({ nextStep, prevStep, formData = {}, updateFormData }) => {
                                         type="number"
                                         id="amount"
                                         name="amount"
-                                        value={formik.values.amount}
-                                        onChange={formik.handleChange}
+                                        value={formData.amount}
+                                        onChange={handleChange}
                                         className="w-full bg-gray-200 rounded-lg py-3 px-4"
                                         readOnly // Make it read-only
                                     />
@@ -140,15 +140,16 @@ const Step5 = ({ nextStep, prevStep, formData = {}, updateFormData }) => {
                                 type="file"
                                 id="paymentScreenshot"
                                 name="paymentScreenshot"
-                                onChange={(event) => {
-                                    formik.setFieldValue("paymentScreenshot", event.currentTarget.files[0]);
-                                }}
                                 className="w-full bg-gray-200 rounded-lg py-0 px-4"
+                                onChange={(event) => {
+                                    updateFormData({
+                                        ...formData,
+                                        paymentScreenshot: event.currentTarget.files[0]
+                                    });
+                                }}
                                 required
                             />
-                            {formik.touched.paymentScreenshot && formik.errors.paymentScreenshot && (
-                                <p className="text-red-500 mb-4">{formik.errors.paymentScreenshot}</p>
-                            )}
+                            {errors.paymentScreenshot && <p className="text-red-500 text-left mb-1">{errors.paymentScreenshot}</p>}
                         </div>
 
                         <div className='w-full flex flex-col sm:flex-row justify-center items-center gap-3'>
