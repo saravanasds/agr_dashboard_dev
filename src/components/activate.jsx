@@ -1,13 +1,14 @@
 import React from 'react'
-import { useParams } from "react-router-dom";
+import { useParams } from 'react-router-dom';
 
 function activate() {
 
-    const { activationToken } = useParams(); // Get activation token from URL
+    const { activationToken } = useParams();
 
     return (
         <div className='w-full h-[100vh] flex justify-center items-center'>
-            activate
+            <h1>Activate Account</h1>
+            <p>Activation Token: {activationToken}</p>
         </div>
     )
 }

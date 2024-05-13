@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Step1 from "./Step1";
 import Step2 from "./Step2";
@@ -37,7 +36,6 @@ const ProgressSteper = () => {
     paymentScreenshot: "",
   });
 
-  const navigate = useNavigate();
 
   async function sendData() {
     setLoading(true);
@@ -54,12 +52,9 @@ const ProgressSteper = () => {
         `http://localhost:9000/api/auth/register`,
         formDataObj
       );
-      
+
       const data = response.data;
-      const { activationToken } = response.data; // Extract activation token from response
       setLoading(false);
-      console.log(response.data); // Log response data
-      navigate(`/activate/${activationToken}`); // Pass activation token in URL
 
     } catch (err) {
       // Handle errors
