@@ -4,7 +4,7 @@ import Login from "./components/login";
 import Info from "./components/info";
 import "./App.css";
 import Kyc from "./Kyc-form/Kyc";
-import Activate from "./components/activate"
+import Activate from "./components/Activate"
 import Dashboard from './pages/Dashboard.jsx';
 import Sidebar from './components/Sidebar';
 import Profile from './pages/Profile.jsx';
