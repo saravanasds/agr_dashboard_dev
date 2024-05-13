@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import * as yup from "yup";
 
-const Step5 = ({ nextStep, prevStep, formData = {}, updateFormData }) => {
+const Step5 = ({ nextStep, prevStep, formData = {}, updateFormData, sendData }) => {
     const [errors, setErrors] = useState({});
 
     const validationSchema = yup.object({
@@ -154,8 +154,8 @@ const Step5 = ({ nextStep, prevStep, formData = {}, updateFormData }) => {
 
                         <div className='w-full flex flex-col sm:flex-row justify-center items-center gap-3'>
                             <button onClick={prevStep} className="w-full sm:w-auto bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-12 rounded-lg focus:outline-none focus:shadow-outline">Previous</button>
-                            <button type="submit" className="w-full sm:w-auto bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-10 rounded-lg focus:outline-none focus:shadow-outline">Next</button>
-                            <button type="submit" onClick={nextStep} className="w-full sm:w-auto bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-10 rounded-lg focus:outline-none focus:shadow-outline">Nxt</button>
+                            <button type="submit" onClick={sendData} className="w-full sm:w-auto bg-blue-800 hover:bg-blue-500 text-white font-bold py-2 px-10 rounded-lg focus:outline-none focus:shadow-outline">Submit</button>
+                            <button onClick={nextStep} className="w-full sm:w-auto bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-10 rounded-lg focus:outline-none focus:shadow-outline">Nxt</button>
                         </div>
                     </form>
                 </div>

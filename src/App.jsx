@@ -4,6 +4,7 @@ import Login from "./components/login";
 import Info from "./components/info";
 import "./App.css";
 import Kyc from "./Kyc-form/Kyc";
+import Activate from "./components/activate"
 import Dashboard from './pages/Dashboard.jsx';
 import Sidebar from './components/Sidebar';
 import Profile from './pages/Profile.jsx';
@@ -20,6 +21,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Info />} />
         <Route path="/register" element={<Kyc />} />
+        <Route path="/activate" element={<Activate />} />
         <Route path="/login" element={<Login />} />
         <Route path="/forgotPassword" element={<ForgotPassword />} />
       </Routes>

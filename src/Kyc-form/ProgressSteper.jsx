@@ -1,11 +1,11 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Step1 from "./Step1";
 import Step2 from "./Step2";
 import Step3 from "./Step3";
 import Step4 from "./Step4";
 import Step5 from "./Step5";
-import Step6 from "./step6";
 
 const ProgressSteper = () => {
   const [currentStep, setCurrentStep] = useState(1);
@@ -37,6 +37,8 @@ const ProgressSteper = () => {
     paymentScreenshot: "",
   });
 
+  const navigate = useNavigate();
+
   async function sendData() {
     setLoading(true);
     try {
@@ -52,10 +54,13 @@ const ProgressSteper = () => {
         `http://localhost:9000/api/auth/register`,
         formDataObj
       );
+      
       const data = response.data;
+      const { activationToken } = response.data; // Extract activation token from response
       setLoading(false);
       console.log(response.data); // Log response data
-      // Handle successful response
+      navigate(`/activate/${activationToken}`); // Pass activation token in URL
+
     } catch (err) {
       // Handle errors
       setLoading(false);
@@ -119,9 +124,9 @@ const ProgressSteper = () => {
           prevStep={prevStep}
           formData={formData}
           updateFormData={updateFormData}
+          sendData={sendData}
         />
       )}
-      {currentStep === 6 && <Step6 prevStep={prevStep} sendData={sendData} />}
     </div>
   );
 };
