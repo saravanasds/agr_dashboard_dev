@@ -1,4 +1,3 @@
-
 import { useFormik } from "formik";
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
@@ -8,6 +7,7 @@ import { togglePasswordVisibility } from "../utils/utils";
 
 export default function Step1({ nextStep, formData = {}, updateFormData }) {
     const [error, setError] = useState("");
+    const [emailExistError, setEmailExistError] = useState("");
 
     const validation = yup.object({
         firstName: yup.string().required("Enter First Name"),
@@ -18,7 +18,6 @@ export default function Step1({ nextStep, formData = {}, updateFormData }) {
         password: yup.string().required("Password is required"),
     });
 
-
     const formik = useFormik({
         initialValues: {
             firstName: formData.name || "",
@@ -26,11 +25,39 @@ export default function Step1({ nextStep, formData = {}, updateFormData }) {
             password: formData.password || "",
         },
         validationSchema: validation,
-        onSubmit: values => {
+        onSubmit: (values) => {
             updateFormData(values);
             nextStep();
-        }
+        },
     });
+
+    const checkEmailExistence = async (email) => {
+        try {
+            const response = await fetch("http://localhost:9000/api/auth/userExist", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ email }),
+            });
+            const data = await response.json();
+            if (response.ok) {
+                // If response status is 200 OK, email does not exist
+                setEmailExistError("");
+            } else {
+                // If response status is not 200 OK, email already exists
+                setEmailExistError("Email already exists");
+            }
+        } catch (error) {
+            console.error("Error checking email existence:", error);
+        }
+    };
+
+    const handleEmailChange = async (e) => {
+        const email = e.target.value;
+        formik.handleChange(e);
+        await checkEmailExistence(email);
+    };
 
     return (
         <>
@@ -68,7 +95,7 @@ export default function Step1({ nextStep, formData = {}, updateFormData }) {
                                         className="w-full bg-gray-200 rounded-lg py-3 px-4 mb-4"
                                         placeholder="Enter Email"
                                         name="email"
-                                        onChange={formik.handleChange}
+                                        onChange={handleEmailChange}
                                         onBlur={formik.handleBlur}
                                         value={formik.values.email}
                                     />
@@ -77,6 +104,7 @@ export default function Step1({ nextStep, formData = {}, updateFormData }) {
                                     ) : (
                                         ""
                                     )}
+                                    {emailExistError && <p className="text-red-500 mb-4">{emailExistError}</p>}
                                     <div className="relative">
                                         <input
                                             id="password-input"
