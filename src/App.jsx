@@ -4,7 +4,6 @@ import Login from "./components/login";
 import Info from "./components/info";
 import "./App.css";
 import Kyc from "./Kyc-form/Kyc";
-import Activate from "./components/Activate"
 import Dashboard from './pages/Dashboard.jsx';
 import Sidebar from './components/Sidebar';
 import Profile from './pages/Profile.jsx';
@@ -14,6 +13,7 @@ import WithdrawRequest from './pages/WithdrawRequest.jsx';
 import PaymentHistory from './pages/PaymentHistory.jsx';
 import Rewards from './pages/Rewards';
 import ForgotPassword from './components/forgotPassword'
+import Activate from "./components/activate";
 
 function App() {
   return (
@@ -21,7 +21,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Info />} />
         <Route path="/register" element={<Kyc />} />
-        <Route path="/activate/:activationToken" element={<Activate />} />
+        <Route path="/activate/activateUserEmail" element={<Activate/>} />
         <Route path="/login" element={<Login />} />
         <Route path="/forgotPassword" element={<ForgotPassword />} />
       </Routes>
