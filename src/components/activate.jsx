@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import axios from 'axios';
 
-function Activate({ activationToken }) {
+function Activate() {
+  const { activationToken } = useParams(); // Get the activation token from the URL parameters
   const [activationStatus, setActivationStatus] = useState(null);
   const [error, setError] = useState(null);
 
@@ -11,13 +13,18 @@ function Activate({ activationToken }) {
         const response = await axios.post('http://localhost:9000/api/auth/activate/activateUserEmail', {
           activationToken: activationToken
         });
-        setActivationStatus(response.data.message);
+
+        const data = response.data;
+
+        setActivationStatus(data.message);
       } catch (error) {
         setError('Activation failed. Please try again.');
       }
     };
 
-    activateUser();
+    if (activationToken) {
+      activateUser();
+    }
   }, [activationToken]);
 
   return (

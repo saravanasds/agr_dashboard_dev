@@ -5,12 +5,10 @@ import Step2 from "./Step2";
 import Step3 from "./Step3";
 import Step4 from "./Step4";
 import Step5 from "./Step5";
-import Activate from "../components/activate";
 
 const ProgressSteper = () => {
   const [currentStep, setCurrentStep] = useState(1);
   const [loading, setLoading] = useState(false);
-  const [activationToken, setActivationToken] = useState(null);
   const [formData, setFormData] = useState({
     firstName: "",
     email: "",
@@ -57,9 +55,6 @@ const ProgressSteper = () => {
 
       const data = response.data;
       setLoading(false);
-
-       // Store the activation token
-       setActivationToken(data.activationToken);
 
     } catch (err) {
       // Handle errors
@@ -127,7 +122,6 @@ const ProgressSteper = () => {
           sendData={sendData}
         />
       )}
-      {activationToken && <Activate activationToken={activationToken} />}
     </div>
   );
 };

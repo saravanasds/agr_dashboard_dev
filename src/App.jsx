@@ -21,7 +21,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Info />} />
         <Route path="/register" element={<Kyc />} />
-        <Route path="/activate/activateUserEmail" element={<Activate/>} />
+        <Route path="/activate/:activationToken" element={<Activate/>} />
         <Route path="/login" element={<Login />} />
         <Route path="/forgotPassword" element={<ForgotPassword />} />
       </Routes>
