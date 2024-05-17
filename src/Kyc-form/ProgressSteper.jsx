@@ -55,7 +55,7 @@ const ProgressSteper = () => {
 
       const data = response.data;
       setLoading(false);
-
+      console.log(response.data);
     } catch (err) {
       // Handle errors
       setLoading(false);
