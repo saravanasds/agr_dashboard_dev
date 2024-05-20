@@ -1,64 +1,80 @@
+import axios from "axios";
 import { useFormik } from "formik";
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Oval } from "react-loader-spinner";
+import { Link, useNavigate } from "react-router-dom";
 import * as yup from "yup";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { togglePasswordVisibility } from "../utils/utils";
 
-export default function Step1({ nextStep, formData = {}, updateFormData }) {
+export default function AdminRegister() {
     const [error, setError] = useState("");
-    const [emailExistError, setEmailExistError] = useState("");
+    const [loading, setLoading] = useState(false);
+    const navigate = useNavigate();
 
     const validation = yup.object({
-        firstName: yup.string().required("Enter Name"),
+        name: yup.string().required("Enter Name"),
         email: yup
             .string()
             .required("Email is required")
             .email("Email is not valid"),
         password: yup.string().required("Password is required"),
     });
+    async function sendData(values) {
+        setLoading(true);
+        try {
+            const response = await axios.post(
+                `http://localhost:9000/api/admin/register`,
+                values
+            );
+            const data = response.data;
 
+            setLoading(false);
+
+            // Handle successful registration
+            toast.success("Register Successfull. Reset Email Send.", {
+                position: "top-right",
+                autoClose: 1500,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "colored",
+            });
+
+            navigate("/adminLogin");
+        } catch (err) {
+            // Handle errors
+            setLoading(false);
+            const errorMessage = err.response?.data?.error || "Internal Server Error";
+            setError(errorMessage);
+
+            toast.error(errorMessage, {
+                position: "top-right",
+                autoClose: 1500,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "colored",
+            });
+        }
+    }
     const formik = useFormik({
         initialValues: {
-            firstName: formData.name || "",
-            email: formData.email || "",
-            password: formData.password || "",
+            name: "",
+            email: "",
+            password: "",
         },
         validationSchema: validation,
-        onSubmit: (values) => {
-            updateFormData(values);
-            nextStep();
-        },
+        onSubmit: sendData,
     });
-
-    const checkEmailExistence = async (email) => {
-        try {
-            const response = await fetch("http://localhost:9000/api/auth/userExist", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({ email }),
-            });
-            const data = await response.json();
-            if (response.ok) {
-                // If response status is 200 OK, email does not exist
-                setEmailExistError("");
-            } else {
-                // If response status is not 200 OK, email already exists
-                setEmailExistError("Email already exists");
-            }
-        } catch (error) {
-            console.error("Error checking email existence:", error);
-        }
-    };
-
-    const handleEmailChange = async (e) => {
-        const email = e.target.value;
-        formik.handleChange(e);
-        await checkEmailExistence(email);
-    };
-
+    function changeBgRegister() {
+        document.getElementById("changeR").classList.add("auth");
+    }
     return (
         <>
             <div className="w-full min-h-screen flex flex-col justify-center items-center m-auto" style={{ background: 'linear-gradient(to right, #3B82F6, #4C1D95' }}>
@@ -67,7 +83,7 @@ export default function Step1({ nextStep, formData = {}, updateFormData }) {
                         <div className="w-full md:w-2/3 lg:w-1/2 xl:w-2/5 bg-white rounded-lg shadow-lg">
                             <div className="px-8 py-8">
                                 <h1 className="text-center text-3xl font-bold text-gray-800 mb-8">
-                                    Register New Account
+                                    Admin Register
                                 </h1>
 
                                 <form onSubmit={formik.handleSubmit}>
@@ -80,13 +96,13 @@ export default function Step1({ nextStep, formData = {}, updateFormData }) {
                                         type="text"
                                         className="w-full bg-gray-200 rounded-lg py-3 px-4 mb-4"
                                         placeholder="Enter Your Name"
-                                        name="firstName"
+                                        name="name"
                                         onChange={formik.handleChange}
                                         onBlur={formik.handleBlur}
-                                        value={formik.values.firstName}
+                                        value={formik.values.name}
                                     />
-                                    {formik.errors.firstName && formik.touched.firstName ? (
-                                        <p className="text-red-500 mb-4">{formik.errors.firstName}</p>
+                                    {error ? (
+                                        <p className="text-center text-red-500 mb-4">{error}</p>
                                     ) : (
                                         ""
                                     )}
@@ -95,7 +111,7 @@ export default function Step1({ nextStep, formData = {}, updateFormData }) {
                                         className="w-full bg-gray-200 rounded-lg py-3 px-4 mb-4"
                                         placeholder="Enter Email"
                                         name="email"
-                                        onChange={handleEmailChange}
+                                        onChange={formik.handleChange}
                                         onBlur={formik.handleBlur}
                                         value={formik.values.email}
                                     />
@@ -104,7 +120,6 @@ export default function Step1({ nextStep, formData = {}, updateFormData }) {
                                     ) : (
                                         ""
                                     )}
-                                    {emailExistError && <p className="text-red-500 mb-4">{emailExistError}</p>}
                                     <div className="relative">
                                         <input
                                             id="password-input"
@@ -126,23 +141,40 @@ export default function Step1({ nextStep, formData = {}, updateFormData }) {
                                     ) : (
                                         ""
                                     )}
-                                    <button type="submit" className="w-full sm:w-auto bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-10 rounded-lg focus:outline-none focus:shadow-outline">Register</button>
-                                    <button type="submit" onClick={nextStep} className="w-full sm:w-auto bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-10 rounded-lg focus:outline-none focus:shadow-outline">Nxt</button>
+                                    <button
+                                        onClick={() => changeBgLogin()}
+                                        id="change"
+                                        type="submit"
+                                        className="w-full bg-blue-500 rounded-lg text-white py-3 font-bold transition duration-300 ease-in-out hover:bg-blue-600 mb-4"
+                                    >
+                                        {loading ? (
+                                            <div className="flex justify-center">
+                                                <Oval
+                                                    height={30}
+                                                    width={30}
+                                                    color="#fff"
+                                                    wrapperStyle={{}}
+                                                    wrapperClass=""
+                                                    visible={true}
+                                                    ariaLabel="oval-loading"
+                                                    secondaryColor="#86b7fe"
+                                                    strokeWidth={2}
+                                                    strokeWidthSecondary={2}
+                                                />
+                                            </div>
+                                        ) : (
+                                            "Register"
+                                        )}
+                                    </button>
                                 </form>
                             </div>
                         </div>
                     </div>
-                    <div className="text-center text-white mt-4 flex gap-3">
+                    <div className="text-center text-white mt-4">
                         <p>
                             Already Have An Account?{" "}
-                            <Link to="/userLogin" className="font-bold hover:underline">
+                            <Link to="/AdminLogin" className="font-bold hover:underline">
                                 Login Here
-                            </Link>
-                        </p>
-                        <p>
-                            Admin?{" "}
-                            <Link to="/adminRegister" className="font-bold hover:underline">
-                                Register Here
                             </Link>
                         </p>
                     </div>

@@ -33,7 +33,7 @@ const Sidebar = ({children}) => {
 
     const menuItem=[
         {
-            path:"/dashboard",
+            path:"/userDashboard",
             name:"Dashboard",
             icon:<FaTh/>
         },

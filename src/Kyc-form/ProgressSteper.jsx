@@ -5,6 +5,7 @@ import Step2 from "./Step2";
 import Step3 from "./Step3";
 import Step4 from "./Step4";
 import Step5 from "./Step5";
+import Step6 from "./Step6";
 
 const ProgressSteper = () => {
   const [currentStep, setCurrentStep] = useState(1);
@@ -121,6 +122,9 @@ const ProgressSteper = () => {
           updateFormData={updateFormData}
           sendData={sendData}
         />
+      )}
+      {currentStep === 6 && (
+        <Step6/>
       )}
     </div>
   );

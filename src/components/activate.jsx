@@ -18,7 +18,7 @@ function Activate() {
 
         setActivationStatus(data.message);
       } catch (error) {
-        setError('Activation failed. Please try again.');
+        setError('Please try again later.');
       }
     };
 
@@ -30,7 +30,7 @@ function Activate() {
   return (
     <div className='w-full h-[100vh] flex justify-center items-center flex-col'>
       {activationStatus ? (
-        <h1>{activationStatus}</h1>
+        <h1 className='text-center text-3xl font-semibold'>{activationStatus} <br /><span className='text-xl'> Your Account is Underprocessing.</span></h1>
       ) : (
         <h1>Activating your account...</h1>
       )}
