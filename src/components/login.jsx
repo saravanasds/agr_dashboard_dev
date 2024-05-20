@@ -8,7 +8,7 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { togglePasswordVisibility } from "../utils/utils";
 
-export default function Login() {
+export default function Login({ setRole }) {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
@@ -33,13 +33,14 @@ export default function Login() {
     setLoading(true);
     try {
       const response = await axios.post(
-        `https://agr-backend-m85q.onrender.com/api/auth/login`,
+        // `https://agr-backend-m85q.onrender.com/api/auth/login`,
+        `http://localhost:9000/api/auth/login`,
         values
       );
 
       const data = response.data;
 
-      localStorage.setItem("authToken", data.token);
+      localStorage.setItem("token", data.token);
       localStorage.setItem("userName", data.userName);
 
       toast.success("Welcome To Home Page", {
@@ -53,7 +54,8 @@ export default function Login() {
         theme: "colored",
       });
 
-      navigate("/dashboard", { state: { message: "Hi" } });
+      setRole('user');
+      navigate("/userDashboard", { state: { message: "Hi" } });
     } catch (err) {
       setLoading(false);
       setError("Email or password is not valid");

@@ -61,12 +61,6 @@ const Dashboard = () => {
                     </div>
                 </div>
 
-
-                {/* <div className='w-full xl:w-1/4 md:w-1/2 min-h-[300px] flex flex-col justify-center items-center relative  pt-1 max-[1280px]:hidden'>
-
-                    <img src={LevelImg} alt="" className='h-[256px] border-4 border-green-500 rounded-lg ' />
-                    <span className='absolute mt-52 pb-4 text-2xl tracking-wider font-bold'>YOUR LEVEL: 3</span>
-                </div> */}
             </div>
 
             <div className='w-full flex justify-start items-center px-3 h-auto '>

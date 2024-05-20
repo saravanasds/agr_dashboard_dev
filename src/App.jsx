@@ -43,7 +43,7 @@ function App() {
         <Route path="/" element={<Info />} />
         <Route path="/userRegister" element={<Kyc />} />
         <Route path="/adminRegister" element={<AdminRegister />} />
-        <Route path="/userLogin" element={<Login />} />
+        <Route path="/userLogin" element={<Login setRole={handleSetRole}/>} />
         <Route path="/adminLogin" element={<AdminLogin setRole={handleSetRole} />} />
         <Route path="/forgotPassword" element={<ForgotPassword />} />
         <Route path="/activate/:activationToken" element={<Activate />} />
