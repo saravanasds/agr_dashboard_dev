@@ -208,25 +208,25 @@ const ActiveUser = () => {
             </div>
             {rejOpen && selectedUser && (
                 <div className="fixed z-10 inset-0 overflow-y-auto">
-                <div className="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
-                    <div className="fixed inset-0 transition-opacity" aria-hidden="true">
-                        <div className="absolute inset-0 bg-gray-900 opacity-75"></div>
-                    </div>
-                    <span className="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
-                    <div className="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-3xl sm:w-full">
-                        <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-                            <h2 className="text-2xl font-semibold mb-4">Deactivation Form</h2>
-                            <div>
-                                <p>Do you want to Deactivate {selectedUser.firstName}?</p>
-                            </div>
+                    <div className="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+                        <div className="fixed inset-0 transition-opacity" aria-hidden="true">
+                            <div className="absolute inset-0 bg-gray-900 opacity-75"></div>
                         </div>
-                        <div className="bg-gray-200 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
-                            <button type="button" className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-green-600 text-base font-medium text-white hover:bg-green-700 sm:ml-3 sm:w-auto sm:text-sm" onClick={handleDeactivate}>Yes</button>
-                            <button type="button" className="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 sm:mt-0 sm:w-auto sm:text-sm" onClick={() => setRejOpen(false)}>No</button>
+                        <span className="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+                        <div className="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-3xl sm:w-full">
+                            <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                                <h2 className="text-2xl font-semibold mb-4">Deactivation Form</h2>
+                                <div>
+                                    <p>Do you want to Deactivate {selectedUser.firstName}?</p>
+                                </div>
+                            </div>
+                            <div className="bg-gray-200 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+                                <button type="button" className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-green-600 text-base font-medium text-white hover:bg-green-700 sm:ml-3 sm:w-auto sm:text-sm" onClick={handleDeactivate}>Yes</button>
+                                <button type="button" className="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 sm:mt-0 sm:w-auto sm:text-sm" onClick={() => setRejOpen(false)}>No</button>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
             )}
             {isOpen && selectedUser && (
                 <div className="fixed z-10 inset-0 overflow-y-auto">
@@ -277,8 +277,21 @@ const ActiveUser = () => {
                                             </div>
                                             <div className='hover:bg-gray-200 rounded flex p-2 gap-2'>
                                                 <h2 className='text-md font-semibold'>Adhar proof:</h2>
-                                                <p>{selectedUser.adharProof}</p>
+                                                <p>
+                                                    <a href={`http://localhost:9000/${selectedUser.adharProof}`} target="_blank" rel="noopener noreferrer">
+                                                        {selectedUser.adharProof}
+                                                    </a>
+                                                </p>
                                             </div>
+                                            <div className='hover:bg-gray-200 rounded flex p-2 gap-2'>
+                                                <h2 className='text-md font-semibold'>Photo:</h2>
+                                                <p>
+                                                    <a href={`http://localhost:9000/${selectedUser.photo}`} target="_blank" rel="noopener noreferrer">
+                                                        {selectedUser.photo}
+                                                    </a>
+                                                </p>
+                                            </div>
+
                                             <div className='hover:bg-gray-200 rounded flex p-2 gap-2'>
                                                 <h2 className='text-md font-semibold'>Nominee Name:</h2>
                                                 <p>{selectedUser.nomineeName}</p>
