@@ -1,105 +1,88 @@
-import axios from "axios";
-import { useFormik } from "formik";
-import React, { useState, useEffect } from "react";
-import { Oval } from "react-loader-spinner";
-import { Link, useNavigate } from "react-router-dom";
-import * as yup from "yup";
-import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import { togglePasswordVisibility } from "../utils/utils";
+// Login.js
+import axios from 'axios';
+import { useFormik } from 'formik';
+import React, { useState, useContext } from 'react';
+import { Oval } from 'react-loader-spinner';
+import { Link, useNavigate } from 'react-router-dom';
+import * as yup from 'yup';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { togglePasswordVisibility } from '../utils/utils';
+import { UserContext } from '../components/UserProvider';
 
 export default function Login({ setRole }) {
-  const [error, setError] = useState("");
+  const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-
-  useEffect(() => {
-    // Apply overflow: hidden to prevent scrolling
-    document.body.style.overflow = "hidden";
-    return () => {
-      document.body.style.overflow = "unset";
-    };
-  }, []);
+  const { setUser } = useContext(UserContext); // Access setUser from context
 
   const validation = yup.object({
-    email: yup
-      .string()
-      .required("Email is required")
-      .email("Email is not valid"),
-    password: yup.string().required("Password is required"),
+    email: yup.string().required('Email is required').email('Email is not valid'),
+    password: yup.string().required('Password is required'),
   });
 
   async function sendDataToLogin(values) {
     setLoading(true);
     try {
-      const response = await axios.post(
-        // `https://agr-backend-m85q.onrender.com/api/auth/login`,
-        `http://localhost:9000/api/auth/login`,
-        values
-      );
-
+      const response = await axios.post('http://localhost:9000/api/auth/login', values);
       const data = response.data;
 
-      localStorage.setItem("token", data.token);
-      localStorage.setItem("role", data.role);
-      localStorage.setItem("firstName", data.firstName);
+      localStorage.setItem('token', data.token);
+      localStorage.setItem('role', data.role);
+      localStorage.setItem('firstName', data.firstName);
+      localStorage.setItem('user', JSON.stringify(data)); // Store user data in localStorage
 
-      toast.success("Welcome To Home Page", {
-        position: "top-right",
+      toast.success('Welcome To Home Page', {
+        position: 'top-right',
         autoClose: 1500,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,
         draggable: true,
         progress: undefined,
-        theme: "colored",
+        theme: 'colored',
       });
 
+      setUser(data); // Store user data in context
       setRole('user');
-      navigate("/userDashboard", { state: { message: "Hi" } });
+      navigate('/profile');
     } catch (err) {
       setLoading(false);
-      setError("Email or password is not valid");
-      toast.error("Email or password is not valid", {
-        position: "top-right",
+      setError('Email or password is not valid');
+      toast.error('Email or password is not valid', {
+        position: 'top-right',
         autoClose: 1500,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,
         draggable: true,
         progress: undefined,
-        theme: "colored",
+        theme: 'colored',
       });
     }
   }
 
   const formik = useFormik({
     initialValues: {
-      email: "",
-      password: "",
+      email: '',
+      password: '',
     },
     validationSchema: validation,
     onSubmit: sendDataToLogin,
   });
 
   function changeBgLogin() {
-    document.getElementById("change").classList.add("auth");
+    document.getElementById('change').classList.add('auth');
   }
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center py-5 md:py-0" style={{ background: 'linear-gradient(to right, #3B82F6, #4C1D95' }}>
+    <div className="min-h-screen flex flex-col items-center justify-center py-5 md:py-0" style={{ background: 'linear-gradient(to right, #3B82F6, #4C1D95)' }}>
       <div className="container mx-auto flex justify-center items-center ">
         <div className="w-full md:w-2/3 lg:w-1/2 xl:w-2/5 bg-white rounded-lg shadow-lg">
           <div className="px-8 py-8">
-            <h1 className="text-center text-3xl font-bold text-gray-800 mb-8">
-              Login Now
-            </h1>
+            <h1 className="text-center text-3xl font-bold text-gray-800 mb-8">Login Now</h1>
             <form onSubmit={formik.handleSubmit}>
-              {error ? (
-                <p className="text-center text-red-500 mb-4">{error}</p>
-              ) : (
-                ""
-              )}
+              {error ? <p className="text-center text-red-500 mb-4">{error}</p> : ''}
               <input
                 type="email"
                 className="w-full bg-gray-200 rounded-lg py-3 px-4 mb-4"
@@ -109,11 +92,7 @@ export default function Login({ setRole }) {
                 onBlur={formik.handleBlur}
                 value={formik.values.email}
               />
-              {formik.errors.email && formik.touched.email ? (
-                <p className="text-red-500 mb-4">{formik.errors.email}</p>
-              ) : (
-                ""
-              )}
+              {formik.errors.email && formik.touched.email ? <p className="text-red-500 mb-4">{formik.errors.email}</p> : ''}
               <div className="relative">
                 <input
                   id="password-input"
@@ -125,16 +104,9 @@ export default function Login({ setRole }) {
                   onBlur={formik.handleBlur}
                   value={formik.values.password}
                 />
-                <i
-                  onClick={() => togglePasswordVisibility()}
-                  className="absolute top-0 right-0 mt-3 mr-4 cursor-pointer fas fa-eye-slash"
-                ></i>
+                <i onClick={() => togglePasswordVisibility()} className="absolute top-0 right-0 mt-3 mr-4 cursor-pointer fas fa-eye-slash"></i>
               </div>
-              {formik.errors.password && formik.touched.password ? (
-                <p className="text-red-500 mb-4">{formik.errors.password}</p>
-              ) : (
-                ""
-              )}
+              {formik.errors.password && formik.touched.password ? <p className="text-red-500 mb-4">{formik.errors.password}</p> : ''}
               <button
                 onClick={() => changeBgLogin()}
                 id="change"
@@ -157,15 +129,12 @@ export default function Login({ setRole }) {
                     />
                   </div>
                 ) : (
-                  "Login"
+                  'Login'
                 )}
               </button>
 
               <div className="text-center mb-4">
-                <Link
-                  to="/forgotPassword"
-                  className="text-blue-500 hover:underline"
-                >
+                <Link to="/forgotPassword" className="text-blue-500 hover:underline">
                   Forgot Password
                 </Link>
               </div>
@@ -175,7 +144,7 @@ export default function Login({ setRole }) {
       </div>
       <div className="text-center text-white mt-3">
         <p>
-          Need An Account?{" "}
+          Need An Account?{' '}
           <Link to="/register" className="font-bold hover:underline">
             Register Here
           </Link>

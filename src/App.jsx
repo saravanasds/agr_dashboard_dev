@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { UserProvider } from "./components/UserProvider";
 import Login from "./components/login";
 import Info from "./components/info";
 import "./App.css";
@@ -31,55 +32,65 @@ import MemberDetails from './pages/MemberDetails.jsx';
 import Adminpanel from './pages/Adminpanel.jsx';
 
 function App() {
-  const [role, setRole] = useState(null);
+  const [role, setRole] = useState(localStorage.getItem("role"));
 
   const handleSetRole = (newRole) => {
     setRole(newRole);
+    localStorage.setItem("role", newRole); // Store the role in local storage
   };
 
+  useEffect(() => {
+    const storedRole = localStorage.getItem("role");
+    if (storedRole) {
+      setRole(storedRole);
+    }
+  }, []); // Load the role from local storage when the component mounts
+
   return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<Info />} />
-        <Route path="/userRegister" element={<Kyc />} />
-        <Route path="/adminRegister" element={<AdminRegister />} />
-        <Route path="/userLogin" element={<Login setRole={handleSetRole}/>} />
-        <Route path="/adminLogin" element={<AdminLogin setRole={handleSetRole} />} />
-        <Route path="/forgotPassword" element={<ForgotPassword />} />
-        <Route path="/activate/:activationToken" element={<Activate />} />
-      </Routes>
-      
-      {role === "user" ? (
-        <Sidebar>
-          <Routes>
-            <Route path="/userDashboard" element={<Dashboard />} />
-            <Route path="/profile" element={<Profile />} />
-            <Route path="/level" element={<Level />} />
-            <Route path="/wallet" element={<Wallet />} />
-            <Route path="/withdrawRequest" element={<WithdrawRequest />} />
-            <Route path="/paymentHistory" element={<PaymentHistory />} />
-            <Route path="/rewards" element={<Rewards />} />
-          </Routes>
-        </Sidebar>
-      ) : (
-        <AdminSidebar>
-          <Routes>
-            <Route path="/adminDashboard" element={<AdminDashboard />} />
-            <Route path="/profileupdates" element={<ProfileUpdate />} />
-            <Route path="/adminLevels" element={<AdminLevels />} />
-            <Route path="/withdrawReq" element={<WithdrawReq />} />
-            <Route path="/accountactivation" element={<AcActivation />} />
-            <Route path="/adminpaymentHistory" element={<AdminPayHistory />} />
-            <Route path="/settings" element={<Settings />} />
-            <Route path="/memberstatus" element={<MemberStatus />} />
-            <Route path="/memberdetails" element={<MemberDetails />} />
-            <Route path="/adminpanel" element={<Adminpanel />} />
-          </Routes>
-        </AdminSidebar>
-      ) 
-        
-      }
-    </Router>
+    <UserProvider>
+      <Router>
+        <Routes>
+          <Route path="/" element={<Info />} />
+          <Route path="/userRegister" element={<Kyc />} />
+          <Route path="/adminRegister" element={<AdminRegister />} />
+          <Route path="/userLogin" element={<Login setRole={handleSetRole} />} />
+          <Route path="/adminLogin" element={<AdminLogin setRole={handleSetRole} />} />
+          <Route path="/forgotPassword" element={<ForgotPassword />} />
+          <Route path="/activate/:activationToken" element={<Activate />} />
+        </Routes>
+
+
+        {role === "user" && (
+          <Sidebar>
+            <Routes>
+              <Route path="/userDashboard" element={<Dashboard />} />
+              <Route path="/profile" element={<Profile />} />
+              <Route path="/level" element={<Level />} />
+              <Route path="/wallet" element={<Wallet />} />
+              <Route path="/withdrawRequest" element={<WithdrawRequest />} />
+              <Route path="/paymentHistory" element={<PaymentHistory />} />
+              <Route path="/rewards" element={<Rewards />} />
+            </Routes>
+          </Sidebar>
+        )}
+        {role === "admin" && (
+          <AdminSidebar>
+            <Routes>
+              <Route path="/adminDashboard" element={<AdminDashboard />} />
+              <Route path="/profileupdates" element={<ProfileUpdate />} />
+              <Route path="/adminLevels" element={<AdminLevels />} />
+              <Route path="/withdrawReq" element={<WithdrawReq />} />
+              <Route path="/accountactivation" element={<AcActivation />} />
+              <Route path="/adminpaymentHistory" element={<AdminPayHistory />} />
+              <Route path="/settings" element={<Settings />} />
+              <Route path="/memberstatus" element={<MemberStatus />} />
+              <Route path="/memberdetails" element={<MemberDetails />} />
+              <Route path="/adminpanel" element={<Adminpanel />} />
+            </Routes>
+          </AdminSidebar>
+        )}
+      </Router>
+    </UserProvider>
   );
 }
 
