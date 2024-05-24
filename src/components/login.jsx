@@ -45,7 +45,7 @@ export default function Login({ setRole }) {
 
       setUser(data); // Store user data in context
       setRole('user');
-      navigate('/profile');
+      navigate('/userDashboard');
     } catch (err) {
       setLoading(false);
       setError('Email or password is not valid');

@@ -2,6 +2,7 @@
 import React, { useContext, useEffect } from 'react';
 import { UserContext } from '../components/UserProvider';
 import { formatDate } from '../utils/utils';
+import Header from '../components/Header'
 
 const Profile = () => {
   const { user, setUser } = useContext(UserContext); // Access user data from context
@@ -19,8 +20,11 @@ const Profile = () => {
 
   return (
     <>
+      <div>
+        <Header />
+      </div>
       {/* Personal details */}
-      <div className='bg-white w-full'>
+      <div className='bg-white w-full py-8'>
         <h2 className='sm:text-2xl text-center font-bold uppercase tracking-wide py-4 bg-gray-200 mx-5 xl:mx-12'>Profile Details</h2>
         <div className='bg-[#F4F6F9] mx-5 xl:mx-12 flex flex-col lg:flex-row py-5 justify-center text-md'>
           <div className='w-full xl:w-1/3 flex justify-center items-center'>

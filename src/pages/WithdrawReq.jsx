@@ -146,17 +146,27 @@ const WithdrawRequestTable = () => {
                         </div>
                         <span className="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
                         <div className="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-3xl sm:w-full">
-                            <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                            <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4 flex flex-col justify-center items-center ">
                                 <h2 className="text-xl font-semibold mb-4">Are You Sure Comfirm to Activate?</h2>
                                 {/* Your form content here */}
+
+                                <div className='flex flex-col gap-4 w-[100%] p-4'>
+                                    <input type="text" className='border-[2px] ' placeholder='Name' />
+                                    <input type="text" className='border-[2px] ' placeholder='Member Id' />
+                                    <input type="text" className='border-[2px] ' placeholder='Account No' />
+                                    <input type="date" className='border-[2px] ' placeholder='Payment Date' />
+                                    <input type="text" className='border-[2px] ' placeholder='Transaction No' />
+                                    <input type="text" className='border-[2px] ' value={'2000'} />
+                                </div>
+
                                 <div className="mt-5 sm:mt-4 flex justify-end">
-                                    <button className='bg-green-600 p-1 px-3 mr-3 rounded-md hover:bg-green-400 text-white' onClick={() => { window.alert('Success! Your action was completed.'); togglePopup(); }}>Yes</button>
+                                    <button className='bg-green-600 p-1 px-10 mr-3 rounded-md hover:bg-green-400 text-white' onClick={() => { window.alert('Success! Your action was completed.'); togglePopup(); }}>Submit</button>
                                     <button
                                         type="button"
                                         onClick={togglePopup}
-                                        className='bg-red-600 p-1 px-3 mr-3 rounded-md hover:bg-red-400 text-white'
+                                        className='bg-gray-500 p-1 px-10 mr-3 rounded-md hover:bg-gray-400 text-white'
                                     >
-                                        No
+                                        Cancel
                                     </button>
                                 </div>
                             </div>
