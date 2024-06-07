@@ -8,7 +8,7 @@ const Step5 = ({ nextStep, prevStep, formData = {}, updateFormData, sendData }) 
         paymentDate: yup.string().required("Payment Date is required"),
         transactionId: yup.string().required("Transaction.no is required"),
         paymentScreenshot: yup.mixed().required("Payment screenshot is required"),
-        referralId: yup.string(),
+        referredBy: yup.string(),
     });
 
     const handleSubmit = (e) => {
@@ -96,15 +96,15 @@ const Step5 = ({ nextStep, prevStep, formData = {}, updateFormData, sendData }) 
                             <div className='w-full sm:w-1/2 md:px-5'>
                                 <div className="mb-4">
                                     <label
-                                        htmlFor="referralId"
+                                        htmlFor="referredBy"
                                         className="block text-gray-700 font-semibold mb-1"
                                     >
                                         Referral ID(If any)
                                     </label>
                                     <input
                                         type="text"
-                                        id="referralId"
-                                        name="referralId"
+                                        id="referredBy"
+                                        name="referredBy"
                                         onChange={handleChange}
                                         className="w-full bg-gray-200 rounded-lg py-3 px-4"
                                     />

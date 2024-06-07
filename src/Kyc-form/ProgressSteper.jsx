@@ -32,7 +32,7 @@ const ProgressSteper = () => {
     upiId: "",
     paymentDate: "",
     transactionId: "",
-    referralId: "",
+    referredBy: "",
     amount: "5000",
     paymentScreenshot: "",
   });
