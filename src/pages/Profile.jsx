@@ -17,6 +17,7 @@ const Profile = () => {
   if (!user) {
     return <div>Loading...</div>; // Show loading or redirect to login if no user data is available
   }
+  // console.log(user.data)
 
   return (
     <>

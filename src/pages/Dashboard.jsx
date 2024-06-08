@@ -6,9 +6,26 @@ import { MdAccountBalance } from "react-icons/md";
 import { BiMoneyWithdraw } from "react-icons/bi";
 import { BsPersonFillAdd } from "react-icons/bs";
 import { SiMoneygram } from "react-icons/si";
+import { useContext, useEffect } from 'react';
+import { UserContext } from '../components/UserProvider';
 // import LevelImg from "../assets/logos/level.jpg";
 
 const Dashboard = () => {
+
+    const { user, setUser } = useContext(UserContext);
+
+    useEffect(() => {
+        const storedUser = localStorage.getItem('user');
+        if (storedUser) {
+          setUser(JSON.parse(storedUser));
+        }
+      }, [setUser]);
+    
+      if (!user) {
+        return <div>Loading...</div>; // Show loading or redirect to login if no user data is available
+      }
+      console.log(user.data)
+
     return (
         <div className='w-full min-h-screen overflow-y-auto grow flex flex-col justify-start items-center'>
             <Header />
@@ -18,7 +35,7 @@ const Dashboard = () => {
                     <div className='bg-blue-300 rounded-lg py-5 flex justify-around items-center px-4 shadow-sm shadow-gray-800'>
                         <div>
                             <p className='text-md sm:text-xl font-semibold'>Total Earning</p>
-                            <p className='text-xl sm:text-2xl font-semibold text-center'> &#x20B9; 7000</p>
+                            <p className='text-xl sm:text-2xl font-semibold text-center'> &#x20B9; {user.data.amount}</p>
                         </div>
                         <div><GiTakeMyMoney className='text-[40px] md:text-[65px] opacity-80' /></div>
                     </div>
@@ -26,14 +43,14 @@ const Dashboard = () => {
                     <div className='bg-red-300 rounded-lg py-5 flex justify-around items-center px-4 shadow-sm shadow-gray-800'>
                         <div>
                             <p className='text-md sm:text-xl font-semibold'>Downline Members</p>
-                            <p className='text-xl sm:text-2xl font-semibold text-center'> 09</p>
+                            <p className='text-xl sm:text-2xl font-semibold text-center'>{user.data.allChild.length}</p>
                         </div>
                         <div><MdGroups className='text-[40px] md:text-[65px] opacity-80' /></div>
                     </div>
                     <div className='bg-[#66bfbf] rounded-lg py-5 flex justify-around items-center px-4 shadow-sm shadow-gray-800'>
                         <div>
                             <p className='text-md sm:text-xl font-semibold'>Referral Members</p>
-                            <p className='text-xl sm:text-2xl font-semibold text-center'>03</p>
+                            <p className='text-xl sm:text-2xl font-semibold text-center'>{user.data.referredPeoples.length}</p>
                         </div>
                         <div><BsPersonFillAdd className='text-[40px] md:text-[65px] opacity-80' /></div>
                     </div>
@@ -55,7 +72,7 @@ const Dashboard = () => {
                     <div className='bg-[#93a7d1] rounded-lg py-5 flex justify-around items-center px-4 shadow-sm shadow-gray-800'>
                         <div>
                             <p className='text-md sm:text-xl font-semibold'>Referral Income</p>
-                            <p className='text-xl sm:text-2xl font-semibold text-center'> &#x20B9; 1500</p>
+                            <p className='text-xl sm:text-2xl font-semibold text-center'> &#x20B9; {user.data.referralAmount}</p>
                         </div>
                         <div><SiMoneygram className='text-[40px] md:text-[65px] opacity-80' /></div>
                     </div>
