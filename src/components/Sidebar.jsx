@@ -62,11 +62,11 @@ const Sidebar = ({children}) => {
             name:"Payment History",
             icon:<FaMoneyCheckDollar/>
         },
-        {
-            path:"/rewards",
-            name:"Rewards",
-            icon:<IoGiftSharp/>
-        },
+        // {
+        //     path:"/rewards",
+        //     name:"Rewards",
+        //     icon:<IoGiftSharp/>
+        // },
     ];
 
     return (

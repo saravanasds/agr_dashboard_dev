@@ -12,7 +12,7 @@ import Level from './pages/Level.jsx';
 import Wallet from './pages/Wallet.jsx';
 import WithdrawRequest from './pages/WithdrawRequest.jsx';
 import PaymentHistory from './pages/PaymentHistory.jsx';
-import Rewards from './pages/Rewards';
+// import Rewards from './pages/Rewards';
 import ForgotPassword from './components/forgotPassword';
 import Activate from "./components/activate";
 import AdminSidebar from "./components/AdminSidebar";
@@ -23,7 +23,7 @@ import AdminLogin from "./components/AdminLogin";
 import AdminDashboard from "./pages/AdminDashboard"
 import ProfileUpdate from './pages/ProfileUpdate.jsx';
 import AdminLevels from './pages/AdminLevel';
-import WithdrawReq from './pages/WithdrawReq.jsx';
+import AdminWithdrawReq from './pages/AdminWithdrawReq';
 import AcActivation from './pages/AcActivation/AcActivation';
 import AdminPayHistory from './pages/AdminPayHistory.jsx';
 import Settings from './pages/Settings.jsx';
@@ -69,7 +69,7 @@ function App() {
               <Route path="/wallet" element={<Wallet />} />
               <Route path="/withdrawRequest" element={<WithdrawRequest />} />
               <Route path="/paymentHistory" element={<PaymentHistory />} />
-              <Route path="/rewards" element={<Rewards />} />
+              {/* <Route path="/rewards" element={<Rewards />} /> */}
             </Routes>
           </Sidebar>
         )}
@@ -79,7 +79,7 @@ function App() {
               <Route path="/adminDashboard" element={<AdminDashboard />} />
               <Route path="/profileupdates" element={<ProfileUpdate />} />
               <Route path="/adminLevels" element={<AdminLevels />} />
-              <Route path="/withdrawReq" element={<WithdrawReq />} />
+              <Route path="/withdrawReq" element={<AdminWithdrawReq />} />
               <Route path="/accountactivation" element={<AcActivation />} />
               <Route path="/adminpaymentHistory" element={<AdminPayHistory />} />
               <Route path="/settings" element={<Settings />} />

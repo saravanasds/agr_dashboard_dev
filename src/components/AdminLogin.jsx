@@ -38,8 +38,9 @@ export default function AdminLogin({ setRole }) { // Receive setRole as a prop
       );
 
       const data = response.data;
+      console.log(data);
 
-      localStorage.setItem("token", data.token);
+      localStorage.setItem("adminToken", data.token);
       localStorage.setItem("role", data.role);
       localStorage.setItem("firstName", data.firstName);
 

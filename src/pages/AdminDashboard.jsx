@@ -1,26 +1,29 @@
-import React from 'react';
-import { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { GiTakeMyMoney } from "react-icons/gi";
-import { MdGroups } from "react-icons/md";
-import { MdAccountBalance } from "react-icons/md";
+import { MdGroups, MdAccountBalance, MdEdit } from "react-icons/md";
 import { BiMoneyWithdraw } from "react-icons/bi";
 import { BsPersonFillAdd } from "react-icons/bs";
 import { SiMoneygram } from "react-icons/si";
-import { MdEdit } from "react-icons/md";
 import { RiDeleteBin5Fill } from "react-icons/ri";
-import { useEffect } from 'react';
-
-
 
 const Dashboard = () => {
-
     const [todos, setTodos] = useState([]);
     const [inputText, setInputText] = useState("");
     const [editingId, setEditingId] = useState(null);
     const [editedText, setEditedText] = useState("");
     const [dueDate, setDueDate] = useState("");
     const [dueTime, setDueTime] = useState("");
+    const [message, setMessage] = useState(null);
 
+    // Load todos from localStorage when component mounts
+    useEffect(() => {
+        const savedTodos = JSON.parse(localStorage.getItem("todos"));
+        if (savedTodos) {
+            setTodos(savedTodos);
+        }
+    }, []);
+
+    // Save todos to localStorage whenever todos state changes
     useEffect(() => {
         localStorage.setItem("todos", JSON.stringify(todos));
     }, [todos]);
@@ -37,17 +40,50 @@ const Dashboard = () => {
         setDueTime(event.target.value);
     };
 
-    const handleAddTodo = () => {
+    const handleAddTodo = async () => {
         if (inputText.trim() !== "") {
-            setTodos([...todos, { id: Date.now(), text: inputText, dueDate, dueTime }]);
-            setInputText("");
-            setDueDate("");
-            setDueTime("");
+            const newTodo = { id: Date.now(), text: inputText, dueDate, dueTime };
+            const token = localStorage.getItem('token');
+            try {
+                const response = await fetch('http://localhost:9000/api/admin/notification', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify({ content: inputText })
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    setMessage({ type: 'success', text: data.message });
+                    setTodos(prevTodos => [...prevTodos, newTodo]);
+                    setInputText("");
+                    setDueDate("");
+                    setDueTime("");
+
+                    setTimeout(() => {
+                        setMessage(null);
+                    }, 3000);
+                } else {
+                    const errorData = await response.json();
+                    setMessage({ type: 'error', text: errorData.message });
+                    setTimeout(() => {
+                        setMessage(null);
+                    }, 3000);
+                }
+            } catch (error) {
+                setMessage({ type: 'error', text: 'Error: ' + error.message });
+                setTimeout(() => {
+                    setMessage(null);
+                }, 3000);
+            }
         }
     };
 
     const handleDeleteTodo = (id) => {
-        setTodos(todos.filter((todo) => todo.id !== id));
+        const updatedTodos = todos.filter((todo) => todo.id !== id);
+        setTodos(updatedTodos);
     };
 
     const handleEditTodo = (id) => {
@@ -57,23 +93,22 @@ const Dashboard = () => {
     };
 
     const handleSaveEdit = (id) => {
-        setTodos(
-            todos.map((todo) => {
-                if (todo.id === id) {
-                    return { ...todo, text: editedText };
-                }
-                return todo;
-            })
-        );
+        const updatedTodos = todos.map((todo) => {
+            if (todo.id === id) {
+                return { ...todo, text: editedText };
+            }
+            return todo;
+        });
+        setTodos(updatedTodos);
         setEditingId(null);
     };
 
     return (
         <>
             <div className='w-full overflow-y-auto grow flex flex-col justify-start items-center'>
-
-                <div className='text-left w-full bg-[#2d4059] border-[1px] border-gray-500'><h1 className='sm:text-2xl text-white font-bold py-3 px-10 uppercase tracking-wider'>Dashboard</h1></div>
-
+                <div className='text-left w-full bg-[#2d4059] border-[1px] border-gray-500'>
+                    <h1 className='sm:text-2xl text-white font-bold py-3 px-10 uppercase tracking-wider'>Dashboard</h1>
+                </div>
 
                 <div className='w-full flex flex-col xl:flex-row justify-center items-start bg-gray-200 pb-10'>
                     <div className='w-full gap-4 grid grid-cols-1 xl:grid-cols-3 md:grid-cols-2 px-3 sm:px-14 py-6 min-h-[300px]'>
@@ -153,6 +188,11 @@ const Dashboard = () => {
                             Add
                         </button>
                     </div>
+                    {message && (
+                        <div className={`mb-4 p-2 text-white ${message.type === 'success' ? 'bg-green-500' : 'bg-red-500'}`}>
+                            {message.text}
+                        </div>
+                    )}
                     <ul className="w-full">
                         {todos.map((todo) => (
                             <li
@@ -201,11 +241,7 @@ const Dashboard = () => {
                         ))}
                     </ul>
                 </div>
-
-
             </div>
-
-
         </>
     );
 };

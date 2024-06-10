@@ -1,172 +1,66 @@
-import React from 'react';
-import ProgressBar from "@ramonak/react-progress-bar";
+import React, { useContext, useEffect } from 'react';
+import { UserContext } from '../components/UserProvider';
 import { GiPadlock } from "react-icons/gi";
-import Header from "../components/Header"
 
 const Level = () => {
+    const { user, setUser } = useContext(UserContext);
+    console.log(user);
+
+    useEffect(() => {
+        const storedUser = localStorage.getItem('user');
+        if (storedUser) {
+            setUser(JSON.parse(storedUser));
+        }
+    }, [setUser]);
+
+    // Function to calculate counts for levels
+    const calculateLevelCount = (allChildLength) => {
+        const levels = new Array(10).fill(0); // Initialize an array for 4 levels with zero count
+
+        if (allChildLength >= 1 && allChildLength <= 3) {
+            levels[0] = allChildLength;
+        } else if (allChildLength >= 4 && allChildLength <= 12) {
+            levels[0] = 3;
+            levels[1] = allChildLength - 3;
+        } else if (allChildLength >= 13 && allChildLength <= 39) {
+            levels[0] = 3;
+            levels[1] = 9;
+            levels[2] = allChildLength - 12;
+        } else if (allChildLength >= 40 && allChildLength <= 120) {
+            levels[0] = 3;
+            levels[1] = 9;
+            levels[2] = 27;
+            levels[3] = allChildLength - 39;
+        }
+
+        return levels;
+    };
+
+    const levelsCount = calculateLevelCount(user?.data?.allChild?.length || 0);
+
     return (
         <>
             <div className='w-full min-h-screen overflow-y-auto grow flex flex-col justify-start items-center'>
-                <div className='w-full'>
-                    <Header />
+                <div className='w-full h-16 bg-[#2d4059] flex justify-between items-center py-3 px-10'>
+                    <div><span className='sm:text-2xl font-bold uppercase text-white'>Level</span></div>
+                    <div className='border-2 border-black rounded-full'>
+                        <img src="src/assets/1679057404284.jpg" alt="" className='w-12 rounded-full border-2' />
+                    </div>
                 </div>
-                <div className='w-full flex flex-col justify-center items-center min-h-screen pt-10'>
-                    {/* <h1 className='text-center text-3xl font-bold py-5'>Level Position</h1> */}
-                    <div className='flex flex-col sm:flex-row justify-center w-full xl:w-4/5  overflow-x-auto' style={{color:'greenyellow'}}>
-                        <div className='w-full text-center flex flex-col justify-end items-center p-1 md:p-3 gap-3 '>
-                            {/* <span className='text-2xl font-semibold'>Level</span> */}
-
-                            <div className='w-full flex flex-col sm:flex-row justify-center items-center gap-4 mb-6 sm:mb-0 p-2 border border-black rounded-md' >
-                                <div className='w-full xl:w-1/2 py-3 h-12 flex items-center justify-center bg-green-800 black rounded hover:bg-blue-500' style={{border:'1px solid greenyellow'}}>
-                                    <h1 className='font-semibold'><span>1st</span> Level</h1>
-                                </div>
-                                <div className='w-full py-3 h-12 rounded px-3 flex items-center border-2 xl:border-none'>
-                                    <ProgressBar
-                                        completed={50}
-                                        className='w-full'
-                                    />
-                                </div>
-                                <div className='w-full xl:w-1/2 py-3 h-12 flex items-center justify-center bg-blue-800 rounded hover:bg-green-500' style={{border:'1px solid greenyellow'}}>
-                                    <h1 className='font-semibold'><span>&#x20B9;</span> 1500</h1>
-                                </div>
+                <div className='w-full flex flex-col lg:flex-row gap-5 px-5 py-12 bg-gray-200 font-semibold'>
+                    <div className='grid grid-cols-2 md:grid-cols-5 gap-3 w-full lg:w-4/5'>
+                        {levelsCount.map((count, index) => (
+                            <div key={index} className='rounded-md shadow-md shadow-gray-500 h-auto flex flex-col'>
+                                <h1 className={`text-center w-full py-2 rounded-t-md ${index % 2 === 0 ? 'bg-blue-400' : 'bg-red-400'}`}>{index + 1}st Level</h1>
+                                <span className='py-3 w-full flex justify-center items-center bg-white rounded-b-md'>
+                                    {count > 0 ? count : <GiPadlock className='h-6 w-6' />}
+                                </span>
                             </div>
-
-                            <div className='w-full flex flex-col sm:flex-row justify-center items-center gap-4 mb-6 sm:mb-0 p-2 border border-black  rounded-md'>
-                                <div className='w-full xl:w-1/2 py-3 h-12 flex items-center justify-center bg-orange-800 rounded hover:bg-blue-500' style={{border:'1px solid greenyellow'}}>
-                                    <h1 className='font-semibold'><span>2nd</span> Level</h1>
-                                </div>
-                                <div className='w-full py-3 h-12 rounded px-3 flex items-center border-2 xl:border-none'>
-                                    <ProgressBar
-                                        completed={10}
-                                        className='w-full'
-                                    />
-                                </div>
-                                <div className='w-full xl:w-1/2 py-3 h-12 flex items-center justify-center bg-gray-600 rounded hover:bg-green-500' style={{border:'1px solid greenyellow'}}>
-                                    <h1 className='font-semibold'><span>&#x20B9;</span> 1500</h1>
-                                </div>
-                            </div>
-
-                            <div className='w-full flex flex-col sm:flex-row justify-center items-center gap-4 mb-6 sm:mb-0 p-2 border border-black rounded-md' >
-                                <div className='w-full xl:w-1/2 py-3 h-12 flex items-center justify-center bg-green-800 rounded hover:bg-blue-500' style={{border:'1px solid greenyellow'}}>
-                                    <h1 className='font-semibold'><span>1st</span> Level</h1>
-                                </div>
-                                <div className='w-full py-3 h-12 rounded px-3 flex items-center border-2 xl:border-none'>
-                                    <ProgressBar
-                                        completed={60}
-                                        className='w-full'
-                                    />
-                                </div>
-                                <div className='w-full xl:w-1/2 py-3 h-12 flex items-center justify-center bg-blue-800 rounded hover:bg-green-500' style={{border:'1px solid greenyellow'}}>
-                                    <h1 className='font-semibold'><span>&#x20B9;</span> 1500</h1>
-                                </div>
-                            </div>
-
-                            <div className='w-full flex flex-col sm:flex-row justify-center items-center gap-4 mb-6 sm:mb-0 p-2 border border-black  rounded-md'>
-                                <div className='w-full xl:w-1/2 py-3 h-12 flex items-center justify-center bg-orange-800 rounded hover:bg-blue-500' style={{border:'1px solid greenyellow'}}>
-                                    <h1 className='font-semibold'><span>2nd</span> Level</h1>
-                                </div>
-                                <div className='w-full py-3 h-12 rounded px-3 flex items-center border-2 xl:border-none'>
-                                    <ProgressBar
-                                        completed={100}
-                                        className='w-full'
-                                    />
-                                </div>
-                                <div className='w-full xl:w-1/2 py-3 h-12 flex items-center justify-center bg-gray-600 rounded hover:bg-green-500' style={{border:'1px solid greenyellow'}}>
-                                    <h1 className='font-semibold'><span>&#x20B9;</span> 1500</h1>
-                                </div>
-                            </div>
-
-                            <div className='w-full flex flex-col sm:flex-row justify-center items-center gap-4 mb-6 sm:mb-0 p-2 border border-black rounded-md' >
-                                <div className='w-full xl:w-1/2 py-3 h-12 flex items-center justify-center bg-green-800 rounded hover:bg-blue-500' style={{border:'1px solid greenyellow'}}>
-                                    <h1 className='font-semibold'><span>1st</span> Level</h1>
-                                </div>
-                                <div className='w-full py-3 h-12 rounded px-3 flex items-center border-2 xl:border-none'>
-                                    <ProgressBar
-                                        completed={100}
-                                        className='w-full'
-                                    />
-                                </div>
-                                <div className='w-full xl:w-1/2 py-3 h-12 flex items-center justify-center bg-blue-800 rounded hover:bg-green-500' style={{border:'1px solid greenyellow'}}>
-                                    <h1 className='font-semibold'><span>&#x20B9;</span> 1500</h1>
-                                </div>
-                            </div>
-
-                            <div className='w-full flex flex-col sm:flex-row justify-center items-center gap-4 mb-6 sm:mb-0 p-2 border border-black  rounded-md'>
-                                <div className='w-full xl:w-1/2 py-3 h-12 flex items-center justify-center bg-orange-800 rounded hover:bg-blue-500' style={{border:'1px solid greenyellow'}}>
-                                    <h1 className='font-semibold'><span>2nd</span> Level</h1>
-                                </div>
-                                <div className='w-full py-3 h-12 rounded px-3 flex items-center border-2 xl:border-none'>
-                                    <ProgressBar
-                                        completed={100}
-                                        className='w-full'
-                                    />
-                                </div>
-                                <div className='w-full xl:w-1/2 py-3 h-12 flex items-center justify-center bg-gray-600 rounded hover:bg-green-500' style={{border:'1px solid greenyellow'}}>
-                                    <h1 className='font-semibold'><span>&#x20B9;</span> 1500</h1>
-                                </div>
-                            </div>
-
-                            <div className='w-full flex flex-col sm:flex-row justify-center items-center gap-4 mb-6 sm:mb-0 p-2 border border-black rounded-md' >
-                                <div className='w-full xl:w-1/2 py-3 h-12 flex items-center justify-center bg-green-800 rounded hover:bg-blue-500' style={{border:'1px solid greenyellow'}}>
-                                    <h1 className='font-semibold'><span>1st</span> Level</h1>
-                                </div>
-                                <div className='w-full py-3 h-12 rounded px-3 flex items-center border-2 xl:border-none'>
-                                    <ProgressBar
-                                        completed={100}
-                                        className='w-full'
-                                    />
-                                </div>
-                                <div className='w-full xl:w-1/2 py-3 h-12 flex items-center justify-center bg-blue-800 rounded hover:bg-green-500' style={{border:'1px solid greenyellow'}}>
-                                    <h1 className='font-semibold'><span>&#x20B9;</span> 1500</h1>
-                                </div>
-                            </div>
-
-                            <div className='w-full flex flex-col sm:flex-row justify-center items-center gap-4 mb-6 sm:mb-0 p-2 border border-black  rounded-md'>
-                                <div className='w-full xl:w-1/2 py-3 h-12 flex items-center justify-center bg-orange-800 rounded hover:bg-blue-500' style={{border:'1px solid greenyellow'}}>
-                                    <h1 className='font-semibold'><span>2nd</span> Level</h1>
-                                </div>
-                                <div className='w-full py-3 h-12 rounded px-3 flex items-center border-2 xl:border-none'>
-                                    <ProgressBar
-                                        completed={100}
-                                        className='w-full'
-                                    />
-                                </div>
-                                <div className='w-full xl:w-1/2 py-3 h-12 flex items-center justify-center bg-gray-600 rounded hover:bg-green-500' style={{border:'1px solid greenyellow'}}>
-                                    <h1 className='font-semibold'><span>&#x20B9;</span> 1500</h1>
-                                </div>
-                            </div>
-
-                            <div className='w-full flex flex-col sm:flex-row justify-center items-center gap-4 mb-6 sm:mb-0 p-2 border border-black rounded-md' >
-                                <div className='w-full xl:w-1/2 py-3 h-12 flex items-center justify-center bg-green-800 rounded hover:bg-blue-500' style={{border:'1px solid greenyellow'}}>
-                                    <h1 className='font-semibold'><span>1st</span> Level</h1>
-                                </div>
-                                <div className='w-full py-3 h-12 rounded px-3 flex items-center border-2 xl:border-none'>
-                                    <ProgressBar
-                                        completed={100}
-                                        className='w-full'
-                                    />
-                                </div>
-                                <div className='w-full xl:w-1/2 py-3 h-12 flex items-center justify-center bg-blue-800 rounded hover:bg-green-500' style={{border:'1px solid greenyellow'}}>
-                                    <h1 className='font-semibold'><span>&#x20B9;</span> 1500</h1>
-                                </div>
-                            </div>
-
-                            <div className='w-full flex flex-col sm:flex-row justify-center items-center gap-4 mb-6 sm:mb-0 p-2 border border-black  rounded-md'>
-                                <div className='w-full xl:w-1/2 py-3 h-12 flex items-center justify-center bg-orange-800 rounded hover:bg-blue-500' style={{border:'1px solid greenyellow'}}>
-                                    <h1 className='font-semibold'><span>2nd</span> Level</h1>
-                                </div>
-                                <div className='w-full py-3 h-12 rounded px-3 flex items-center border-2 xl:border-none'>
-                                    <ProgressBar
-                                        completed={100}
-                                        className='w-full'
-                                    />
-                                </div>
-                                <div className='w-full xl:w-1/2 py-3 h-12 flex items-center justify-center bg-gray-600 rounded hover:bg-green-500' style={{border:'1px solid greenyellow'}}>
-                                    <h1 className='font-semibold'><span>&#x20B9;</span> 1500</h1>
-                                </div>
-                            </div>
-                            
-                        </div>
+                        ))}
+                    </div>
+                    <div className='border-[1px] border-gray-300 rounded-md shadow-md shadow-gray-500 w-full lg:w-1/5 flex flex-col justify-center items-center p-2 py-4 bg-gray-500' style={{ color: 'greenyellow' }}>
+                        <h1 className='text-md font-semibold uppercase text-white'>Total Members</h1>
+                        <span className='text-5xl font-bold uppercase'>{user?.data?.allChild?.length || 0}</span>
                     </div>
                 </div>
             </div>

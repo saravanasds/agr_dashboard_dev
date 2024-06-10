@@ -5,7 +5,12 @@ const Wallet = () => {
     return (
         <>
             <div>
-                <Header />
+                <div className='w-full h-16 bg-[#2d4059] flex justify-between items-center py-3 px-10'>
+                    <div><span className='sm:text-2xl font-bold uppercase text-white'>Wallet</span></div>
+                    <div className='border-2 border-black rounded-full'>
+                        <img src="src/assets/1679057404284.jpg" alt="" className='w-12 rounded-full border-2' />
+                    </div>
+                </div>
             </div>
             <div>
                 <h1 className="text-2xl font-bold text-center py-4">Wallet Section</h1>
