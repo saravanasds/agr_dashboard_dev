@@ -7,7 +7,7 @@ const Step2 = ({ nextStep, prevStep, formData = {}, updateFormData }) => {
 
     const validationSchema = yup.object({
         guardian: yup.string().required("Guardian is required"),
-        mobileNumber: yup.string().required("Mobile Number is required"),
+        mobileNumber: yup.string().required("Whatsapp Number is required"),
         aadharNo: yup.string().required("Aadhar Number is required"),
         nomineeName: yup.string().required("Nominee detail is required"),
         nomineeRelationship: yup.string().required("Nominee Relationship is required"),
@@ -143,7 +143,7 @@ const Step2 = ({ nextStep, prevStep, formData = {}, updateFormData }) => {
                                     <input
                                         type="number"
                                         className="w-full bg-gray-200 rounded-lg py-3 px-4"
-                                        placeholder="Mobile Number"
+                                        placeholder="Whatsapp Number"
                                         name="mobileNumber"
                                         onChange={handleChange}
                                         value={formData.mobileNumber}

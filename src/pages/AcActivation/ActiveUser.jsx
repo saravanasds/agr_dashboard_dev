@@ -262,7 +262,7 @@ const ActiveUser = () => {
                                                 <p>{new Date(selectedUser.dob).toLocaleDateString()}</p>
                                             </div>
                                             <div className='hover:bg-gray-200 rounded flex p-2 gap-2'>
-                                                <h2 className='text-md font-semibold'>Mobile no:</h2>
+                                                <h2 className='text-md font-semibold'>Whatsapp no:</h2>
                                                 <p>{selectedUser.mobileNumber}</p>
                                             </div>
                                             <div className='hover:bg-gray-200 rounded flex p-2 gap-2'>
