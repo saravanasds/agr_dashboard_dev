@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { UserContext } from '../components/UserProvider';
-import Header from "../components/Header";
 import ReferralWithdraw from './ReferralWithdraw';
 
 const WithdrawRequest = () => {

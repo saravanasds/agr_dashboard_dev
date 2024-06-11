@@ -101,7 +101,7 @@ const Level = () => {
                     <div className='grid grid-cols-2 md:grid-cols-5 gap-3 w-full lg:w-4/5'>
                         {levelsCount.map((count, index) => (
                             <div key={index} className='rounded-md shadow-md shadow-gray-500 h-auto flex flex-col'>
-                                <h1 className={`text-center w-full py-2 rounded-t-md ${index % 2 === 0 ? 'bg-blue-400' : 'bg-red-400'}`}>{index + 1}st Level</h1>
+                                <h1 className={`text-center w-full py-2 rounded-t-md ${index % 2 === 0 ? 'bg-blue-400' : 'bg-red-400'}`}>Level {index + 1}</h1>
                                 <span className='py-3 w-full flex justify-center items-center bg-white rounded-b-md'>
                                     {count > 0 ? count : <GiPadlock className='h-6 w-6' />}
                                 </span>
