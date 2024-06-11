@@ -8,6 +8,7 @@ const MemberDetails = () => {
   const [toDate, setToDate] = useState('');
   const [error, setError] = useState(null);
   const [memberDetails, setMemberDetails] = useState([]);
+  const [selectedUser, setSelectedUser] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -64,7 +65,8 @@ const MemberDetails = () => {
     return matchesSearchTerm && matchesDateRange;
   });
 
-  const togglePopup = () => {
+  const togglePopup = (memberDetails) => {
+    setSelectedUser(memberDetails);
     setIsOpen(!isOpen);
   };
 
@@ -186,7 +188,7 @@ const MemberDetails = () => {
                       <td className="px-6 py-4 text-center whitespace-nowrap">
                         <button
                           className='bg-blue-800 p-1 px-3 mr-3 rounded-md hover:bg-blue-600 text-white text-xs sm:text-sm'
-                          onClick={togglePopup}
+                          onClick={() => togglePopup(member)}
                         >
                           View
                         </button>
@@ -199,126 +201,133 @@ const MemberDetails = () => {
           </div>
         )}
       </div>
-      {isOpen && (
-        <div className="fixed z-10 inset-0 overflow-y-auto">
-          <div className="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
-            <div className="fixed inset-0 transition-opacity" aria-hidden="true">
-              <div className="absolute inset-0 bg-gray-900 opacity-75"></div>
-            </div>
-            <span className="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
-            <div className="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-5xl sm:w-full">
-              <div id='printUserDetails'>
-                <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-                  <h1 className='text-2xl text-center font-semibold uppercase tracking-wide py-4 bg-gray-200'>Profile Details</h1>
-                  <div className='details w-full bg-[#F4F6F9] flex flex-col lg:flex-row py-5 justify-center'>
+      {isOpen && selectedUser && (
+                <div className="fixed z-10 inset-0 overflow-y-auto">
+                    <div className="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+                        <div className="fixed inset-0 transition-opacity" aria-hidden="true">
+                            <div className="absolute inset-0 bg-gray-900 opacity-75"></div>
+                        </div>
+                        <span className="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+                        <div className="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-5xl sm:w-full">
+                            <div id='printUserDetails'>
+                                <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                                    <h1 className='text-2xl text-center font-semibold uppercase tracking-wide py-4 bg-gray-200'>Profile Details</h1>
+                                    <div className='details w-full bg-[#F4F6F9] flex flex-col lg:flex-row py-5 justify-center'>
+                                        <div className='w-full lg:w-1/3 px-3'>
+                                            <div className='hover:bg-gray-200 rounded flex p-2 gap-2'>
+                                                <h2 className='text-md font-semibold'>User Name:</h2>
+                                                <p>{selectedUser.firstName}</p>
+                                            </div>
+                                            <div className='hover:bg-gray-200 rounded flex p-2 gap-2'>
+                                                <h2 className='text-md font-semibold'>Email Id:</h2>
+                                                <p>{selectedUser.email}</p>
+                                            </div>
+                                            <div className='hover:bg-gray-200 rounded flex p-2 gap-2'>
+                                                <h2 className='text-md font-semibold'>Guardian Name:</h2>
+                                                <p>{selectedUser.guardian}</p>
+                                            </div>
+                                            <div className='hover:bg-gray-200 rounded flex p-2 gap-2'>
+                                                <h2 className='text-md font-semibold'>Gender:</h2>
+                                                <p>{selectedUser.gender}</p>
+                                            </div>
+                                            <div className='hover:bg-gray-200 rounded flex p-2 gap-2'>
+                                                <h2 className='text-md font-semibold'>DOB:</h2>
+                                                <p>{new Date(selectedUser.dob).toLocaleDateString()}</p>
+                                            </div>
+                                            <div className='hover:bg-gray-200 rounded flex p-2 gap-2'>
+                                                <h2 className='text-md font-semibold'>Mobile no:</h2>
+                                                <p>{selectedUser.mobileNumber}</p>
+                                            </div>
+                                            <div className='hover:bg-gray-200 rounded flex p-2 gap-2'>
+                                                <h2 className='text-md font-semibold'>Alternate Mobile no:</h2>
+                                                <p>{selectedUser.alternateMobileNumber}</p>
+                                            </div>
+                                        </div>
+                                        <div className='w-full lg:w-1/3 px-3'>
+                                            <div className='hover:bg-gray-200 rounded flex p-2 gap-2'>
+                                                <h2 className='text-md font-semibold'>Adhar no:</h2>
+                                                <p>{selectedUser.aadharNo}</p>
+                                            </div>
+                                            <div className='hover:bg-gray-200 rounded flex p-2 gap-2'>
+                                                <h2 className='text-md font-semibold'>Adhar proof:</h2>
+                                                <p>
+                                                    <a href={`http://localhost:9000/${selectedUser.adharProof}`} target="_blank" rel="noopener noreferrer">
+                                                        {selectedUser.adharProof}
+                                                    </a>
+                                                </p>
+                                            </div>
+                                            <div className='hover:bg-gray-200 rounded flex p-2 gap-2'>
+                                                <h2 className='text-md font-semibold'>Photo:</h2>
+                                                <p>
+                                                    <a href={`http://localhost:9000/${selectedUser.photo}`} target="_blank" rel="noopener noreferrer">
+                                                        {selectedUser.photo}
+                                                    </a>
+                                                </p>
+                                            </div>
 
-                    <div className='w-full lg:w-1/3 px-3'>
-                      <div className='hover:bg-gray-200 rounded flex p-2 gap-2'>
-                        <h2 className='text-md font-semibold'>User Name:</h2>
-                        <p>Karthikeyan</p>
-                      </div>
-                      <div className='hover:bg-gray-200 rounded flex p-2 gap-2'>
-                        <h2 className='text-md font-semibold'>Email Id:</h2>
-                        <p>karthin951@gmail.com</p>
-                      </div>
-                      <div className='hover:bg-gray-200 rounded flex p-2 gap-2'>
-                        <h2 className='text-md font-semibold'>Guardian Name:</h2>
-                        <p>Murugesan</p>
-                      </div>
-                      <div className='hover:bg-gray-200 rounded flex p-2 gap-2'>
-                        <h2 className='text-md font-semibold'>Gender:</h2>
-                        <p>Male</p>
-                      </div>
-                      <div className='hover:bg-gray-200 rounded flex p-2 gap-2'>
-                        <h2 className='text-md font-semibold'>DOB:</h2>
-                        <p>12-12-1997</p>
-                      </div>
-                      <div className='hover:bg-gray-200 rounded flex p-2 gap-2'>
-                        <h2 className='text-md font-semibold'>Mobile no:</h2>
-                        <p>9994476524</p>
-                      </div>
-                      <div className='hover:bg-gray-200 rounded flex p-2 gap-2'>
-                        <h2 className='text-md font-semibold'>Alternate Mobile no:</h2>
-                        <p>9994476524</p>
-                      </div>
-
+                                            <div className='hover:bg-gray-200 rounded flex p-2 gap-2'>
+                                                <h2 className='text-md font-semibold'>Nominee Name:</h2>
+                                                <p>{selectedUser.nomineeName}</p>
+                                            </div>
+                                            <div className='hover:bg-gray-200 rounded flex p-2 gap-2'>
+                                                <h2 className='text-md font-semibold'>Nominee Relationship:</h2>
+                                                <p>{selectedUser.nomineeRelationship}</p>
+                                            </div>
+                                            <div className='address hover:bg-gray-200 rounded flex p-2 gap-2'>
+                                                <h2 className='text-md font-semibold'>Address:</h2>
+                                                <p>{selectedUser.address}</p>
+                                            </div>
+                                        </div>
+                                        <div className='w-full lg:w-1/3 px-3'>
+                                            <div className='hover:bg-gray-200 rounded flex p-2 gap-2'>
+                                                <h2 className='text-md font-semibold'>Bank Ac.no:</h2>
+                                                <p>{selectedUser.bankAcno}</p>
+                                            </div>
+                                            <div className='hover:bg-gray-200 rounded flex p-2 gap-2'>
+                                                <h2 className='text-md font-semibold'>Bank Name:</h2>
+                                                <p>{selectedUser.bankName}</p>
+                                            </div>
+                                            <div className='hover:bg-gray-200 rounded flex p-2 gap-2'>
+                                                <h2 className='text-md font-semibold'>Branch:</h2>
+                                                <p>{selectedUser.branch}</p>
+                                            </div>
+                                            <div className='hover:bg-gray-200 rounded flex p-2 gap-2'>
+                                                <h2 className='text-md font-semibold'>IFSC Code:</h2>
+                                                <p>{selectedUser.ifsc}</p>
+                                            </div>
+                                            <div className='hover:bg-gray-200 rounded flex p-2 gap-2'>
+                                                <h2 className='text-md font-semibold'>Payment Date:</h2>
+                                                <p>{new Date(selectedUser.paymentDate).toLocaleDateString()}</p>
+                                            </div>
+                                            <div className='hover:bg-gray-200 rounded flex p-2 gap-2'>
+                                                <h2 className='text-md font-semibold'>Transaction Id:</h2>
+                                                <p>{selectedUser.transactionId}</p>
+                                            </div>
+                                            <div className='hover:bg-gray-200 rounded flex p-2 gap-2'>
+                                                <h2 className='text-md font-semibold'>Payment Screenshot:</h2>
+                                                <p>{selectedUser.paymentScreenshot}</p>
+                                            </div>
+                                            <div className='hover:bg-gray-200 rounded flex p-2 gap-2'>
+                                                <h2 className='text-md font-semibold'>Referral Id:</h2>
+                                                <p>{selectedUser.referralId}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="details-btn bg-gray-50 px-4 py-3 sm:px-6 flex gap-3 items-center justify-end mr-12">
+                                    <button className="bg-green-700 text-white px-8 py-2 rounded-md hover:bg-green-600 font-semibold uppercase" onClick={printUserDetails}>Print</button>
+                                    <button
+                                        onClick={togglePopup}
+                                        className="bg-orange-700 text-white px-8 py-2 rounded-md hover:bg-orange-600 font-semibold uppercase"
+                                    >
+                                        Close
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-
-                    <div className='w-full lg:w-1/3 px-3'>
-                      <div className='hover:bg-gray-200 rounded flex p-2 gap-2'>
-                        <h2 className='text-md font-semibold'>Adhar no:</h2>
-                        <p>4499077550220</p>
-                      </div>
-                      <div className='hover:bg-gray-200 rounded flex p-2 gap-2'>
-                        <h2 className='text-md font-semibold'>Adhar proof:</h2>
-                        <p>file</p>
-                      </div>
-                      <div className='hover:bg-gray-200 rounded flex p-2 gap-2'>
-                        <h2 className='text-md font-semibold'>Nominee Name:</h2>
-                        <p>Murugesan</p>
-                      </div>
-                      <div className='hover:bg-gray-200 rounded flex p-2 gap-2'>
-                        <h2 className='text-md font-semibold'>Nominee Relationship:</h2>
-                        <p>Father</p>
-                      </div>
-                      <div className='address hover:bg-gray-200 rounded flex p-2 gap-2'>
-                        <h2 className='text-md font-semibold'>Address:</h2>
-                        <p>3/385-C, gobalapuram, vkmills, chinnakalayamputhur, palani, dindigul.</p>
-                      </div>
-                    </div>
-
-
-                    <div className='w-full lg:w-1/3 px-3'>
-                      <div className='hover:bg-gray-200 rounded flex p-2 gap-2'>
-                        <h2 className='text-md font-semibold'>Bank Ac.no:</h2>
-                        <p>33814913660</p>
-                      </div>
-                      <div className='hover:bg-gray-200 rounded flex p-2 gap-2'>
-                        <h2 className='text-md font-semibold'>Bank Name:</h2>
-                        <p>State bank of india</p>
-                      </div>
-                      <div className='hover:bg-gray-200 rounded flex p-2 gap-2'>
-                        <h2 className='text-md font-semibold'>Branch:</h2>
-                        <p>palani</p>
-                      </div>
-                      <div className='hover:bg-gray-200 rounded flex p-2 gap-2'>
-                        <h2 className='text-md font-semibold'>IFSC Code:</h2>
-                        <p>SBIN0002241</p>
-                      </div>
-                      <div className='hover:bg-gray-200 rounded flex p-2 gap-2'>
-                        <h2 className='text-md font-semibold'>Payment Date:</h2>
-                        <p>12-12-2024</p>
-                      </div>
-                      <div className='hover:bg-gray-200 rounded flex p-2 gap-2'>
-                        <h2 className='text-md font-semibold'>Transaction Id:</h2>
-                        <p>TRAN58723654283754</p>
-                      </div>
-                      <div className='hover:bg-gray-200 rounded flex p-2 gap-2'>
-                        <h2 className='text-md font-semibold'>Payment Screenshot:</h2>
-                        <p>file</p>
-                      </div>
-                      <div className='hover:bg-gray-200 rounded flex p-2 gap-2'>
-                        <h2 className='text-md font-semibold'>Referral Id:</h2>
-                        <p>AK25478</p>
-                      </div>
-                    </div>
-
-                  </div>
                 </div>
-                <div className="details-btn bg-gray-50 px-4 py-3 sm:px-6 flex gap-3 items-center justify-end mr-12">
-                  <button className="bg-green-700 text-white px-8 py-2 rounded-md hover:bg-green-600 font-semibold uppercase" onClick={printUserDetails}>Print</button>
-                  <button
-                    onClick={togglePopup}
-                    className="bg-orange-700 text-white px-8 py-2  rounded-md hover:bg-orange-600 font-semibold uppercase"
-                  >
-                    Close
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
+            )}
     </>
   );
 };
