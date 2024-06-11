@@ -4,6 +4,7 @@ import { MdGroups, MdAccountBalance } from "react-icons/md";
 import { BiMoneyWithdraw } from "react-icons/bi";
 import { BsPersonFillAdd } from "react-icons/bs";
 import { SiMoneygram } from "react-icons/si";
+import { BsFilePersonFill } from "react-icons/bs";
 import { UserContext } from '../components/UserProvider';
 
 const Dashboard = () => {
@@ -69,10 +70,10 @@ const Dashboard = () => {
 
                     <div className='bg-green-300 rounded-lg py-5 flex justify-around items-center px-4 shadow-sm shadow-gray-800'>
                         <div>
-                            <p className='text-md sm:text-xl font-semibold'>Deposit Amount</p>
-                            <p className='text-xl sm:text-2xl font-semibold text-center'> &#x20B9; 5000</p>
+                            <p className='text-md sm:text-xl font-semibold'>Member Id</p>
+                            <p className='text-md sm:text-md font-semibold text-center text-gray-500'>{user.data.referralId}</p>
                         </div>
-                        <div><MdAccountBalance className='text-[40px] md:text-[65px] opacity-80' /></div>
+                        <div><BsFilePersonFill className='text-[30px] md:text-[45px] opacity-80' /></div>
                     </div>
                     <div className='bg-red-300 rounded-lg py-5 flex justify-around items-center px-4 shadow-sm shadow-gray-800'>
                         <div>

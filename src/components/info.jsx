@@ -70,7 +70,7 @@ export default function Info() {
                   />
                 </div>
               ) : (
-                <p className="text-green-500 text-3xl">Earn More!</p>
+                <p className="text-green-500 text-3xl">Earn More</p>
               )}
             </div>
           </div>
