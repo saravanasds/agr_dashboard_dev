@@ -47,6 +47,14 @@ const Dashboard = () => {
         return <div>Loading...</div>; // Show loading or redirect to login if no user data is available
     }
 
+    const formatDate = (dateString) => {
+        const date = new Date(dateString);
+        const day = String(date.getDate()).padStart(2, '0');
+        const month = String(date.getMonth() + 1).padStart(2, '0');
+        const year = String(date.getFullYear()).slice(-2);
+        return `${day}/${month}/${year}`;
+      };
+
     return (
         <div className='w-full min-h-screen overflow-y-auto grow flex flex-col justify-start items-center'>
             <div className='w-full h-16 bg-[#2d4059] flex justify-between items-center py-3 px-10'>
@@ -111,8 +119,9 @@ const Dashboard = () => {
                     <h1 className='font-bold mb-3 text-blue-600'>Notifications</h1>
                     {notifications.length > 0 ? (
                         notifications.map((notification, index) => (
-                            <p key={index} className='text-md md:text-xl border-b-2 mb-4 py-3 px-5 shadow-sm rounded-md' style={{ borderColor: 'blue', boxShadow: `0 0 5px blue`, backgroundColor: `#e0f3ff` }}>
-                                {notification.content}
+                            <p key={index} className='text-md md:text-xl border-b-2 mb-4 py-3 px-5 shadow-sm rounded-md' style={{ borderColor: 'gray', boxShadow: `0 0 2px gray`, backgroundColor: `#e0f3ff` }}>
+                                {notification.content}<br></br>
+                                <span className='text-xs font-semibold text-gray-400'>Published at {formatDate(notification.createdAt)}</span>
                             </p>
                         ))
                     ) : (
