@@ -1,7 +1,18 @@
-import React from 'react';
-import Header from "../components/Header"
+import React, { useContext, useEffect } from 'react';
+import { UserContext } from '../components/UserProvider';
+
 
 const Wallet = () => {
+    const { user, setUser } = useContext(UserContext);
+    console.log(user);
+
+    useEffect(() => {
+        const storedUser = localStorage.getItem('user');
+        if (storedUser) {
+            setUser(JSON.parse(storedUser));
+        }
+    }, [setUser]);
+
     return (
         <>
             <div>
@@ -13,24 +24,23 @@ const Wallet = () => {
                 </div>
             </div>
             <div>
-                <h1 className="text-2xl font-bold text-center py-4">Wallet Section</h1>
-                <div className="  flex flex-col justify-around items-center gap-4">
+                <div className="  flex flex-col justify-around items-center mt-16 gap-4">
                     {/* Wallet */}
                     <div className="border-2 border-gray-400 w-[95%] md:w-[70%] p-2 md:p-5 bg-white rounded-md">
                         <h1 className="text-xl font-semibold mb-1">Your Wallet</h1>
                         <div className="my-3">
                             <div className="flex justify-center items-center w-full hover:bg-gray-200 p-2 rounded-md">
                                 <div className="w-1/2"><h1 className="text-md sm:text-lg">Current Balance</h1></div>
-                                <div className="w-1/2 h-full bg-gray-200 hover:bg-white px-2 py-1 rounded-md"><p>$ 4000</p></div>
+                                <div className="w-1/2 h-full bg-gray-200 hover:bg-white px-2 py-1 rounded-md"><p>&#x20B9; {user?.data?.amount-5000}</p></div>
                             </div>
-                            <div className="flex justify-center items-center w-full hover:bg-gray-200 p-2 rounded-md">
+                            {/* <div className="flex justify-center items-center w-full hover:bg-gray-200 p-2 rounded-md">
                                 <div className="w-1/2"><h1 className="text-md sm:text-lg">Withdraw Balance</h1></div>
                                 <div className="w-1/2 h-full bg-gray-200 hover:bg-white px-2 py-1 rounded-md"><p>$ 4000</p></div>
                             </div>
                             <div className="flex justify-center items-center w-full hover:bg-gray-200 p-2 rounded-md">
                                 <div className="w-1/2"><h1 className="text-md sm:text-lg">Wallet Balance</h1></div>
                                 <div className="w-1/2 h-full bg-gray-200 hover:bg-white px-2 py-1 rounded-md"><p>$ 4000</p></div>
-                            </div>
+                            </div> */}
                         </div>
                     </div>
 
@@ -40,11 +50,11 @@ const Wallet = () => {
                         <div className="my-3">
                             <div className="flex justify-center items-center w-full hover:bg-gray-200 p-2 rounded-md">
                                 <div className="w-1/2"><h1 className="text-md sm:text-lg">Level Income</h1></div>
-                                <div className="w-1/2 h-full bg-gray-200 hover:bg-white px-2 py-1 rounded-md text-xl"><p>$---</p></div>
+                                <div className="w-1/2 h-full bg-gray-200 hover:bg-white px-2 py-1 rounded-md text-xl"><p>&#x20B9; {user?.data?.levelAmount}</p></div>
                             </div>
                             <div className="flex justify-center items-center w-full hover:bg-gray-200 p-2 rounded-md">
                                 <div className="w-1/2"><h1 className="text-md sm:text-lg">Referal Income</h1></div>
-                                <div className="w-1/2 h-full bg-gray-200 hover:bg-white px-2 py-1 rounded-md text-xl"><p>$---</p></div>
+                                <div className="w-1/2 h-full bg-gray-200 hover:bg-white px-2 py-1 rounded-md text-xl"><p>&#x20B9; {user?.data?.referralAmount}</p></div>
                             </div>
                             <div className="flex justify-center items-center w-full hover:bg-gray-200 p-2 rounded-md">
                                 <div className="w-1/2"><h1 className="text-md sm:text-lg">Bonus</h1></div>

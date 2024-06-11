@@ -1,39 +1,38 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 
 const MemberDetails = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
   const [fromDate, setFromDate] = useState('');
   const [toDate, setToDate] = useState('');
-  const [memberDetails, setMemberDetails] = useState([
-    {
-      memberId: 'MEM001',
-      date: '11-jan-2024',
-      name: 'John Doe',
-      age: 30,
-      email: 'john@example.com',
-      address: '123 Street, City',
-      phone: '1234567890'
-    },
-    {
-      memberId: 'MEM002',
-      date: '20-feb-2024',
-      name: 'Jane Smith',
-      age: 25,
-      email: 'jane@example.com',
-      address: '456 Avenue, Town',
-      phone: '9876543210'
-    },
-    {
-      memberId: 'MEM003',
-      date: '02-mar-2024',
-      name: 'Michael Johnson',
-      age: 35,
-      email: 'michael@example.com',
-      address: '789 Road, Village',
-      phone: '7890123456'
-    }
-  ]);
+  const [error, setError] = useState(null);
+  const [memberDetails, setMemberDetails] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const token = localStorage.getItem('adminToken');
+        console.log(token);
+        const response = await axios.get('http://localhost:9000/api/admin/allUsers', {
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        });
+        const data = response.data.result;
+        console.log(data);
+        if (data.length > 0) {
+          setMemberDetails(data);
+        } else {
+          setMemberDetails([]);
+          setError('Users not found');
+        }
+      } catch (error) {
+        setError('Failed to fetch data');
+      }
+    };
+    fetchData();
+  }, []);
 
   const handleSearchChange = (event) => {
     setSearchTerm(event.target.value);
@@ -49,13 +48,13 @@ const MemberDetails = () => {
 
   const filteredMembers = memberDetails.filter(member => {
     const matchesSearchTerm = (
-      member.memberId.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      member.phone.includes(searchTerm)
+      member.referralId.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      member.mobileNumber.includes(searchTerm)
     );
 
     const fromDateObject = fromDate ? new Date(fromDate) : null;
     const toDateObject = toDate ? new Date(toDate) : null;
-    const memberDateObject = new Date(member.date);
+    const memberDateObject = new Date(member.updatedAt);
 
     const matchesDateRange = (
       (!fromDateObject || memberDateObject >= fromDateObject) &&
@@ -68,6 +67,15 @@ const MemberDetails = () => {
   const togglePopup = () => {
     setIsOpen(!isOpen);
   };
+
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    const day = String(date.getDate()).padStart(2, '0');
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const year = String(date.getFullYear()).slice(-2);
+    return `${day}/${month}/${year}`;
+};
+
 
   const printUserDetails = () => {
     const printContents = document.getElementById("printUserDetails").innerHTML;
@@ -111,7 +119,6 @@ const MemberDetails = () => {
     printWindow.close();
   };
 
-
   return (
     <>
       <div className='text-left w-full bg-[#2d4059] border-[1px] border-gray-500'>
@@ -119,8 +126,6 @@ const MemberDetails = () => {
       </div>
 
       <div className="mx-auto px-4 py-8 bg-gray-300 min-h-screen">
-
-
         <div className="w-full flex flex-col xl:flex-row justify-between items-center bg-gray-400 py-4 pb-6 px-8 mb-6 rounded-md shadow-md shadow-[#2d4059]">
           <div className='w-full lg:w-[90%] xl:w-[380px] mb-3 xl:mb-0'>
             <label className="text-md font-semibold">Search Member Details:</label>
@@ -162,26 +167,22 @@ const MemberDetails = () => {
               <table className="min-w-full">
                 <thead className="bg-[#455d7a]">
                   <tr>
-                    <th className="px-6 py-3 text-center text-xs font-medium text-white uppercase tracking-wider">Member ID</th>
-                    <th className="px-6 py-3 text-center text-xs font-medium text-white uppercase tracking-wider">Name</th>
+                    <th className="px-6 py-3 text-center text-xs font-medium text-white uppercase tracking-wider">Sl.no</th>
                     <th className="px-6 py-3 text-center text-xs font-medium text-white uppercase tracking-wider">Date</th>
-                    <th className="px-6 py-3 text-center text-xs font-medium text-white uppercase tracking-wider">Age</th>
-                    <th className="px-6 py-3 text-center text-xs font-medium text-white uppercase tracking-wider">Email</th>
-                    <th className="px-6 py-3 text-center text-xs font-medium text-white uppercase tracking-wider">Address</th>
+                    <th className="px-6 py-3 text-center text-xs font-medium text-white uppercase tracking-wider">Member ID</th>
+                    <th className="px-6 py-3 text-center text-xs font-medium text-white uppercase tracking-wider">Name</th>          
                     <th className="px-6 py-3 text-center text-xs font-medium text-white uppercase tracking-wider">Phone</th>
                     <th className="px-6 py-3 text-center text-xs font-medium text-white uppercase tracking-wider">For more</th>
                   </tr>
                 </thead>
                 <tbody className="bg-white divide-y divide-gray-200">
-                  {filteredMembers.map(member => (
+                  {filteredMembers.map((member, index) => (
                     <tr key={member.memberId}>
-                      <td className="px-6 py-4 whitespace-nowrap text-center text-xs sm:text-sm">{member.memberId}</td>
-                      <td className="px-6 py-4 whitespace-nowrap text-center text-xs sm:text-sm">{member.name}</td>
-                      <td className="px-6 py-4 whitespace-nowrap text-center text-xs sm:text-sm">{member.date}</td>
-                      <td className="px-6 py-4 whitespace-nowrap text-center text-xs sm:text-sm">{member.age}</td>
-                      <td className="px-6 py-4 whitespace-nowrap text-center text-xs sm:text-sm">{member.email}</td>
-                      <td className="px-6 py-4 whitespace-nowrap text-center text-xs sm:text-sm">{member.address}</td>
-                      <td className="px-6 py-4 whitespace-nowrap text-center text-xs sm:text-sm">{member.phone}</td>
+                      <td className="px-6 py-4 whitespace-nowrap text-center text-xs sm:text-sm">{index+1}</td>
+                      <td className="px-6 py-4 whitespace-nowrap text-center text-xs sm:text-sm">{formatDate(member.updatedAt)}</td>
+                      <td className="px-6 py-4 whitespace-nowrap text-center text-xs sm:text-sm">{member.referralId}</td>
+                      <td className="px-6 py-4 whitespace-nowrap text-center text-xs sm:text-sm">{member.firstName}</td>
+                      <td className="px-6 py-4 whitespace-nowrap text-center text-xs sm:text-sm">{member.mobileNumber}</td>
                       <td className="px-6 py-4 text-center whitespace-nowrap">
                         <button
                           className='bg-blue-800 p-1 px-3 mr-3 rounded-md hover:bg-blue-600 text-white text-xs sm:text-sm'

@@ -4,7 +4,6 @@ import { GiPadlock } from "react-icons/gi";
 
 const Level = () => {
     const { user, setUser } = useContext(UserContext);
-    console.log(user);
 
     useEffect(() => {
         const storedUser = localStorage.getItem('user');
@@ -31,6 +30,57 @@ const Level = () => {
             levels[1] = 9;
             levels[2] = 27;
             levels[3] = allChildLength - 39;
+        } else if (allChildLength >= 121 && allChildLength <= 363) {
+            levels[0] = 3;
+            levels[1] = 9;
+            levels[2] = 27;
+            levels[3] = 81;
+            levels[4] = allChildLength - 120;
+        } else if (allChildLength >= 364 && allChildLength <= 1092) {
+            levels[0] = 3;
+            levels[1] = 9;
+            levels[2] = 27;
+            levels[3] = 81;
+            levels[4] = 243;
+            levels[5] = allChildLength - 363;
+        } else if (allChildLength >= 1093 && allChildLength <= 3279) {
+            levels[0] = 3;
+            levels[1] = 9;
+            levels[2] = 27;
+            levels[3] = 81;
+            levels[4] = 243;
+            levels[5] = 729;
+            levels[6] = allChildLength - 1092;
+        } else if (allChildLength >= 3280 && allChildLength <= 9840) {
+            levels[0] = 3;
+            levels[1] = 9;
+            levels[2] = 27;
+            levels[3] = 81;
+            levels[4] = 243;
+            levels[5] = 729;
+            levels[6] = 2187;
+            levels[7] = allChildLength - 3279;
+        } else if (allChildLength >= 9841 && allChildLength <= 29523) {
+            levels[0] = 3;
+            levels[1] = 9;
+            levels[2] = 27;
+            levels[3] = 81;
+            levels[4] = 243;
+            levels[5] = 729;
+            levels[6] = 2187;
+            levels[7] = 6561;
+            levels[8] = allChildLength - 9840;
+        } else if (allChildLength >= 29524 && allChildLength <= 88572) {
+            levels[0] = 3;
+            levels[1] = 9;
+            levels[2] = 27;
+            levels[3] = 81;
+            levels[4] = 243;
+            levels[5] = 729;
+            levels[6] = 2187;
+            levels[7] = 6561;
+            levels[8] = 19683;
+            levels[9] = allChildLength - 29523; // 59049
         }
 
         return levels;
