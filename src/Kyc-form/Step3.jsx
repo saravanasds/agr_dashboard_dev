@@ -9,7 +9,7 @@ const Step3 = ({ nextStep, prevStep, formData = {}, updateFormData }) => {
         bankName: yup.string().required("Bank Name is required"),
         branch: yup.string().required("Branch is required"),
         ifsc: yup.string().required("IFSC code is required"),
-        upiId: yup.string().required("UPI ID is required"),
+        gpayNumber: yup.string(),
     });
 
     const formik = useFormik({
@@ -18,7 +18,7 @@ const Step3 = ({ nextStep, prevStep, formData = {}, updateFormData }) => {
             bankName: formData.bankName || '',
             branch: formData.branch || '',
             ifsc: formData.ifsc || '',
-            upiId: formData.ifsc || ''
+            gpayNumber: formData.ifsc || ''
         },
         validationSchema,
         onSubmit: values => {
@@ -109,15 +109,15 @@ const Step3 = ({ nextStep, prevStep, formData = {}, updateFormData }) => {
                                     <input
                                         type="text"
                                         className="w-full bg-gray-200 rounded-lg py-3 px-4"
-                                        placeholder="UPI ID"
-                                        name="upiId"
+                                        placeholder="Gpay Number"
+                                        name="gpayNumber"
                                         onChange={formik.handleChange}
                                         onBlur={formik.handleBlur}
-                                        value={formik.values.upiId}
+                                        value={formik.values.gpayNumber}
                                     />
-                                    {formik.touched.upiId && formik.errors.upiId && (
+                                    {formik.touched.gpayNumber && formik.errors.gpayNumber && (
                                         <p className="text-red-500 mb-4">
-                                            {formik.errors.upiId}
+                                            {formik.errors.gpayNumber}
                                         </p>
                                     )}
                                 </div>

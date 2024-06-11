@@ -1,25 +1,32 @@
-import React, { useContext, useEffect } from 'react';
-import { UserContext } from '../components/UserProvider';
+import React, { useEffect } from 'react';
 import { GiPadlock } from "react-icons/gi";
 import { useState } from 'react';
+import axios from 'axios';
 
 const Level = () => {
-    const { user, setUser } = useContext(UserContext);
-    const [totalMembers, setTotalMembers] = useState("")
+    const [totalMembers, setTotalMembers] = useState([]);
 
     useEffect(() => {
-        const storedUser = localStorage.getItem('user');
-        if (storedUser) {
-            setUser(JSON.parse(storedUser));
-        }
+        const fetchData = async () => {
+            try {
+                const token = localStorage.getItem('adminToken');
+                // console.log(token);
+                const response = await axios.get('http://localhost:9000/api/admin/allUsers', {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+                const data = response.data.result;
+                // console.log(data);
+                setTotalMembers(data);
+            } catch (error) {
+                console.log('Failed to fetch data');
+            }
+        };
+        fetchData();
+    }, []);
 
-        const totalMembers = localStorage.getItem('totalMembers');
-        if(totalMembers){
-            setTotalMembers(totalMembers);
-        }
-    }, [setUser]);
-
-    console.log(totalMembers)
+    // console.log(totalMembers)
 
     // Function to calculate counts for levels
     const calculateLevelCount = (allChildLength) => {
@@ -95,7 +102,7 @@ const Level = () => {
         return levels;
     };
 
-    const levelsCount = calculateLevelCount(totalMembers || 0);
+    const levelsCount = calculateLevelCount(totalMembers.length || 0);
 
     return (
         <>
@@ -119,7 +126,7 @@ const Level = () => {
                     </div>
                     <div className='border-[1px] border-gray-300 rounded-md shadow-md shadow-gray-500 w-full lg:w-1/5 flex flex-col justify-center items-center p-2 py-4 bg-gray-500' style={{ color: 'greenyellow' }}>
                         <h1 className='text-md font-semibold uppercase text-white'>Total Members</h1>
-                        <span className='text-5xl font-bold uppercase'>{totalMembers || 0}</span>
+                        <span className='text-5xl font-bold uppercase'>{totalMembers.length || 0}</span>
                     </div>
                 </div>
             </div>

@@ -81,7 +81,7 @@ function ProfileTab() {
                             <p className='p-2 border hover:border-black rounded-lg'>Lorem, ipsum.</p>
                         </div>
                         <div className='hover:bg-gray-200 p-3 rounded-lg my-2'>
-                            <h2 className='p-2 text-xl font-semibold'>UPI Id</h2>
+                            <h2 className='p-2 text-xl font-semibold'>Gpay Number</h2>
                             <p className='p-2 border hover:border-black rounded-lg'>Lorem, ipsum.</p>
                         </div>
                     </div>

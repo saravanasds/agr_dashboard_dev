@@ -29,7 +29,7 @@ const ProgressSteper = () => {
     bankName: "",
     branch: "",
     ifsc: "",
-    upiId: "",
+    gpayNumber: "",
     paymentDate: "",
     transactionId: "",
     referredBy: "",

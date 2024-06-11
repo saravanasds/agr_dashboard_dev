@@ -5,7 +5,6 @@ const WithdrawRequestTable = () => {
     const [isOpen, setIsOpen] = useState(false);
     const [requests, setRequests] = useState([]);
     const [error, setError] = useState(null);
-    const [withdrawValue, setWithdrawValue] = useState(0);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -31,20 +30,6 @@ const WithdrawRequestTable = () => {
         };
         fetchData();
     }, []);
-
-    useEffect(() => {
-        const withdrawReqCount = requests.length;
-        localStorage.setItem('withdrawReqCount', withdrawReqCount);
-
-        const totalLevelIncome = requests.reduce((acc, request) => acc + request.levelIncome, 0);
-        const totalReferralIncome = requests.reduce((acc, request) => acc + request.referralIncome, 0);
-        setWithdrawValue(totalLevelIncome + totalReferralIncome);
-    }, [requests]);
-
-    useEffect(() => {
-        const withdrawableAmount = withdrawValue;
-        localStorage.setItem('withdrawableAmount', withdrawableAmount);
-    }, [requests]);
 
 
     const formatDate = (dateString) => {
@@ -175,7 +160,7 @@ const WithdrawRequestTable = () => {
                                     <input type="text" className='border-[2px]' placeholder='Account No' />
                                     <input type="date" className='border-[2px]' placeholder='Payment Date' />
                                     <input type="text" className='border-[2px]' placeholder='Transaction No' />
-                                    <input type="text" className='border-[2px]' value={withdrawValue} readOnly />
+                                    <input type="text" className='border-[2px]' />
                                 </div>
 
                                 <div className="mt-5 sm:mt-4 flex justify-end">

@@ -35,11 +35,6 @@ const MemberDetails = () => {
     fetchData();
   }, []);
 
-  useEffect(() => {
-    const totalMembers = memberDetails.length;
-    localStorage.setItem('totalMembers', totalMembers);
-  }, [memberDetails]);
-
 
 
   const handleSearchChange = (event) => {

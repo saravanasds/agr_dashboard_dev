@@ -137,8 +137,8 @@ function ProfileTab({ data }) {
                             <p className='p-2 border hover:border-black rounded-lg'>{data.ifsc}</p>
                         </div>
                         <div className='hover:bg-gray-200 p-3 rounded-lg my-2'>
-                            <h2 className='p-2 text-md font-semibold'>UPI Id</h2>
-                            <p className='p-2 border hover:border-black rounded-lg'>{data.upiId}</p>
+                            <h2 className='p-2 text-md font-semibold'>Gpay Number</h2>
+                            <p className='p-2 border hover:border-black rounded-lg'>{data.gpayNumber}</p>
                         </div>
                     </div>
                 </div>
@@ -155,7 +155,7 @@ function EditProfileTab({ data, onSaveChanges }) {
         bankName: data.bankName,
         bankAcno: data.accountNumber,
         ifsc: data.ifscCode,
-        upiId: data.upiId,
+        gpayNumber: data.gpayNumber,
         password: '',
         newPassword: '',
         confirmPassword: ''
@@ -208,8 +208,8 @@ function EditProfileTab({ data, onSaveChanges }) {
                         <input className='p-2 border hover:border-[#E3E4E8] rounded-lg w-full' type='text' name='ifscCode' value={formData.ifsc} onChange={handleChange} placeholder="Enter IFSC" />
                     </div>
                     <div className='rounded-lg my-2 px-5'>
-                        <label className='block text-gray-700 font-semibold mb-2 py-1 text-md'>UPI Id</label>
-                        <input className='p-2 border hover:border-[#E3E4E8] rounded-lg w-full' type='text' name='upiId' value={formData.upiId} onChange={handleChange} placeholder="Enter UPI Id" />
+                        <label className='block text-gray-700 font-semibold mb-2 py-1 text-md'>Gpay Number</label>
+                        <input className='p-2 border hover:border-[#E3E4E8] rounded-lg w-full' type='text' name='gpayNumber' value={formData.gpayNumber} onChange={handleChange} placeholder="Enter Gpay Number" />
                     </div>
                     <div className='flex justify-center w-full px-5'>
                         <button type='submit' className='w-full py-2 bg-green-700 text-white font-bold text-md mt-2 rounded-lg hover:bg-green-800 transition 2s'>Save Changes</button>

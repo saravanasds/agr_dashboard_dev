@@ -323,6 +323,10 @@ const ActiveUser = () => {
                                                 <p>{selectedUser.ifsc}</p>
                                             </div>
                                             <div className='hover:bg-gray-200 rounded flex p-2 gap-2'>
+                                                <h2 className='text-md font-semibold'>Gpay Number:</h2>
+                                                <p>{selectedUser.gpayNumber}</p>
+                                            </div>
+                                            <div className='hover:bg-gray-200 rounded flex p-2 gap-2'>
                                                 <h2 className='text-md font-semibold'>Payment Date:</h2>
                                                 <p>{new Date(selectedUser.paymentDate).toLocaleDateString()}</p>
                                             </div>

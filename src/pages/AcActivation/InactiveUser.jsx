@@ -29,10 +29,10 @@ const InactiveUser = () => {
         fetchData();
     }, []);
 
-    useEffect(() => {
-        const waitingUsers = activations.length;
-        localStorage.setItem('waitingUsers', waitingUsers);
-    }, [activations]);
+    // useEffect(() => {
+    //     const waitingUsers = activations.length;
+    //     localStorage.setItem('waitingUsers', waitingUsers);
+    // }, [activations]);
 
     const printTable = () => {
         const printContents = document.getElementById("printTable").innerHTML;
@@ -324,6 +324,10 @@ const InactiveUser = () => {
                                             <div className='hover:bg-gray-200 rounded flex p-2 gap-2'>
                                                 <h2 className='text-md font-semibold'>IFSC Code:</h2>
                                                 <p>{selectedUser.ifsc}</p>
+                                            </div>
+                                            <div className='hover:bg-gray-200 rounded flex p-2 gap-2'>
+                                                <h2 className='text-md font-semibold'>Gpay Number:</h2>
+                                                <p>{selectedUser.gpayNumber}</p>
                                             </div>
                                             <div className='hover:bg-gray-200 rounded flex p-2 gap-2'>
                                                 <h2 className='text-md font-semibold'>Payment Date:</h2>

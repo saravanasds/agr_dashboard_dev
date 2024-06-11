@@ -20,7 +20,8 @@ const Step4 = ({ nextStep, prevStep }) => {
                         <span><span className='font-bold mr-3'>Bank:</span>City Union Bank</span><br />
                         <span><span className='font-bold mr-3'>Ac.no:</span>500101012417848</span><br />
                         <span><span className='font-bold mr-3'>Branch:</span> Palani</span><br />
-                        <span><span className='font-bold mr-3'>IFSC Code:</span>CUB0000321</span>
+                        <span><span className='font-bold mr-3'>IFSC Code:</span>CUB0000321</span><br />
+                        <span><span className='font-bold mr-3'>Gpay Number:</span>7418618828</span>
                     </div>
                 </div>
 

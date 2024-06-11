@@ -96,8 +96,8 @@ const Profile = () => {
               <p className='p-2 border hover:border-black rounded-lg'>{user.data.ifsc}</p>
             </div>
             <div className='hover:bg-gray-200 p-3 rounded-lg my-2'>
-              <h2 className='p-2 text-md font-semibold'>UPI Id</h2>
-              <p className='p-2 border hover:border-black rounded-lg'>{user.data.upiId}</p>
+              <h2 className='p-2 text-md font-semibold'>Gpay Number</h2>
+              <p className='p-2 border hover:border-black rounded-lg'>{user.data.gpayNumber}</p>
             </div>
           </div>
         </div>

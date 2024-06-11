@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { GiTakeMyMoney } from "react-icons/gi";
-import { MdGroups, MdAccountBalance, MdEdit } from "react-icons/md";
+import { MdGroups, MdEdit } from "react-icons/md";
 import { BiMoneyWithdraw } from "react-icons/bi";
-import { BsPersonFillAdd } from "react-icons/bs";
 import { SiMoneygram } from "react-icons/si";
 import { RiDeleteBin5Fill } from "react-icons/ri";
 import axios from 'axios';
@@ -11,7 +10,7 @@ const Dashboard = () => {
     const [todos, setTodos] = useState([]);
     const [users, setUsers] = useState([]);
     const [actReq, setActReq] = useState("");
-    const [withdrawReqCount, setWithdrawReqCount] = useState("");
+    const [withdrawReqCount, setWithdrawReqCount] = useState([]);
     const [withdrawableValue, setWithdrawableValue] = useState("");
     const [inputText, setInputText] = useState("");
     const [editingId, setEditingId] = useState(null);
@@ -20,20 +19,55 @@ const Dashboard = () => {
     const [dueTime, setDueTime] = useState("");
     const [message, setMessage] = useState(null);
 
+
     useEffect(() => {
-        const waitingUsers = localStorage.getItem('waitingUsers');
-        if (waitingUsers) {
-            setActReq(waitingUsers);
-        }
-        const withdrawReqCount = localStorage.getItem('withdrawReqCount');
-        if(withdrawReqCount){
-            setWithdrawReqCount(withdrawReqCount);
-        }
-        const withdrawableValue = localStorage.getItem('withdrawableAmount');
-        if(withdrawableValue){
-            setWithdrawableValue(withdrawableValue);
-        }
+        const fetchData = async () => {
+            const token = localStorage.getItem('token');
+            if (!token) {
+                console.error('No token found');
+                return;
+            }
+            try {
+                const response = await axios.post('http://localhost:9000/api/admin/deactivatedUser', {}, {
+                    headers: {
+                        "Authorization": `Bearer ${token}`
+                    }
+                });
+                setActReq(response.data.activatedUsers);
+            } catch (error) {
+                console.error('Error fetching data:', error);
+            }
+        };
+
+        fetchData();
     }, []);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const token = localStorage.getItem('adminToken');
+                console.log(token);
+                const response = await axios.get('http://localhost:9000/api/admin/withdrawRequestUser', {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+                const data = response.data.result;
+                console.log(data);
+                setWithdrawReqCount(data)
+            } catch (error) {
+                setError('Failed to fetch data');
+            }
+        };
+        fetchData();
+    }, []);
+
+    useEffect(() => {
+        const totalLevelIncome = withdrawReqCount.reduce((acc, withdrawReq) => acc + withdrawReq.levelIncome, 0);
+        const totalReferralIncome = withdrawReqCount.reduce((acc, withdrawReq) => acc + withdrawReq.referralIncome, 0);
+        setWithdrawableValue(totalLevelIncome + totalReferralIncome);
+    }, [withdrawReqCount]);
+
 
     useEffect(() => {
         const fetchData = async () => {
@@ -164,7 +198,7 @@ const Dashboard = () => {
                         <div className='bg-red-300 rounded-lg py-5 flex justify-around items-center px-4 shadow-md shadow-gray-500'>
                             <div>
                                 <p className='text-md sm:text-xl font-semibold'>Activation Request</p>
-                                <p className='text-xl sm:text-xl font-semibold text-center'>{actReq}</p>
+                                <p className='text-xl sm:text-xl font-semibold text-center'>{actReq.length}</p>
                             </div>
                             <div><MdGroups className='text-[40px] md:text-[65px] opacity-80' /></div>
                         </div>
@@ -185,7 +219,7 @@ const Dashboard = () => {
                         <div className='bg-[#fce38a] rounded-lg py-5 flex justify-around items-center px-4 shadow-md shadow-gray-500 '>
                             <div>
                                 <p className='text-md sm:text-xl font-semibold'>Withdraw Request</p>
-                                <p className='text-xl sm:text-xl font-semibold text-center'>{withdrawReqCount}</p>
+                                <p className='text-xl sm:text-xl font-semibold text-center'>{withdrawReqCount.length}</p>
                             </div>
                             <div><BiMoneyWithdraw className='text-[40px] md:text-[65px] opacity-80' /></div>
                         </div>
