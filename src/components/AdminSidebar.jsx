@@ -54,11 +54,11 @@ const Sidebar = ({children}) => {
             name:"Withdraw Request",
             icon:<BiMoneyWithdraw/>
         },
-        {
-            path:"/profileupdates",
-            name:"Profile Updates",
-            icon:<FaUserAlt/>
-        }, 
+        // {
+        //     path:"/profileupdates",
+        //     name:"Profile Updates",
+        //     icon:<FaUserAlt/>
+        // }, 
         {
             path:"/adminpaymentHistory",
             name:"Payment History",

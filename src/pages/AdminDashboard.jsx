@@ -5,15 +5,56 @@ import { BiMoneyWithdraw } from "react-icons/bi";
 import { BsPersonFillAdd } from "react-icons/bs";
 import { SiMoneygram } from "react-icons/si";
 import { RiDeleteBin5Fill } from "react-icons/ri";
+import axios from 'axios';
 
 const Dashboard = () => {
     const [todos, setTodos] = useState([]);
+    const [users, setUsers] = useState([]);
+    const [actReq, setActReq] = useState("");
+    const [withdrawReqCount, setWithdrawReqCount] = useState("");
+    const [withdrawableValue, setWithdrawableValue] = useState("");
     const [inputText, setInputText] = useState("");
     const [editingId, setEditingId] = useState(null);
     const [editedText, setEditedText] = useState("");
     const [dueDate, setDueDate] = useState("");
     const [dueTime, setDueTime] = useState("");
     const [message, setMessage] = useState(null);
+
+    useEffect(() => {
+        const waitingUsers = localStorage.getItem('waitingUsers');
+        if (waitingUsers) {
+            setActReq(waitingUsers);
+        }
+        const withdrawReqCount = localStorage.getItem('withdrawReqCount');
+        if(withdrawReqCount){
+            setWithdrawReqCount(withdrawReqCount);
+        }
+        const withdrawableValue = localStorage.getItem('withdrawableAmount');
+        if(withdrawableValue){
+            setWithdrawableValue(withdrawableValue);
+        }
+    }, []);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const token = localStorage.getItem('adminToken');
+                console.log(token);
+                const response = await axios.get('http://localhost:9000/api/admin/allUsers', {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+                const data = response.data.result;
+                console.log(data);
+                setUsers(data);
+            } catch (error) {
+                setError('Failed to fetch data');
+            }
+        };
+        fetchData();
+    }, []);
+
 
     // Load todos from localStorage when component mounts
     useEffect(() => {
@@ -111,11 +152,11 @@ const Dashboard = () => {
                 </div>
 
                 <div className='w-full flex flex-col xl:flex-row justify-center items-start bg-gray-200 pb-10'>
-                    <div className='w-full gap-4 grid grid-cols-1 xl:grid-cols-3 md:grid-cols-2 px-3 sm:px-14 py-6 min-h-[300px]'>
+                    <div className='w-full gap-4 grid grid-cols-1 xl:grid-cols-2 md:grid-cols-2 px-3 sm:px-14 py-6 min-h-[300px]'>
                         <div className='bg-blue-300 rounded-lg py-5 flex justify-around items-center px-4 shadow-md shadow-gray-500'>
                             <div>
                                 <p className='text-md sm:text-xl font-semibold'>Total Members</p>
-                                <p className='text-xl sm:text-xl font-semibold text-center'> 500</p>
+                                <p className='text-xl sm:text-xl font-semibold text-center'> {users.length}</p>
                             </div>
                             <div><GiTakeMyMoney className='text-[40px] md:text-[65px] opacity-80' /></div>
                         </div>
@@ -123,28 +164,28 @@ const Dashboard = () => {
                         <div className='bg-red-300 rounded-lg py-5 flex justify-around items-center px-4 shadow-md shadow-gray-500'>
                             <div>
                                 <p className='text-md sm:text-xl font-semibold'>Activation Request</p>
-                                <p className='text-xl sm:text-xl font-semibold text-center'> 09</p>
+                                <p className='text-xl sm:text-xl font-semibold text-center'>{actReq}</p>
                             </div>
                             <div><MdGroups className='text-[40px] md:text-[65px] opacity-80' /></div>
                         </div>
-                        <div className='bg-[#66bfbf] rounded-lg py-5 flex justify-around items-center px-4 shadow-md shadow-gray-500'>
+                        {/* <div className='bg-[#66bfbf] rounded-lg py-5 flex justify-around items-center px-4 shadow-md shadow-gray-500'>
                             <div>
                                 <p className='text-md sm:text-xl font-semibold'>Referral Members</p>
                                 <p className='text-xl sm:text-xl font-semibold text-center'>03</p>
                             </div>
                             <div><BsPersonFillAdd className='text-[40px] md:text-[65px] opacity-80' /></div>
-                        </div>
-                        <div className='bg-green-300 rounded-lg py-5 flex justify-around items-center px-4 shadow-md shadow-gray-500'>
+                        </div> */}
+                        {/* <div className='bg-green-300 rounded-lg py-5 flex justify-around items-center px-4 shadow-md shadow-gray-500'>
                             <div>
                                 <p className='text-md sm:text-xl font-semibold'>Total Refferals</p>
                                 <p className='text-xl sm:text-xl font-semibold text-center'> 200</p>
                             </div>
                             <div><MdAccountBalance className='text-[40px] md:text-[65px] opacity-80' /></div>
-                        </div>
+                        </div> */}
                         <div className='bg-[#fce38a] rounded-lg py-5 flex justify-around items-center px-4 shadow-md shadow-gray-500 '>
                             <div>
                                 <p className='text-md sm:text-xl font-semibold'>Withdraw Request</p>
-                                <p className='text-xl sm:text-xl font-semibold text-center'> 10</p>
+                                <p className='text-xl sm:text-xl font-semibold text-center'>{withdrawReqCount}</p>
                             </div>
                             <div><BiMoneyWithdraw className='text-[40px] md:text-[65px] opacity-80' /></div>
                         </div>
@@ -152,7 +193,7 @@ const Dashboard = () => {
                         <div className='bg-[#93a7d1] rounded-lg py-5 flex justify-around items-center px-4 shadow-md shadow-gray-500'>
                             <div>
                                 <p className='text-md sm:text-xl font-semibold'>Withdraw Value</p>
-                                <p className='text-xl sm:text-xl font-semibold text-center'> &#x20B9; 20100</p>
+                                <p className='text-xl sm:text-xl font-semibold text-center'> &#x20B9; {withdrawableValue}</p>
                             </div>
                             <div><SiMoneygram className='text-[40px] md:text-[65px] opacity-80' /></div>
                         </div>

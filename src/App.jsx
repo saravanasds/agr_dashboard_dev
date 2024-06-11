@@ -21,7 +21,7 @@ import AdminSidebar from "./components/AdminSidebar";
 import AdminRegister from './components/adminRegister'
 import AdminLogin from "./components/AdminLogin";
 import AdminDashboard from "./pages/AdminDashboard"
-import ProfileUpdate from './pages/ProfileUpdate.jsx';
+// import ProfileUpdate from './pages/ProfileUpdate.jsx';
 import AdminLevels from './pages/AdminLevel';
 import AdminWithdrawReq from './pages/AdminWithdrawReq';
 import AcActivation from './pages/AcActivation/AcActivation';
@@ -77,7 +77,7 @@ function App() {
           <AdminSidebar>
             <Routes>
               <Route path="/adminDashboard" element={<AdminDashboard />} />
-              <Route path="/profileupdates" element={<ProfileUpdate />} />
+              {/* <Route path="/profileupdates" element={<ProfileUpdate />} /> */}
               <Route path="/adminLevels" element={<AdminLevels />} />
               <Route path="/withdrawReq" element={<AdminWithdrawReq />} />
               <Route path="/accountactivation" element={<AcActivation />} />

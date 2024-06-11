@@ -10,17 +10,17 @@ const Step4 = ({ nextStep, prevStep }) => {
 
                 <div className="flex flex-col md:flex-row justify-center mb-4 border-2 ">
                     <img
-                        src="./QR.jpeg"
+                        src="public/agr-qr.jpeg"
                         alt="Sample QR Code"
                         className="w-80"
                     />
                     <div className='border-2 p-10 text-left leading-10'>
                         <h1 className='text-2xl font-bold text-gray-800 mb-8'>Account Details</h1>
-                        <span><span className='font-bold mr-3'>Name:</span> Aandhakumar</span><br />
-                        <span><span className='font-bold mr-3'>Bank:</span> State Bank Of India</span><br />
-                        <span><span className='font-bold mr-3'>Ac.no:</span> 8457962145</span><br />
+                        <span><span className='font-bold mr-3'>Name:</span>G.Ramamoorthi</span><br />
+                        <span><span className='font-bold mr-3'>Bank:</span>City Union Bank</span><br />
+                        <span><span className='font-bold mr-3'>Ac.no:</span>500101012417848</span><br />
                         <span><span className='font-bold mr-3'>Branch:</span> Palani</span><br />
-                        <span><span className='font-bold mr-3'>IFSC Code:</span> SBIN0002240</span>
+                        <span><span className='font-bold mr-3'>IFSC Code:</span>CUB0000321</span>
                     </div>
                 </div>
 
