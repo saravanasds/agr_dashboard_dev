@@ -38,11 +38,12 @@ export default function AdminLogin({ setRole }) { // Receive setRole as a prop
       );
 
       const data = response.data;
-      console.log(data);
+      console.log(data.data.email);
 
       localStorage.setItem("adminToken", data.token);
       localStorage.setItem("role", data.role);
       localStorage.setItem("firstName", data.firstName);
+      localStorage.setItem("adminEmail", data.data.email)
 
       toast.success("Welcome To Home Page", {
         position: "top-right",
