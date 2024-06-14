@@ -99,7 +99,7 @@ const Dashboard = () => {
                     <div className='bg-[#fce38a] rounded-lg py-5 flex justify-around items-center px-4 shadow-sm shadow-gray-800'>
                         <div>
                             <p className='text-md sm:text-xl font-semibold'>Level Income</p>
-                            <p className='text-xl sm:text-2xl font-semibold text-center'> &#x20B9; {user.data.levelAmount}</p>
+                            <p className='text-xl sm:text-2xl font-semibold text-center'> &#x20B9; {user.data.availableLevelIncome}</p>
                         </div>
                         <div><BiMoneyWithdraw className='text-[40px] md:text-[65px] opacity-80' /></div>
                     </div>
@@ -107,7 +107,7 @@ const Dashboard = () => {
                     <div className='bg-[#93a7d1] rounded-lg py-5 flex justify-around items-center px-4 shadow-sm shadow-gray-800'>
                         <div>
                             <p className='text-md sm:text-xl font-semibold'>Referral Income</p>
-                            <p className='text-xl sm:text-2xl font-semibold text-center'> &#x20B9; {user.data.referralAmount}</p>
+                            <p className='text-xl sm:text-2xl font-semibold text-center'> &#x20B9; {user.data.availableReferralIncome}</p>
                         </div>
                         <div><SiMoneygram className='text-[40px] md:text-[65px] opacity-80' /></div>
                     </div>

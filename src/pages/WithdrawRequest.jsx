@@ -16,14 +16,16 @@ const WithdrawRequest = () => {
         }
     }, [setUser]);
 
+   
+
     useEffect(() => {
         if (user && user.data.allChild) {
             const length = user.data.allChild.length;
-            if (length >= 3) {
-                setWithdrawAmount('1500');
-            }
+            
             if (length >= 12) {
-                setWithdrawAmount('2400');
+                setWithdrawAmount('900');
+            } else if (length >= 3) {
+                setWithdrawAmount('1500');
             }
         }
     }, [user]);
@@ -37,6 +39,7 @@ const WithdrawRequest = () => {
         setLoading(true);
         setError(null);
         setSuccess(false);
+        setWithdrawAmount('0');
 
         const requestData = {
             name: user.data.firstName,

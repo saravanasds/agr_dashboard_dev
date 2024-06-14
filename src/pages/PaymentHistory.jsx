@@ -1,13 +1,22 @@
-import React from 'react';
-import Header from "../components/Header"
+import React, { useState, useEffect, useContext } from 'react';
+import { UserContext } from '../components/UserProvider';
 
 const PaymentHistory = () => {
-    const payments = [
-        { id: 1, date: '2024-04-01', transactionId: 'TRAN0004758', amount: 100 },
-        { id: 2, date: '2024-04-05', transactionId: 'TRAN0004758', amount: 150 },
-        { id: 3, date: '2024-04-10', transactionId: 'TRAN0004758', amount: 200 },
-        // Add more payment data as needed
-    ];
+    const { user, setUser } = useContext(UserContext);
+    const [withdrawHistory, setWithdrawHistory] = useState([]);
+
+    useEffect(() => {
+        const storedUser = localStorage.getItem('user');
+        if (storedUser) {
+            setUser(JSON.parse(storedUser));
+        }
+    }, [setUser]);
+
+    useEffect(() => {
+        if (user && user.data.withdrawHistory) {
+            setWithdrawHistory(user.data.withdrawHistory);
+        }
+    }, [user]);
 
     return (
         <>
@@ -28,16 +37,18 @@ const PaymentHistory = () => {
                                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Sl.no</th>
                                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
                                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Transaction Id</th>
-                                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Amount</th>
+                                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Level Income</th>
+                                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Referral Income</th>
                             </tr>
                         </thead>
                         <tbody className="bg-white divide-y divide-gray-200">
-                            {payments.map(payment => (
-                                <tr key={payment.id}>
-                                    <td className="px-6 py-4 whitespace-nowrap">{payment.id}</td>
-                                    <td className="px-6 py-4 whitespace-nowrap">{payment.date}</td>
-                                    <td className="px-6 py-4 whitespace-nowrap">{payment.transactionId}</td>
-                                    <td className="px-6 py-4 whitespace-nowrap">&#x20B9; {payment.amount}</td>
+                            {withdrawHistory.map((history, index) => (
+                                <tr key={index}>
+                                    <td className="px-6 py-4 whitespace-nowrap">{index + 1}</td>
+                                    <td className="px-6 py-4 whitespace-nowrap">{history.date}</td>
+                                    <td className="px-6 py-4 whitespace-nowrap">{history.transactionNo}</td>
+                                    <td className="px-6 py-4 whitespace-nowrap">&#x20B9; {history.withdrawLevelIncome}</td>
+                                    <td className="px-6 py-4 whitespace-nowrap">&#x20B9; {history.withdrawRefferalIncome}</td>
                                 </tr>
                             ))}
                         </tbody>

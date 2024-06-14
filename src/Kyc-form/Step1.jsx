@@ -141,8 +141,8 @@ export default function Step1({ nextStep, formData = {}, updateFormData }) {
                         </p>
                         <p>
                             Admin?{" "}
-                            <Link to="/adminRegister" className="font-bold hover:underline">
-                                Register Here
+                            <Link to="/adminLogin" className="font-bold hover:underline">
+                                Login Here
                             </Link>
                         </p>
                     </div>
