@@ -7,12 +7,42 @@ import { Link } from "react-router-dom";
 
 const Dashboard = () => {
     const [todos, setTodos] = useState([]);
+    const [name, setName] = useState('');
+    const [bankAcno, setBankAcno] = useState('');
+    const [transactionNo, setTransactionNo] = useState('');
     const [memberId, setMemberId] = useState('');
     const [bonusValue, setBonusValue] = useState('');
     const [subject, setSubject] = useState('');
     const [date, setDate] = useState('');
+    const [totalUser, setTotalUser] = useState([]);
+    const [totalReceivedAmount, setTotalReceivedAmount] = useState("");
 
     const adminToken = localStorage.getItem("adminToken");
+
+    useEffect(() => {
+        const totalAmount = totalUser.length*5000;
+        setTotalReceivedAmount(totalAmount);
+    }, [totalUser]);
+
+    useEffect(() => {
+        const fetchData = async () => {
+          try {
+            const token = localStorage.getItem('adminToken');
+            console.log(token);
+            const response = await axios.get('http://localhost:9000/api/admin/allUsers', {
+              headers: {
+                'Authorization': `Bearer ${token}`
+              }
+            });
+            const data = response.data.result;
+            console.log(data);
+            setTotalUser(data);
+          } catch (error) {
+            setError('Failed to fetch data');
+          }
+        };
+        fetchData();
+      }, []);
 
     useEffect(() => {
         const fetchBonusHistory = async () => {
@@ -22,7 +52,6 @@ const Dashboard = () => {
                         Authorization: `Bearer ${adminToken}`,
                     },
                 });
-                console.log(response.data);
                 setTodos(response.data);
             } catch (error) {
                 console.error('Error fetching bonus history:', error);
@@ -33,7 +62,7 @@ const Dashboard = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        if (!memberId || !bonusValue || !subject || !date) {
+        if (!name || !memberId || !bonusValue || !subject || !date) {
             alert('Please fill out all fields');
             return;
         }
@@ -42,7 +71,10 @@ const Dashboard = () => {
             referralId: memberId,
             bonusValue: parseInt(bonusValue, 10),
             subject,
-            date
+            date,
+            name,
+            bankAcno,
+            transactionNo
         };
 
         try {
@@ -54,6 +86,9 @@ const Dashboard = () => {
 
             if (response.status === 200) {
                 setTodos([...todos, newBonus]);
+                setName('');
+                setBankAcno('');
+                setTransactionNo('');
                 setMemberId('');
                 setBonusValue('');
                 setSubject('');
@@ -86,7 +121,7 @@ const Dashboard = () => {
                         <div className='bg-red-300 rounded-lg py-5 flex justify-around items-center px-4 shadow-md shadow-gray-500'>
                             <div>
                                 <p className='text-xl sm:text-xl font-semibold mb-2'>Total Payment Received</p>
-                                <p className='text-xl sm:text-xl font-bold text-center'>&#x20B9; 500000</p>
+                                <p className='text-xl sm:text-xl font-bold text-center'>&#x20B9; {totalReceivedAmount}</p>
                             </div>
                             <div><GiTakeMyMoney className='text-[40px] md:text-[65px] opacity-80' /></div>
                         </div>
@@ -106,6 +141,16 @@ const Dashboard = () => {
                 <form onSubmit={handleSubmit} className="w-full  space-y-3 border-2 border-gray-500 p-4 rounded-lg bg-gray-400 shadow-lg shadow-white">
                     <h1 className='text-center text-xl font-semibold uppercase'>Bonus Payment</h1>
                     <div>
+                        <label htmlFor="name" className="block text-md text-gray-700 font-semibold">Name:</label>
+                        <input
+                            type="text"
+                            id="name"
+                            value={name}
+                            onChange={(e) => setName(e.target.value)}
+                            className="border border-gray-400 rounded-md px-4 py-2 w-full"
+                        />
+                    </div>
+                    <div>
                         <label htmlFor="memberId" className="block text-md text-gray-700 font-semibold">Member Id:</label>
                         <input
                             type="text"
@@ -122,6 +167,26 @@ const Dashboard = () => {
                             id="bonusValue"
                             value={bonusValue}
                             onChange={(e) => setBonusValue(e.target.value)}
+                            className="border border-gray-400 rounded-md px-4 py-2 w-full"
+                        />
+                    </div>
+                    <div>
+                        <label htmlFor="bankAcno" className="block text-md text-gray-700 font-semibold">Bank Ac.no:</label>
+                        <input
+                            type="text"
+                            id="bankAcno"
+                            value={bankAcno}
+                            onChange={(e) => setBankAcno(e.target.value)}
+                            className="border border-gray-400 rounded-md px-4 py-2 w-full"
+                        />
+                    </div>
+                    <div>
+                        <label htmlFor="transactionNo" className="block text-md text-gray-700 font-semibold">TransactionNo:</label>
+                        <input
+                            type="text"
+                            id="transactionNo"
+                            value={transactionNo}
+                            onChange={(e) => setTransactionNo(e.target.value)}
                             className="border border-gray-400 rounded-md px-4 py-2 w-full"
                         />
                     </div>

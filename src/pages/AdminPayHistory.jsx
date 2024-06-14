@@ -1,37 +1,28 @@
-
-
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 
 export default function Example() {
+  const [adminHistory, setAdminHistory] = useState([]);
 
-  const payments = [
-    {
-      id: 1,
-      date: '2024-04-01',
-      name: 'Karthik',
-      memberId: 'KAR005',
-      transacyionNo: 'TRAN0004758',
-      amount: 2500,
-      bankAcno: '3381754862',
-    },
-    {
-      id: 2,
-      date: '2024-04-01',
-      name: 'naveen',
-      memberId: 'NAV006',
-      transacyionNo: 'TRAN0004758',
-      amount: 5000,
-      bankAcno: '3381754862',
-    },
-    {
-      id: 3,
-      date: '2024-04-01',
-      name: 'Anandh',
-      memberId: 'ANA007',
-      transacyionNo: 'TRAN0004758',
-      amount: 3000,
-      bankAcno: '3381754862',
-    },
-  ];
+  const adminToken = localStorage.getItem("adminToken");
+
+  useEffect(() => {
+    const fetchReferralHistory = async () => {
+      try {
+        const response = await axios.get('http://localhost:9000/api/admin/referralHistory', {
+          headers: {
+            Authorization: `Bearer ${adminToken}`,
+          },
+        });
+        setAdminHistory(response.data);
+      } catch (error) {
+        console.error('Error fetching bonus history:', error);
+      }
+    };
+    fetchReferralHistory();
+  }, [adminToken]);
+
+  console.log(adminHistory);
 
   const printPaymentHistory = () => {
     const printContents = document.getElementById("printPaymentHistory").innerHTML;
@@ -93,19 +84,23 @@ export default function Example() {
                     <th className="px-6 py-3 text-center text-xs font-medium text-white uppercase tracking-wider">Member Id</th>
                     <th className="px-6 py-3 text-center text-xs font-medium text-white uppercase tracking-wider">Transaction no</th>
                     <th className="px-6 py-3 text-center text-xs font-medium text-white uppercase tracking-wider">Ac/no</th>
-                    <th className="px-6 py-3 text-center text-xs font-medium text-white uppercase tracking-wider">Amount</th>
+                    <th className="px-6 py-3 text-center text-xs font-medium text-white uppercase tracking-wider">Level Income</th>
+                    <th className="px-6 py-3 text-center text-xs font-medium text-white uppercase tracking-wider">Referral Income</th>
+                    <th className="px-6 py-3 text-center text-xs font-medium text-white uppercase tracking-wider">Bonus</th>
                   </tr>
                 </thead>
                 <tbody className="bg-white divide-y divide-gray-200">
-                  {payments.map(payment => (
-                    <tr key={payment}>
-                      <td className="px-6 py-4 whitespace-nowrap text-center text-xs sm:text-sm">{payment.id}</td>
+                  {adminHistory.map((payment, index) => (
+                    <tr key={index}>
+                      <td className="px-6 py-4 whitespace-nowrap text-center text-xs sm:text-sm">{index + 1}</td>
                       <td className="px-6 py-4 whitespace-nowrap text-center text-xs sm:text-sm">{payment.date}</td>
                       <td className="px-6 py-4 whitespace-nowrap text-center text-xs sm:text-sm">{payment.name}</td>
-                      <td className="px-6 py-4 whitespace-nowrap text-center text-xs sm:text-sm">{payment.memberId}</td>
-                      <td className="px-6 py-4 whitespace-nowrap text-center text-xs sm:text-sm">{payment.transacyionNo}</td>
+                      <td className="px-6 py-4 whitespace-nowrap text-center text-xs sm:text-sm">{payment.referralId}</td>
+                      <td className="px-6 py-4 whitespace-nowrap text-center text-xs sm:text-sm">{payment.transactionNo}</td>
                       <td className="px-6 py-4 whitespace-nowrap text-center text-xs sm:text-sm">{payment.bankAcno}</td>
-                      <td className="px-6 py-4 whitespace-nowrap text-center text-xs sm:text-sm">&#x20B9; {payment.amount}</td>
+                      <td className="px-6 py-4 whitespace-nowrap text-center text-xs sm:text-sm">{payment.withdrawLevelIncome ? payment.withdrawLevelIncome : "0"}</td>
+                      <td className="px-6 py-4 whitespace-nowrap text-center text-xs sm:text-sm">{payment.withdrawRefferalIncome ? payment.withdrawRefferalIncome : "0"}</td>
+                      <td className="px-6 py-4 whitespace-nowrap text-center text-xs sm:text-sm">{payment.bonusValue ? payment.bonusValue : "0"}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -116,5 +111,5 @@ export default function Example() {
         </div>
       </div>
     </>
-  )
+  );
 }
