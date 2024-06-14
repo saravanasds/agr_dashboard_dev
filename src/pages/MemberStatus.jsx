@@ -1,50 +1,78 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 
 function MemberStatus() {
     const [searchTerm, setSearchTerm] = useState('');
     const [filteredMembers, setFilteredMembers] = useState([]);
-    const members = [{
-        memberId: 'MEM001',
-        date: '11-jan-2024',
-        name: 'John Doe',
-        level: 3,
-        referrals: '5',
-        earning: '1500',
-        walletBallence: '3000',
-        phone: '1234567890'
-    },
-    {
-        memberId: 'MEM002',
-        date: '20-feb-2024',
-        name: 'Jane Smith',
-        level: 2,
-        referrals: '4',
-        earning: '1000',
-        walletBallence: '2000',
-        phone: '9876543210'
-    },
-    {
-        memberId: 'MEM003',
-        date: '02-mar-2024',
-        name: 'Michael Johnson',
-        level: 1,
-        referrals: '2',
-        earning: '0',
-        walletBallence: '1000',
-        phone: '7890123456'
-    }];
+    const [members, setMembers] = useState([]);
+    // const members = [{
+    //     memberId: 'MEM001',
+    //     date: '11-jan-2024',
+    //     name: 'John Doe',
+    //     level: 3,
+    //     referrals: '5',
+    //     earning: '1500',
+    //     walletBallence: '3000',
+    //     phone: '1234567890'
+    // },
+    // {
+    //     memberId: 'MEM002',
+    //     date: '20-feb-2024',
+    //     name: 'Jane Smith',
+    //     level: 2,
+    //     referrals: '4',
+    //     earning: '1000',
+    //     walletBallence: '2000',
+    //     phone: '9876543210'
+    // },
+    // {
+    //     memberId: 'MEM003',
+    //     date: '02-mar-2024',
+    //     name: 'Michael Johnson',
+    //     level: 1,
+    //     referrals: '2',
+    //     earning: '0',
+    //     walletBallence: '1000',
+    //     phone: '7890123456'
+    // }];
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const token = localStorage.getItem('adminToken');
+                console.log(token);
+                const response = await axios.get('http://localhost:9000/api/admin/allUsers', {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+                const data = response.data.result;
+                console.log(data);
+                if (data.length > 0) {
+                    setMembers(data);
+                } else {
+                    setMembers([]);
+                    setError('Users not found');
+                }
+            } catch (error) {
+                setError('Failed to fetch data');
+            }
+        };
+        fetchData();
+    }, []);
+
+    console.log(members)
 
     const handleSearchChange = (event) => {
         const searchTerm = event.target.value;
         setSearchTerm(searchTerm);
         const filtered = members.filter(member =>
-            member.memberId.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            member.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            member.phone.includes(searchTerm)
+            member.referralId.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            member.mobileNumber.includes(searchTerm)
         );
         setFilteredMembers(filtered);
     };
-
+    console.log(filteredMembers)
 
     return (
         <>
@@ -87,12 +115,12 @@ function MemberStatus() {
                                     <tbody className="bg-white divide-y divide-gray-200">
                                         {filteredMembers.map(member => (
                                             <tr key={member.memberId}>
-                                                <td className="px-6 py-4 whitespace-nowrap text-center text-xs sm:text-sm">{member.memberId}</td>
-                                                <td className="px-6 py-4 whitespace-nowrap text-center text-xs sm:text-sm">{member.name}</td>
+                                                <td className="px-6 py-4 whitespace-nowrap text-center text-xs sm:text-sm">{member.referralId}</td>
+                                                <td className="px-6 py-4 whitespace-nowrap text-center text-xs sm:text-sm">{member.firstName}</td>
                                                 <td className="px-6 py-4 whitespace-nowrap text-center text-xs sm:text-sm">{member.date}</td>
                                                 <td className="px-6 py-4 whitespace-nowrap text-center text-xs sm:text-sm">{member.level}</td>
-                                                <td className="px-6 py-4 whitespace-nowrap text-center text-xs sm:text-sm">{member.referrals}</td>
-                                                <td className="px-6 py-4 whitespace-nowrap text-center text-xs sm:text-sm">{member.earning}</td>
+                                                <td className="px-6 py-4 whitespace-nowrap text-center text-xs sm:text-sm">{member.referredPeoples.length}</td>
+                                                <td className="px-6 py-4 whitespace-nowrap text-center text-xs sm:text-sm">{member.amount - 5000}</td>
                                                 <td className="px-6 py-4 whitespace-nowrap text-center text-xs sm:text-sm">{member.walletBallence}</td>
                                                 <td className="px-6 py-4 whitespace-nowrap text-center text-xs sm:text-sm">{member.phone}</td>
                                             </tr>
