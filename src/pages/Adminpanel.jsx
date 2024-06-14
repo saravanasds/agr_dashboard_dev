@@ -1,45 +1,75 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import { GiTakeMyMoney } from "react-icons/gi";
 import { MdGroups } from "react-icons/md";
 import { BiMoneyWithdraw } from "react-icons/bi";
 import { Link } from "react-router-dom";
 
-
 const Dashboard = () => {
-
     const [todos, setTodos] = useState([]);
     const [memberId, setMemberId] = useState('');
     const [bonusValue, setBonusValue] = useState('');
     const [subject, setSubject] = useState('');
     const [date, setDate] = useState('');
 
-    const handleSubmit = (e) => {
+    const adminToken = localStorage.getItem("adminToken");
+
+    useEffect(() => {
+        const fetchBonusHistory = async () => {
+            try {
+                const response = await axios.get('http://localhost:9000/api/admin/bonusHistory', {
+                    headers: {
+                        Authorization: `Bearer ${adminToken}`,
+                    },
+                });
+                console.log(response.data);
+                setTodos(response.data);
+            } catch (error) {
+                console.error('Error fetching bonus history:', error);
+            }
+        };
+        fetchBonusHistory();
+    }, [adminToken]);
+
+    const handleSubmit = async (e) => {
         e.preventDefault();
         if (!memberId || !bonusValue || !subject || !date) {
             alert('Please fill out all fields');
             return;
         }
-        const newTodo = {
-            id: Date.now(),
-            memberId,
-            bonusValue,
+
+        const newBonus = {
+            referralId: memberId,
+            bonusValue: parseInt(bonusValue, 10),
             subject,
             date
         };
-        setTodos([...todos, newTodo]);
-        // Clear input fields
-        setMemberId('');
-        setBonusValue('');
-        setSubject('');
-        setDate('');
+
+        try {
+            const response = await axios.post('http://localhost:9000/api/admin/assignBonus', newBonus, {
+                headers: {
+                    Authorization: `Bearer ${adminToken}`,
+                },
+            });
+
+            if (response.status === 200) {
+                setTodos([...todos, newBonus]);
+                setMemberId('');
+                setBonusValue('');
+                setSubject('');
+                setDate('');
+                alert(response.data.message);
+            }
+        } catch (error) {
+            console.error('Error assigning bonus:', error);
+            alert('Failed to assign bonus');
+        }
     };
 
     return (
         <>
             <div className='w-full overflow-y-auto grow flex flex-col justify-start items-center'>
-
                 <div className='text-left w-full bg-[#2d4059] border-[1px] border-gray-500'><h1 className='sm:text-2xl text-white font-bold py-3 px-10 uppercase tracking-wider'>adminpanel</h1></div>
-
 
                 <div className='w-full flex justify-center items-start bg-gray-200 '>
                     <div className='w-full gap-4 grid grid-cols-1 lg:grid-cols-3 px-3 sm:px-14 md:px-6 py-6 min-h-[150px]'>
@@ -70,7 +100,6 @@ const Dashboard = () => {
                         </div>
                     </div>
                 </div>
-
             </div>
 
             <div className="w-full grid grid-cols-1 lg:grid-cols-2 gap-5 p-4 px-6">
@@ -122,16 +151,14 @@ const Dashboard = () => {
                 <div className="w-full  border-2 border-gray-500 p-4 rounded-lg bg-gray-400 shadow-lg shadow-white">
                     <h1 className='text-center text-xl font-semibold mb-6 uppercase'>Bonus Report</h1>
                     <ul className='overflow-auto h-[340px] py-3 pr-3 '>
-                        {todos.map(todo => (
-                            <li key={todo.id} className="mb-2 flex gap-6 border-2 p-2 rounded-md w-[800px]">
-                                {todo.date} <span className="font-semibold">{todo.memberId}</span>  <span>&#x20B9; {todo.bonusValue}</span>  {todo.subject}
+                        {todos.map((todo, index) => (
+                            <li key={index} className="mb-2 flex gap-6 border-2 p-2 rounded-md w-[800px]">
+                                {index + 1}. {todo.date} <span className="font-semibold">{todo.referralId}</span>  <span>&#x20B9; {todo.bonusValue}</span>  {todo.subject}
                             </li>
                         ))}
                     </ul>
                 </div>
             </div>
-
-
         </>
     );
 };
