@@ -145,7 +145,7 @@ export default function Login({ setRole }) {
       <div className="text-center text-white mt-3">
         <p>
           Need An Account?{' '}
-          <Link to="/register" className="font-bold hover:underline">
+          <Link to="/userRegister" className="font-bold hover:underline">
             Register Here
           </Link>
         </p>

@@ -3,6 +3,7 @@ import { UserContext } from '../components/UserProvider';
 
 const PaymentHistory = () => {
     const { user, setUser } = useContext(UserContext);
+    const [singleUser, setSingleUser] = useState(null);
     const [withdrawHistory, setWithdrawHistory] = useState([]);
 
     useEffect(() => {
@@ -12,11 +13,41 @@ const PaymentHistory = () => {
         }
     }, [setUser]);
 
+    const email = user?.data?.email
+
     useEffect(() => {
-        if (user && user.data.withdrawHistory) {
-            setWithdrawHistory(user.data.withdrawHistory);
-        }
+        const fetchSingleUser = async () => {
+            const token = localStorage.getItem('token');
+            if (user && token) {
+                try {
+                    const response = await fetch('http://localhost:9000/api/auth/userData', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${token}`
+                        },
+                        body: JSON.stringify({email})
+                    });
+                    if (response.ok) {
+                        const data = await response.json();
+                        setSingleUser(data.data);
+                    } else {
+                        console.error('Failed to fetch notifications');
+                    }
+                } catch (error) {
+                    console.error('Error fetching notifications:', error);
+                }
+            }
+        };
+        fetchSingleUser();
     }, [user]);
+
+
+    useEffect(() => {
+        if (singleUser && singleUser.withdrawHistory) {
+            setWithdrawHistory(singleUser.withdrawHistory);
+        }
+    }, [singleUser]);
 
     return (
         <>

@@ -1,10 +1,11 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { UserContext } from '../components/UserProvider';
 
 
 const Wallet = () => {
     const { user, setUser } = useContext(UserContext);
-    console.log(user);
+    const [singleUser, setSingleUser] = useState(null);
+
 
     useEffect(() => {
         const storedUser = localStorage.getItem('user');
@@ -12,6 +13,35 @@ const Wallet = () => {
             setUser(JSON.parse(storedUser));
         }
     }, [setUser]);
+
+    const email = user?.data?.email
+
+    useEffect(() => {
+        const fetchSingleUser = async () => {
+            const token = localStorage.getItem('token');
+            if (user && token) {
+                try {
+                    const response = await fetch('http://localhost:9000/api/auth/userData', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${token}`
+                        },
+                        body: JSON.stringify({email})
+                    });
+                    if (response.ok) {
+                        const data = await response.json();
+                        setSingleUser(data.data);
+                    } else {
+                        console.error('Failed to fetch notifications');
+                    }
+                } catch (error) {
+                    console.error('Error fetching notifications:', error);
+                }
+            }
+        };
+        fetchSingleUser();
+    }, [user]);
 
     return (
         <>
@@ -31,7 +61,7 @@ const Wallet = () => {
                         <div className="my-3">
                             <div className="flex justify-center items-center w-full hover:bg-gray-200 p-2 rounded-md">
                                 <div className="w-1/2"><h1 className="text-md sm:text-lg">Current Balance</h1></div>
-                                <div className="w-1/2 h-full bg-gray-200 hover:bg-white px-2 py-1 rounded-md"><p>&#x20B9; {user?.data?.amount-5000}</p></div>
+                                <div className="w-1/2 h-full bg-gray-200 hover:bg-white px-2 py-1 rounded-md"><p>&#x20B9; {singleUser?.amount-5000}</p></div>
                             </div>
                             {/* <div className="flex justify-center items-center w-full hover:bg-gray-200 p-2 rounded-md">
                                 <div className="w-1/2"><h1 className="text-md sm:text-lg">Withdraw Balance</h1></div>
@@ -50,15 +80,11 @@ const Wallet = () => {
                         <div className="my-3">
                             <div className="flex justify-center items-center w-full hover:bg-gray-200 p-2 rounded-md">
                                 <div className="w-1/2"><h1 className="text-md sm:text-lg">Level Income</h1></div>
-                                <div className="w-1/2 h-full bg-gray-200 hover:bg-white px-2 py-1 rounded-md text-xl"><p>&#x20B9; {user?.data?.levelAmount}</p></div>
+                                <div className="w-1/2 h-full bg-gray-200 hover:bg-white px-2 py-1 rounded-md text-xl"><p>&#x20B9; {singleUser?.levelAmount}</p></div>
                             </div>
                             <div className="flex justify-center items-center w-full hover:bg-gray-200 p-2 rounded-md">
                                 <div className="w-1/2"><h1 className="text-md sm:text-lg">Referal Income</h1></div>
-                                <div className="w-1/2 h-full bg-gray-200 hover:bg-white px-2 py-1 rounded-md text-xl"><p>&#x20B9; {user?.data?.referralAmount}</p></div>
-                            </div>
-                            <div className="flex justify-center items-center w-full hover:bg-gray-200 p-2 rounded-md">
-                                <div className="w-1/2"><h1 className="text-md sm:text-lg">Bonus</h1></div>
-                                <div className="w-1/2 h-full bg-gray-200 hover:bg-white px-2 py-1 rounded-md text-xl"><p>$---</p></div>
+                                <div className="w-1/2 h-full bg-gray-200 hover:bg-white px-2 py-1 rounded-md text-xl"><p>&#x20B9; {singleUser?.referralAmount}</p></div>
                             </div>
                         </div>
                     </div>

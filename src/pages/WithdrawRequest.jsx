@@ -4,6 +4,7 @@ import ReferralWithdraw from './ReferralWithdraw';
 
 const WithdrawRequest = () => {
     const { user, setUser } = useContext(UserContext);
+    const [singleUser, setSingleUser] = useState(null);
     const [withdrawAmount, setWithdrawAmount] = useState("");
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
@@ -16,11 +17,41 @@ const WithdrawRequest = () => {
         }
     }, [setUser]);
 
+    const email = user?.data?.email
+
+    useEffect(() => {
+        const fetchSingleUser = async () => {
+            const token = localStorage.getItem('token');
+            if (user && token) {
+                try {
+                    const response = await fetch('http://localhost:9000/api/auth/userData', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${token}`
+                        },
+                        body: JSON.stringify({email})
+                    });
+                    if (response.ok) {
+                        const data = await response.json();
+                        setSingleUser(data.data);
+                    } else {
+                        console.error('Failed to fetch notifications');
+                    }
+                } catch (error) {
+                    console.error('Error fetching notifications:', error);
+                }
+            }
+        };
+        fetchSingleUser();
+    }, [user]);
+
+
    
 
     useEffect(() => {
-        if (user && user.data.allChild) {
-            const length = user.data.allChild.length;
+        if (singleUser && singleUser.allChild) {
+            const length = singleUser.allChild.length;
             
             if (length >= 12) {
                 setWithdrawAmount('900');
@@ -28,9 +59,9 @@ const WithdrawRequest = () => {
                 setWithdrawAmount('1500');
             }
         }
-    }, [user]);
+    }, [singleUser]);
 
-    if (!user) {
+    if (!singleUser) {
         return <div>Loading...</div>;
     }
 
@@ -42,15 +73,15 @@ const WithdrawRequest = () => {
         setWithdrawAmount('0');
 
         const requestData = {
-            name: user.data.firstName,
-            email: user.data.email,
-            referralId: user.data.referralId,
+            name: singleUser.firstName,
+            email: singleUser.email,
+            referralId: singleUser.referralId,
             levelIncome: withdrawAmount,
-            mobileNumber: user.data.mobileNumber,
-            bankName: user.data.bankName,
-            bankAcno: user.data.bankAcno,
-            branch: user.data.branch,
-            ifsc: user.data.ifsc
+            mobileNumber: singleUser.mobileNumber,
+            bankName: singleUser.bankName,
+            bankAcno: singleUser.bankAcno,
+            branch: singleUser.branch,
+            ifsc: singleUser.ifsc
         };
 
         console.log(requestData);

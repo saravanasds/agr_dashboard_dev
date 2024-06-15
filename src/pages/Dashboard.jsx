@@ -10,6 +10,7 @@ import { UserContext } from '../components/UserProvider';
 const Dashboard = () => {
     const { user, setUser } = useContext(UserContext);
     const [notifications, setNotifications] = useState([]);
+    const [singleUser, setSingleUser] = useState(null);
 
     useEffect(() => {
         const storedUser = localStorage.getItem('user');
@@ -17,6 +18,35 @@ const Dashboard = () => {
             setUser(JSON.parse(storedUser));
         }
     }, [setUser]);
+
+    const email = user?.data?.email
+
+    useEffect(() => {
+        const fetchSingleUser = async () => {
+            const token = localStorage.getItem('token');
+            if (user && token) {
+                try {
+                    const response = await fetch('http://localhost:9000/api/auth/userData', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${token}`
+                        },
+                        body: JSON.stringify({email})
+                    });
+                    if (response.ok) {
+                        const data = await response.json();
+                        setSingleUser(data.data);
+                    } else {
+                        console.error('Failed to fetch notifications');
+                    }
+                } catch (error) {
+                    console.error('Error fetching notifications:', error);
+                }
+            }
+        };
+        fetchSingleUser();
+    }, [user]);
 
     useEffect(() => {
         const fetchNotifications = async () => {
@@ -59,7 +89,7 @@ const Dashboard = () => {
     return (
         <div className='w-full min-h-screen overflow-y-auto grow flex flex-col justify-start items-center'>
             <div className='w-full h-16 bg-[#2d4059] flex justify-between items-center py-3 px-10'>
-                <div><span className='sm:text-2xl font-bold uppercase text-white'>Your Level : {user.data.level}</span></div>
+                <div><span className='sm:text-2xl font-bold uppercase text-white'>Your Level : {singleUser?.level}</span></div>
                 <div className='border-2 border-black rounded-full'>
                     <img src="src/assets/1679057404284.jpg" alt="" className='w-12 rounded-full border-2' />
                 </div>
@@ -71,35 +101,35 @@ const Dashboard = () => {
                     <div className='bg-green-300 rounded-lg py-5 flex justify-around items-center px-4 shadow-sm shadow-gray-800'>
                         <div>
                             <p className='text-md sm:text-xl font-semibold'>Member Id</p>
-                            <p className='text-md sm:text-md font-semibold text-center text-gray-500'>{user.data.referralId}</p>
+                            <p className='text-md sm:text-md font-semibold text-center text-gray-500'>{singleUser?.referralId}</p>
                         </div>
                         <div><BsFilePersonFill className='text-[30px] md:text-[45px] opacity-80' /></div>
                     </div>
                     <div className='bg-red-300 rounded-lg py-5 flex justify-around items-center px-4 shadow-sm shadow-gray-800'>
                         <div>
                             <p className='text-md sm:text-xl font-semibold'>Downline Members</p>
-                            <p className='text-xl sm:text-2xl font-semibold text-center'>{user.data.allChild.length}</p>
+                            <p className='text-xl sm:text-2xl font-semibold text-center'>{singleUser?.allChild.length}</p>
                         </div>
                         <div><MdGroups className='text-[40px] md:text-[65px] opacity-80' /></div>
                     </div>
                     <div className='bg-[#66bfbf] rounded-lg py-5 flex justify-around items-center px-4 shadow-sm shadow-gray-800'>
                         <div>
                             <p className='text-md sm:text-xl font-semibold'>Referral Members</p>
-                            <p className='text-xl sm:text-2xl font-semibold text-center'>{user.data.referredPeoples.length}</p>
+                            <p className='text-xl sm:text-2xl font-semibold text-center'>{singleUser?.referredPeoples.length}</p>
                         </div>
                         <div><BsPersonFillAdd className='text-[40px] md:text-[65px] opacity-80' /></div>
                     </div>
                     <div className='bg-blue-300 rounded-lg py-5 flex justify-around items-center px-4 shadow-sm shadow-gray-800'>
                         <div>
                             <p className='text-md sm:text-xl font-semibold'>Total Earning</p>
-                            <p className='text-xl sm:text-2xl font-semibold text-center'> &#x20B9; {user.data.amount - 5000}</p>
+                            <p className='text-xl sm:text-2xl font-semibold text-center'> &#x20B9; {singleUser?.amount - 5000}</p>
                         </div>
                         <div><GiTakeMyMoney className='text-[40px] md:text-[65px] opacity-80' /></div>
                     </div>
                     <div className='bg-[#fce38a] rounded-lg py-5 flex justify-around items-center px-4 shadow-sm shadow-gray-800'>
                         <div>
                             <p className='text-md sm:text-xl font-semibold'>Level Income</p>
-                            <p className='text-xl sm:text-2xl font-semibold text-center'> &#x20B9; {user.data.availableLevelIncome}</p>
+                            <p className='text-xl sm:text-2xl font-semibold text-center'> &#x20B9; {singleUser?.availableLevelIncome}</p>
                         </div>
                         <div><BiMoneyWithdraw className='text-[40px] md:text-[65px] opacity-80' /></div>
                     </div>
@@ -107,7 +137,7 @@ const Dashboard = () => {
                     <div className='bg-[#93a7d1] rounded-lg py-5 flex justify-around items-center px-4 shadow-sm shadow-gray-800'>
                         <div>
                             <p className='text-md sm:text-xl font-semibold'>Referral Income</p>
-                            <p className='text-xl sm:text-2xl font-semibold text-center'> &#x20B9; {user.data.availableReferralIncome}</p>
+                            <p className='text-xl sm:text-2xl font-semibold text-center'> &#x20B9; {singleUser?.availableReferralIncome}</p>
                         </div>
                         <div><SiMoneygram className='text-[40px] md:text-[65px] opacity-80' /></div>
                     </div>

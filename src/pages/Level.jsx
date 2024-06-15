@@ -1,9 +1,10 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { UserContext } from '../components/UserProvider';
 import { GiPadlock } from "react-icons/gi";
 
 const Level = () => {
     const { user, setUser } = useContext(UserContext);
+    const [singleUser, setSingleUser] = useState(null);
 
     useEffect(() => {
         const storedUser = localStorage.getItem('user');
@@ -11,6 +12,35 @@ const Level = () => {
             setUser(JSON.parse(storedUser));
         }
     }, [setUser]);
+
+    const email = user?.data?.email
+
+    useEffect(() => {
+        const fetchSingleUser = async () => {
+            const token = localStorage.getItem('token');
+            if (user && token) {
+                try {
+                    const response = await fetch('http://localhost:9000/api/auth/userData', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${token}`
+                        },
+                        body: JSON.stringify({email})
+                    });
+                    if (response.ok) {
+                        const data = await response.json();
+                        setSingleUser(data.data);
+                    } else {
+                        console.error('Failed to fetch notifications');
+                    }
+                } catch (error) {
+                    console.error('Error fetching notifications:', error);
+                }
+            }
+        };
+        fetchSingleUser();
+    }, [user]);
 
     // Function to calculate counts for levels
     const calculateLevelCount = (allChildLength) => {
@@ -86,7 +116,7 @@ const Level = () => {
         return levels;
     };
 
-    const levelsCount = calculateLevelCount(user?.data?.allChild?.length || 0);
+    const levelsCount = calculateLevelCount(singleUser?.allChild?.length || 0);
 
     return (
         <>
@@ -110,7 +140,7 @@ const Level = () => {
                     </div>
                     <div className='border-[1px] border-gray-300 rounded-md shadow-md shadow-gray-500 w-full lg:w-1/5 flex flex-col justify-center items-center p-2 py-4 bg-gray-500' style={{ color: 'greenyellow' }}>
                         <h1 className='text-md font-semibold uppercase text-white'>Total Members</h1>
-                        <span className='text-5xl font-bold uppercase'>{user?.data?.allChild?.length || 0}</span>
+                        <span className='text-5xl font-bold uppercase'>{singleUser?.allChild?.length || 0}</span>
                     </div>
                 </div>
             </div>
