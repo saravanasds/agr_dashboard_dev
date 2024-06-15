@@ -20,14 +20,17 @@ const ActiveUser = () => {
                         "Authorization": `Bearer ${token}`
                     }
                 });
-                setActivations(response.data.activatedUsers);
+                // Reverse the order of activations
+                const reversedActivations = response.data.activatedUsers.reverse();
+                setActivations(reversedActivations);
             } catch (error) {
                 console.error('Error fetching data:', error);
             }
         };
-
+    
         fetchData();
     }, []);
+    
 
     const printTable = () => {
         const printContents = document.getElementById("printTable").innerHTML;
