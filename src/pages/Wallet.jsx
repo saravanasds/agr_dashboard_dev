@@ -80,11 +80,11 @@ const Wallet = () => {
                         <div className="my-3">
                             <div className="flex justify-center items-center w-full hover:bg-gray-200 p-2 rounded-md">
                                 <div className="w-1/2"><h1 className="text-md sm:text-lg">Level Income</h1></div>
-                                <div className="w-1/2 h-full bg-gray-200 hover:bg-white px-2 py-1 rounded-md text-xl"><p>&#x20B9; {singleUser?.levelAmount}</p></div>
+                                <div className="w-1/2 h-full bg-gray-200 hover:bg-white px-2 py-1 rounded-md text-xl"><p>&#x20B9; {singleUser?.availableLevelIncome}</p></div>
                             </div>
                             <div className="flex justify-center items-center w-full hover:bg-gray-200 p-2 rounded-md">
                                 <div className="w-1/2"><h1 className="text-md sm:text-lg">Referal Income</h1></div>
-                                <div className="w-1/2 h-full bg-gray-200 hover:bg-white px-2 py-1 rounded-md text-xl"><p>&#x20B9; {singleUser?.referralAmount}</p></div>
+                                <div className="w-1/2 h-full bg-gray-200 hover:bg-white px-2 py-1 rounded-md text-xl"><p>&#x20B9; {singleUser?.availableReferralIncome}</p></div>
                             </div>
                         </div>
                     </div>
