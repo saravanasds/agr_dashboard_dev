@@ -49,8 +49,8 @@ const ProgressSteper = () => {
       console.log(formDataObj);
 
       const response = await axios.post(
-        // `https://agr-backend-m85q.onrender.com/api/auth/register`,
-        `https://agr-backend-m85q.onrender.com/api/auth/register`,
+        // `http://3.25.59.94:9000/api/auth/register`,
+        `http://3.25.59.94:9000/api/auth/register`,
         formDataObj
       );
 

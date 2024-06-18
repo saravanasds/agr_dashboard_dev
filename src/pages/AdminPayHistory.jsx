@@ -9,7 +9,7 @@ export default function Example() {
   useEffect(() => {
     const fetchReferralHistory = async () => {
       try {
-        const response = await axios.get('https://agr-backend-m85q.onrender.com/api/admin/referralHistory', {
+        const response = await axios.get('http://3.25.59.94:9000/api/admin/referralHistory', {
           headers: {
             Authorization: `Bearer ${adminToken}`,
           },

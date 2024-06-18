@@ -32,7 +32,7 @@ export default function Register() {
     setLoading(true);
     try {
       const response = await axios.post(
-        `https://agr-backend-m85q.onrender.com/api/auth/register`,
+        `http://3.25.59.94:9000/api/auth/register`,
         values
       );
       const data = response.data;

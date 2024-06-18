@@ -25,7 +25,7 @@ export default function AdminRegister() {
         setLoading(true);
         try {
             const response = await axios.post(
-                `https://agr-backend-m85q.onrender.com/api/admin/register`,
+                `http://3.25.59.94:9000/api/admin/register`,
                 values
             );
             const data = response.data;

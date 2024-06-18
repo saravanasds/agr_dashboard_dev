@@ -15,7 +15,7 @@ const InactiveUser = () => {
                 return;
             }
             try {
-                const response = await axios.post('https://agr-backend-m85q.onrender.com/api/admin/deactivatedUser', {}, {
+                const response = await axios.post('http://3.25.59.94:9000/api/admin/deactivatedUser', {}, {
                     headers: {
                         "Authorization": `Bearer ${token}`
                     }
@@ -137,7 +137,7 @@ const InactiveUser = () => {
 
         try {
             const response = await axios.post(
-                'https://agr-backend-m85q.onrender.com/api/admin/activateUser',
+                'http://3.25.59.94:9000/api/admin/activateUser',
                 {
                     email: selectedUser.email,
                     reqMessage: true
@@ -281,7 +281,7 @@ const InactiveUser = () => {
                                             <div className='hover:bg-gray-200 rounded flex p-2 gap-2'>
                                                 <h2 className='text-md font-semibold'>Adhar proof:</h2>
                                                 <p>
-                                                    <a href={`https://agr-backend-m85q.onrender.com/${selectedUser.adharProof}`} target="_blank" rel="noopener noreferrer">
+                                                    <a href={`http://3.25.59.94:9000/${selectedUser.adharProof}`} target="_blank" rel="noopener noreferrer">
                                                         {selectedUser.adharProof}
                                                     </a>
                                                 </p>
@@ -289,7 +289,7 @@ const InactiveUser = () => {
                                             <div className='hover:bg-gray-200 rounded flex p-2 gap-2'>
                                                 <h2 className='text-md font-semibold'>Photo:</h2>
                                                 <p>
-                                                    <a href={`https://agr-backend-m85q.onrender.com/${selectedUser.photo}`} target="_blank" rel="noopener noreferrer">
+                                                    <a href={`http://3.25.59.94:9000/${selectedUser.photo}`} target="_blank" rel="noopener noreferrer">
                                                         {selectedUser.photo}
                                                     </a>
                                                 </p>

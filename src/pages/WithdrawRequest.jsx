@@ -24,7 +24,7 @@ const WithdrawRequest = () => {
             const token = localStorage.getItem('token');
             if (user && token) {
                 try {
-                    const response = await fetch('https://agr-backend-m85q.onrender.com/api/auth/userData', {
+                    const response = await fetch('http://3.25.59.94:9000/api/auth/userData', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',
@@ -93,7 +93,7 @@ const WithdrawRequest = () => {
         }
 
         try {
-            const response = await fetch('https://agr-backend-m85q.onrender.com/api/auth/levelIncomeWithdrawRequest', {
+            const response = await fetch('http://3.25.59.94:9000/api/auth/levelIncomeWithdrawRequest', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

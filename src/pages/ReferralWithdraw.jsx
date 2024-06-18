@@ -45,7 +45,7 @@ const ReferralWithdraw = () => {
         }
 
         try {
-            const response = await fetch('https://agr-backend-m85q.onrender.com/api/auth/referralIncomeWithdrawRequest', {
+            const response = await fetch('http://3.25.59.94:9000/api/auth/referralIncomeWithdrawRequest', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

@@ -11,7 +11,7 @@ const Level = () => {
             try {
                 const token = localStorage.getItem('adminToken');
                 // console.log(token);
-                const response = await axios.get('https://agr-backend-m85q.onrender.com/api/admin/allUsers', {
+                const response = await axios.get('http://3.25.59.94:9000/api/admin/allUsers', {
                     headers: {
                         'Authorization': `Bearer ${token}`
                     }
