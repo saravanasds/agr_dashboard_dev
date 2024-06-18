@@ -30,7 +30,7 @@ const WithdrawRequestTable = () => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:9000/api/admin/withdrawRequestUser",
+          "https://agr-backend-m85q.onrender.com/api/admin/withdrawRequestUser",
           {
             headers: {
               Authorization: `Bearer ${adminToken}`,
@@ -66,7 +66,7 @@ const WithdrawRequestTable = () => {
       // console.log(approvePayment);
       // console.log(adminToken);
       await axios.post(
-        "http://localhost:9000/api/admin/approveWithdrawRequest",
+        "https://agr-backend-m85q.onrender.com/api/admin/approveWithdrawRequest",
         approvePayment,
         {
           headers: {
@@ -174,7 +174,7 @@ const WithdrawRequestTable = () => {
     try {
 
       await axios.post(
-        "http://localhost:9000/api/admin/rejectWithdrawRequest",
+        "https://agr-backend-m85q.onrender.com/api/admin/rejectWithdrawRequest",
         newData,
         {
           headers: {

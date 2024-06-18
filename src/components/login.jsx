@@ -24,7 +24,7 @@ export default function Login({ setRole }) {
   async function sendDataToLogin(values) {
     setLoading(true);
     try {
-      const response = await axios.post('http://localhost:9000/api/auth/login', values);
+      const response = await axios.post('https://agr-backend-m85q.onrender.com/api/auth/login', values);
       const data = response.data;
 
       localStorage.setItem('token', data.token);
