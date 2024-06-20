@@ -24,7 +24,7 @@ export default function Login({ setRole }) {
   async function sendDataToLogin(values) {
     setLoading(true);
     try {
-      const response = await axios.post('http://3.25.59.94:9000/api/auth/login', values);
+      const response = await axios.post('https://api.agrpremiumplan.in/api/auth/login', values);
       const data = response.data;
 
       localStorage.setItem('token', data.token);

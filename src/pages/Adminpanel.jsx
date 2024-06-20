@@ -29,7 +29,7 @@ const Dashboard = () => {
           try {
             const token = localStorage.getItem('adminToken');
             console.log(token);
-            const response = await axios.get('http://3.25.59.94:9000/api/admin/allUsers', {
+            const response = await axios.get('https://api.agrpremiumplan.in/api/admin/allUsers', {
               headers: {
                 'Authorization': `Bearer ${token}`
               }
@@ -47,7 +47,7 @@ const Dashboard = () => {
     useEffect(() => {
         const fetchBonusHistory = async () => {
             try {
-                const response = await axios.get('http://3.25.59.94:9000/api/admin/bonusHistory', {
+                const response = await axios.get('https://api.agrpremiumplan.in/api/admin/bonusHistory', {
                     headers: {
                         Authorization: `Bearer ${adminToken}`,
                     },
@@ -78,7 +78,7 @@ const Dashboard = () => {
         };
 
         try {
-            const response = await axios.post('http://3.25.59.94:9000/api/admin/assignBonus', newBonus, {
+            const response = await axios.post('https://api.agrpremiumplan.in/api/admin/assignBonus', newBonus, {
                 headers: {
                     Authorization: `Bearer ${adminToken}`,
                 },

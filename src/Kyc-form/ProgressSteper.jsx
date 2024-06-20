@@ -49,8 +49,8 @@ const ProgressSteper = () => {
       console.log(formDataObj);
 
       const response = await axios.post(
-        // `http://3.25.59.94:9000/api/auth/register`,
-        `http://3.25.59.94:9000/api/auth/register`,
+        // `https://api.agrpremiumplan.in/api/auth/register`,
+        `https://api.agrpremiumplan.in/api/auth/register`,
         formDataObj
       );
 

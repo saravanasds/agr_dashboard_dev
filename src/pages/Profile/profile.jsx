@@ -12,7 +12,7 @@ function ProfilePage() {
     useEffect(() => {
         const fetchProfileData = async () => {
             try {
-                const response = await axios.get('http://3.25.59.94:9000/api/user/profile', {
+                const response = await axios.get('https://api.agrpremiumplan.in/api/user/profile', {
                     headers: {
                         "Authorization": `Bearer ${localStorage.getItem('token')}`
                     }
@@ -31,7 +31,7 @@ function ProfilePage() {
 
     const handleSaveChanges = async (updatedData) => {
         try {
-            const response = await axios.put('http://3.25.59.94:9000/api/user/profile', updatedData, {
+            const response = await axios.put('https://api.agrpremiumplan.in/api/user/profile', updatedData, {
                 headers: {
                     "Authorization": `Bearer ${localStorage.getItem('token')}`
                 }

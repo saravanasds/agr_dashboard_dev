@@ -18,7 +18,7 @@ const MemberDetails = () => {
       try {
         const token = localStorage.getItem('adminToken');
         console.log(token);
-        const response = await axios.get('http://3.25.59.94:9000/api/admin/allUsers', {
+        const response = await axios.get('https://api.agrpremiumplan.in/api/admin/allUsers', {
           headers: {
             'Authorization': `Bearer ${token}`
           }
@@ -274,7 +274,7 @@ const MemberDetails = () => {
                   <div className='hover:bg-gray-200 rounded flex p-2 gap-2'>
                     <h2 className='text-md font-semibold'>Adhar proof:</h2>
                     <p>
-                      <a href={`http://3.25.59.94:9000/${selectedUser.adharProof}`} target="_blank" rel="noopener noreferrer">
+                      <a href={`https://api.agrpremiumplan.in/${selectedUser.adharProof}`} target="_blank" rel="noopener noreferrer">
                         {selectedUser.adharProof}
                       </a>
                     </p>
@@ -282,7 +282,7 @@ const MemberDetails = () => {
                   <div className='hover:bg-gray-200 rounded flex p-2 gap-2'>
                     <h2 className='text-md font-semibold'>Photo:</h2>
                     <p>
-                      <a href={`http://3.25.59.94:9000/${selectedUser.photo}`} target="_blank" rel="noopener noreferrer">
+                      <a href={`https://api.agrpremiumplan.in/${selectedUser.photo}`} target="_blank" rel="noopener noreferrer">
                         {selectedUser.photo}
                       </a>
                     </p>

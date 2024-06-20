@@ -45,7 +45,7 @@ const ReferralWithdraw = () => {
         }
 
         try {
-            const response = await fetch('http://3.25.59.94:9000/api/auth/referralIncomeWithdrawRequest', {
+            const response = await fetch('https://api.agrpremiumplan.in/api/auth/referralIncomeWithdrawRequest', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

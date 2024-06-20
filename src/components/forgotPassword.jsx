@@ -32,7 +32,7 @@ export default function Register() {
     setLoading(true);
     try {
       const response = await axios.post(
-        `http://3.25.59.94:9000/api/auth/register`,
+        `https://api.agrpremiumplan.in/api/auth/register`,
         values
       );
       const data = response.data;

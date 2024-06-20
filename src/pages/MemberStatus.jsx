@@ -16,7 +16,7 @@ function MemberStatus() {
         const fetchData = async () => {
             try {
                 const token = localStorage.getItem('adminToken');
-                const response = await axios.get('http://3.25.59.94:9000/api/admin/allUsers', {
+                const response = await axios.get('https://api.agrpremiumplan.in/api/admin/allUsers', {
                     headers: {
                         'Authorization': `Bearer ${token}`
                     }

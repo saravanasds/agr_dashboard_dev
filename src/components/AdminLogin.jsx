@@ -33,7 +33,7 @@ export default function AdminLogin({ setRole }) { // Receive setRole as a prop
     setLoading(true);
     try {
       const response = await axios.post(
-        `http://3.25.59.94:9000/api/admin/login`,
+        `https://api.agrpremiumplan.in/api/admin/login`,
         values
       );
 
