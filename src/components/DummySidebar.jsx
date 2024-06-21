@@ -11,6 +11,7 @@ import { FaMoneyCheckDollar } from "react-icons/fa6";
 import { BiMoneyWithdraw } from "react-icons/bi";
 import { NavLink } from 'react-router-dom';
 import ProgressSteper from '../Kyc-form/ProgressSteper';
+import agrlogo from '../../public/assets/logos/agr logo.png'
 
 const Sidebar = () => {
     const [isOpen, setIsOpen] = useState(window.innerWidth > 568);
@@ -74,7 +75,7 @@ const Sidebar = () => {
         <div className="flex w-full">
             <div style={{ width: isOpen ? "250px" : "40px", minWidth: isOpen ? "250px" : "40px" }} className="sidebar bg-black min-h-screen text-white transition-all duration-500 fixed">
                 <div className="top_section flex items-center py-[20px] " style={{ marginBottom: isOpen ? "15px" : "60px" }}>
-                    <img src="src/assets/agr logo.png" alt="" style={{ display: isOpen ? "block" : "none" }} className="logo w-[85px] sm:w-[100px] ml-14 sm:ml-16 mt-5" />
+                    <img src={agrlogo} alt="" style={{ display: isOpen ? "block" : "none" }} className="logo w-[85px] sm:w-[100px] ml-14 sm:ml-16 mt-5" />
                     <div style={{ marginTop: isOpen ? "15px" : "20px", fontSize: isOpen? "30px" : "25px", marginLeft: isOpen ? "16px" : "7px" }} className="bars flex justify-center items-center text-3xl cursor-pointer hover:text-blue-400 absolute ">
                         <FaBars onClick={toggle}/>
                     </div>

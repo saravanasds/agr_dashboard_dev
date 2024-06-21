@@ -339,7 +339,11 @@ const InactiveUser = () => {
                                             </div>
                                             <div className='hover:bg-gray-200 rounded flex p-2 gap-2'>
                                                 <h2 className='text-md font-semibold'>Payment Screenshot:</h2>
-                                                <p>{selectedUser.paymentScreenshot}</p>
+                                                <p>
+                                                    <a href={`https://agr-backend-m85q.onrender.com/${selectedUser.paymentScreenshot}`} target="_blank" rel="noopener noreferrer">
+                                                        {selectedUser.paymentScreenshot}
+                                                    </a>
+                                                </p>
                                             </div>
                                             <div className='hover:bg-gray-200 rounded flex p-2 gap-2'>
                                                 <h2 className='text-md font-semibold'>Referral Id:</h2>

@@ -127,7 +127,6 @@ export default function Step1({ nextStep, formData = {}, updateFormData }) {
                                         ""
                                     )}
                                     <button type="submit" className="w-full sm:w-auto bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-10 rounded-lg focus:outline-none focus:shadow-outline">Register</button>
-                                    <button type="submit" onClick={nextStep} className="w-full sm:w-auto bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-10 rounded-lg focus:outline-none focus:shadow-outline">Nxt</button>
                                 </form>
                             </div>
                         </div>

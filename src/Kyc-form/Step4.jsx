@@ -10,7 +10,7 @@ const Step4 = ({ nextStep, prevStep }) => {
 
                 <div className="flex flex-col md:flex-row justify-center mb-4 border-2 ">
                     <img
-                        src="public/agr-qr.jpeg"
+                        src="assets/agr-qr.jpeg"
                         alt="Sample QR Code"
                         className="w-80"
                     />

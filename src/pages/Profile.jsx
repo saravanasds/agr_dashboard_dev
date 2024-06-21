@@ -2,7 +2,6 @@
 import React, { useContext, useEffect } from 'react';
 import { UserContext } from '../components/UserProvider';
 import { formatDate } from '../utils/utils';
-import Header from '../components/Header'
 
 const Profile = () => {
   const { user, setUser } = useContext(UserContext); // Access user data from context
@@ -35,7 +34,7 @@ const Profile = () => {
         <div className='bg-[#F4F6F9] mx-5 xl:mx-12 flex flex-col lg:flex-row py-5 justify-center text-md'>
           <div className='w-full xl:w-1/3 flex justify-center items-center'>
             <div className='bg-white border-4 border-gray-500 h-[200px] w-[200px] md:h-[250px] md:w-[250px] rounded-[50%]'>
-              <img src={user.data.photo} alt="" className='rounded-full border-white border-4' />
+              <img src={`https://agr-backend-m85q.onrender.com/${user.data.photo}`} alt="" className='rounded-full border-white border-4' />
             </div>
           </div>
           <div className='w-full xl:w-1/3'>
