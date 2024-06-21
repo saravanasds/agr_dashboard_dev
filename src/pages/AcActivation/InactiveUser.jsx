@@ -282,7 +282,7 @@ const InactiveUser = () => {
                                                 <h2 className='text-md font-semibold'>Adhar proof:</h2>
                                                 <p>
                                                     <a href={`https://agr-backend-m85q.onrender.com/${selectedUser.adharProof}`} target="_blank" rel="noopener noreferrer">
-                                                        {selectedUser.adharProof}
+                                                        User Aadhar Proof
                                                     </a>
                                                 </p>
                                             </div>

@@ -32,6 +32,7 @@ const Level = () => {
                     if (response.ok) {
                         const data = await response.json();
                         setSingleUser(data.data);
+                        console.log(data);
                     } else {
                         console.error('Failed to fetch notifications');
                     }

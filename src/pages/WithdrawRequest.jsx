@@ -54,10 +54,10 @@ const WithdrawRequest = () => {
         if (singleUser && singleUser.allChild) {
             const length = singleUser.allChild.length;
             
-            if (length >= 12) {
-                setWithdrawAmount('900');
-            } else if (length >= 3) {
-                setWithdrawAmount('1500');
+            if (length > 0 && length <= 3) {
+                setWithdrawAmount(1500);
+            } else if (length > 3 && length <= 12) {
+                setWithdrawAmount(1500);
             }
         }
     }, [singleUser]);
