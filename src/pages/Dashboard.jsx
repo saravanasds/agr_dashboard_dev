@@ -21,8 +21,9 @@ const Dashboard = () => {
         }
     }, [setUser]);
 
-    const email = user?.data?.email
-    const profilePhoto = `https://agr-backend-m85q.onrender.com/${user.data.photo}`
+    const profilePhoto = user?.data?.photo
+        ? `https://agr-backend-m85q.onrender.com/${user.data.photo}`
+        : '';
 
     useEffect(() => {
         const fetchSingleUser = async () => {
@@ -35,7 +36,7 @@ const Dashboard = () => {
                             'Content-Type': 'application/json',
                             'Authorization': `Bearer ${token}`
                         },
-                        body: JSON.stringify({ email })
+                        body: JSON.stringify({ email: user.data.email })
                     });
                     if (response.ok) {
                         const data = await response.json();
@@ -55,9 +56,10 @@ const Dashboard = () => {
                 setLoading(false);
             }
         };
-        fetchSingleUser();
-    }, [user, email]);
-
+        if (user) {
+            fetchSingleUser();
+        }
+    }, [user]);
 
     useEffect(() => {
         const fetchNotifications = async () => {
@@ -82,7 +84,9 @@ const Dashboard = () => {
                 }
             }
         };
-        fetchNotifications();
+        if (user) {
+            fetchNotifications();
+        }
     }, [user]);
 
     if (!user) {
@@ -127,14 +131,14 @@ const Dashboard = () => {
                     <div className='bg-red-300 rounded-lg py-5 flex justify-around items-center px-4 shadow-sm shadow-gray-800'>
                         <div>
                             <p className='text-md sm:text-xl font-semibold'>Downline Members</p>
-                            <p className='text-xl sm:text-2xl font-semibold text-center'>{singleUser?.allChild.length}</p>
+                            <p className='text-xl sm:text-2xl font-semibold text-center'>{singleUser?.allChild?.length}</p>
                         </div>
                         <div><MdGroups className='text-[40px] md:text-[65px] opacity-80' /></div>
                     </div>
                     <div className='bg-[#66bfbf] rounded-lg py-5 flex justify-around items-center px-4 shadow-sm shadow-gray-800'>
                         <div>
                             <p className='text-md sm:text-xl font-semibold'>Referral Members</p>
-                            <p className='text-xl sm:text-2xl font-semibold text-center'>{singleUser?.referredPeoples.length}</p>
+                            <p className='text-xl sm:text-2xl font-semibold text-center'>{singleUser?.referredPeoples?.length}</p>
                         </div>
                         <div><BsPersonFillAdd className='text-[40px] md:text-[65px] opacity-80' /></div>
                     </div>

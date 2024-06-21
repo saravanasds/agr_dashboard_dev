@@ -17,8 +17,8 @@ const WithdrawRequest = () => {
         }
     }, [setUser]);
 
-    const email = user?.data?.email
-    const profilePhoto = `https://agr-backend-m85q.onrender.com/${user.data.photo}`
+    const email = user?.data?.email;
+    const profilePhoto = user?.data ? `https://agr-backend-m85q.onrender.com/${user.data.photo}` : '';
 
     useEffect(() => {
         const fetchSingleUser = async () => {
@@ -51,16 +51,15 @@ const WithdrawRequest = () => {
                 setLoading(false);
             }
         };
-        fetchSingleUser();
+        if (user) {
+            fetchSingleUser();
+        }
     }, [user, email]);
-
-
-   
 
     useEffect(() => {
         if (singleUser && singleUser.allChild) {
             const length = singleUser.allChild.length;
-            
+
             if (length > 0 && length <= 3) {
                 setWithdrawAmount(1500);
             } else if (length > 3 && length <= 12) {
@@ -125,14 +124,13 @@ const WithdrawRequest = () => {
         }
     };
 
-
     return (
         <>
             <div>
                 <div className='w-full h-16 bg-[#2d4059] flex justify-between items-center py-3 px-10'>
                     <div><span className='sm:text-2xl font-bold uppercase text-white'>Withdraw Request</span></div>
                     <div className=' rounded-full flex justify-center items-center'>
-                        <img src={profilePhoto} alt="" className=' rounded-full border-2 h-12 w-12 object-cover' />
+                        {user?.data && <img src={profilePhoto} alt="" className=' rounded-full border-2 h-12 w-12 object-cover' />}
                     </div>
                 </div>
             </div>

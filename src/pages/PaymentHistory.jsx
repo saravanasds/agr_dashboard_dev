@@ -15,8 +15,8 @@ const PaymentHistory = () => {
         }
     }, [setUser]);
 
-    const email = user?.data?.email
-    const profilePhoto = `https://agr-backend-m85q.onrender.com/${user.data.photo}`
+    const email = user?.data?.email;
+    const profilePhoto = user?.data ? `https://agr-backend-m85q.onrender.com/${user.data.photo}` : '';
 
     useEffect(() => {
         const fetchSingleUser = async () => {
@@ -49,9 +49,10 @@ const PaymentHistory = () => {
                 setLoading(false);
             }
         };
-        fetchSingleUser();
+        if (user) {
+            fetchSingleUser();
+        }
     }, [user, email]);
-
 
     useEffect(() => {
         if (singleUser && singleUser.withdrawHistory) {
@@ -67,14 +68,13 @@ const PaymentHistory = () => {
         return <div>{error}</div>;
     }
 
-
     return (
         <>
             <div>
                 <div className='w-full h-16 bg-[#2d4059] flex justify-between items-center py-3 px-10'>
                     <div><span className='sm:text-2xl font-bold uppercase text-white'>Payment History</span></div>
                     <div className=' rounded-full flex justify-center items-center'>
-                        <img src={profilePhoto} alt="" className=' rounded-full border-2 h-12 w-12 object-cover' />
+                        {profilePhoto && <img src={profilePhoto} alt="Profile" className='rounded-full border-2 h-12 w-12 object-cover' />}
                     </div>
                 </div>
             </div>
