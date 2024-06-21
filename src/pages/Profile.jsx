@@ -18,23 +18,26 @@ const Profile = () => {
   }
   // console.log(user.data)
 
+  const profilePhoto = `https://agr-backend-m85q.onrender.com/${user.data.photo}`
+
+
   return (
     <>
       <div>
-      <div className='w-full h-16 bg-[#2d4059] flex justify-between items-center py-3 px-10'>
-        <div><span className='sm:text-2xl font-bold uppercase text-white'>Profile</span></div>
-        <div className='border-2 border-black rounded-full'>
-            <img src="src/assets/1679057404284.jpg" alt="" className='w-12 rounded-full border-2'/>
+        <div className='w-full h-16 bg-[#2d4059] flex justify-between items-center py-3 px-10'>
+          <div><span className='sm:text-2xl font-bold uppercase text-white'>Profile</span></div>
+          <div className=' rounded-full flex justify-center items-center'>
+            <img src={profilePhoto} alt="" className=' rounded-full border-2 h-12 w-12 object-cover' />
+          </div>
         </div>
-    </div>
       </div>
       {/* Personal details */}
       <div className='bg-white w-full py-8'>
         <h2 className='sm:text-2xl text-center font-bold uppercase tracking-wide py-4 bg-gray-200 mx-5 xl:mx-12'>Profile Details</h2>
         <div className='bg-[#F4F6F9] mx-5 xl:mx-12 flex flex-col lg:flex-row py-5 justify-center text-md'>
           <div className='w-full xl:w-1/3 flex justify-center items-center'>
-            <div className='bg-white border-4 border-gray-500 h-[200px] w-[200px] md:h-[250px] md:w-[250px] rounded-[50%]'>
-              <img src={`https://agr-backend-m85q.onrender.com/${user.data.photo}`} alt="" className='rounded-full border-white border-4' />
+            <div className='bg-white border-4 border-gray-500 h-[200px] w-[200px] md:h-[250px] md:w-[250px] rounded-full flex justify-center items-center'>
+              <img src={profilePhoto} alt="" className='rounded-full object-cover h-[200px] w-[200px] md:h-[240px] md:w-[240px] border-white border-4' />
             </div>
           </div>
           <div className='w-full xl:w-1/3'>

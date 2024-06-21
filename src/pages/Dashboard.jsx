@@ -20,6 +20,7 @@ const Dashboard = () => {
     }, [setUser]);
 
     const email = user?.data?.email
+    const profilePhoto = `https://agr-backend-m85q.onrender.com/${user.data.photo}`
 
     useEffect(() => {
         const fetchSingleUser = async () => {
@@ -32,7 +33,7 @@ const Dashboard = () => {
                             'Content-Type': 'application/json',
                             'Authorization': `Bearer ${token}`
                         },
-                        body: JSON.stringify({email})
+                        body: JSON.stringify({ email })
                     });
                     if (response.ok) {
                         const data = await response.json();
@@ -84,14 +85,14 @@ const Dashboard = () => {
         const month = String(date.getMonth() + 1).padStart(2, '0');
         const year = String(date.getFullYear()).slice(-2);
         return `${day}/${month}/${year}`;
-      };
+    };
 
     return (
         <div className='w-full min-h-screen overflow-y-auto grow flex flex-col justify-start items-center'>
             <div className='w-full h-16 bg-[#2d4059] flex justify-between items-center py-3 px-10'>
                 <div><span className='sm:text-2xl font-bold uppercase text-white'>Your Level : {singleUser?.level}</span></div>
-                <div className='border-2 border-black rounded-full'>
-                    <img src="src/assets/1679057404284.jpg" alt="" className='w-12 rounded-full border-2' />
+                <div className=' rounded-full flex justify-center items-center'>
+                    <img src={profilePhoto} alt="" className=' rounded-full border-2 h-12 w-12 object-cover' />
                 </div>
             </div>
 

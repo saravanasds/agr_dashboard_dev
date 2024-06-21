@@ -14,6 +14,7 @@ const PaymentHistory = () => {
     }, [setUser]);
 
     const email = user?.data?.email
+    const profilePhoto = `https://agr-backend-m85q.onrender.com/${user.data.photo}`
 
     useEffect(() => {
         const fetchSingleUser = async () => {
@@ -26,7 +27,7 @@ const PaymentHistory = () => {
                             'Content-Type': 'application/json',
                             'Authorization': `Bearer ${token}`
                         },
-                        body: JSON.stringify({email})
+                        body: JSON.stringify({ email })
                     });
                     if (response.ok) {
                         const data = await response.json();
@@ -54,8 +55,8 @@ const PaymentHistory = () => {
             <div>
                 <div className='w-full h-16 bg-[#2d4059] flex justify-between items-center py-3 px-10'>
                     <div><span className='sm:text-2xl font-bold uppercase text-white'>Payment History</span></div>
-                    <div className='border-2 border-black rounded-full'>
-                        <img src="src/assets/1679057404284.jpg" alt="" className='w-12 rounded-full border-2' />
+                    <div className=' rounded-full flex justify-center items-center'>
+                        <img src={profilePhoto} alt="" className=' rounded-full border-2 h-12 w-12 object-cover' />
                     </div>
                 </div>
             </div>
@@ -79,9 +80,9 @@ const PaymentHistory = () => {
                                     <td className="px-6 py-4 whitespace-nowrap">{index + 1}</td>
                                     <td className="px-6 py-4 whitespace-nowrap">{history.date}</td>
                                     <td className="px-6 py-4 whitespace-nowrap">{history.transactionNo}</td>
-                                    <td className="px-6 py-4 whitespace-nowrap">{history.withdrawLevelIncome?history.withdrawLevelIncome:"0"}</td>
-                                    <td className="px-6 py-4 whitespace-nowrap">{history.withdrawRefferalIncome?history.withdrawRefferalIncome:"0"}</td>
-                                    <td className="px-6 py-4 whitespace-nowrap">{history.bonusValue?history.bonusValue:"0"}</td>
+                                    <td className="px-6 py-4 whitespace-nowrap">{history.withdrawLevelIncome ? history.withdrawLevelIncome : "0"}</td>
+                                    <td className="px-6 py-4 whitespace-nowrap">{history.withdrawRefferalIncome ? history.withdrawRefferalIncome : "0"}</td>
+                                    <td className="px-6 py-4 whitespace-nowrap">{history.bonusValue ? history.bonusValue : "0"}</td>
                                 </tr>
                             ))}
                         </tbody>

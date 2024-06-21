@@ -18,6 +18,7 @@ const WithdrawRequest = () => {
     }, [setUser]);
 
     const email = user?.data?.email
+    const profilePhoto = `https://agr-backend-m85q.onrender.com/${user.data.photo}`
 
     useEffect(() => {
         const fetchSingleUser = async () => {
@@ -122,8 +123,8 @@ const WithdrawRequest = () => {
             <div>
                 <div className='w-full h-16 bg-[#2d4059] flex justify-between items-center py-3 px-10'>
                     <div><span className='sm:text-2xl font-bold uppercase text-white'>Withdraw Request</span></div>
-                    <div className='border-2 border-black rounded-full'>
-                        <img src="src/assets/1679057404284.jpg" alt="" className='w-12 rounded-full border-2' />
+                    <div className=' rounded-full flex justify-center items-center'>
+                        <img src={profilePhoto} alt="" className=' rounded-full border-2 h-12 w-12 object-cover' />
                     </div>
                 </div>
             </div>
