@@ -4,7 +4,7 @@ import { GiPadlock } from "react-icons/gi";
 
 const Level = () => {
     const { user, setUser } = useContext(UserContext);
-    const [singleUser, setSingleUser] = useState(null);
+    const [singleUser, setSingleUser] = useState({});
 
     useEffect(() => {
         const storedUser = localStorage.getItem('user');
@@ -31,7 +31,7 @@ const Level = () => {
                     });
                     if (response.ok) {
                         const data = await response.json();
-                        setSingleUser(data.data);
+                        setSingleUser(data?.data);
                         console.log(data);
                     } else {
                         console.error('Failed to fetch notifications');
