@@ -26,7 +26,7 @@ const Dashboard = () => {
             const token = localStorage.getItem('token');
             if (user && token) {
                 try {
-                    const response = await fetch('https://api.agrpremiumplan.in/api/auth/userData', {
+                    const response = await fetch('https://agr-backend-m85q.onrender.com/api/auth/userData', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',
@@ -53,7 +53,7 @@ const Dashboard = () => {
             const token = localStorage.getItem('token');
             if (user && token) {
                 try {
-                    const response = await fetch('https://api.agrpremiumplan.in/api/auth/notification', {
+                    const response = await fetch('https://agr-backend-m85q.onrender.com/api/auth/notification', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',

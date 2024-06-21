@@ -28,7 +28,7 @@ const Dashboard = () => {
                 return;
             }
             try {
-                const response = await axios.post('https://api.agrpremiumplan.in/api/admin/deactivatedUser', {}, {
+                const response = await axios.post('https://agr-backend-m85q.onrender.com/api/admin/deactivatedUser', {}, {
                     headers: {
                         "Authorization": `Bearer ${token}`
                     }
@@ -47,7 +47,7 @@ const Dashboard = () => {
             try {
                 const token = localStorage.getItem('adminToken');
                 console.log(token);
-                const response = await axios.get('https://api.agrpremiumplan.in/api/admin/withdrawRequestUser', {
+                const response = await axios.get('https://agr-backend-m85q.onrender.com/api/admin/withdrawRequestUser', {
                     headers: {
                         'Authorization': `Bearer ${token}`
                     }
@@ -74,7 +74,7 @@ const Dashboard = () => {
             try {
                 const token = localStorage.getItem('adminToken');
                 console.log(token);
-                const response = await axios.get('https://api.agrpremiumplan.in/api/admin/allUsers', {
+                const response = await axios.get('https://agr-backend-m85q.onrender.com/api/admin/allUsers', {
                     headers: {
                         'Authorization': `Bearer ${token}`
                     }
@@ -120,7 +120,7 @@ const Dashboard = () => {
             const newTodo = { id: Date.now(), text: inputText, dueDate, dueTime };
             const token = localStorage.getItem('token');
             try {
-                const response = await fetch('https://api.agrpremiumplan.in/api/admin/notification', {
+                const response = await fetch('https://agr-backend-m85q.onrender.com/api/admin/notification', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',

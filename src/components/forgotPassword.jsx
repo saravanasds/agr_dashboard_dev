@@ -32,7 +32,7 @@ export default function Register() {
     setLoading(true);
     try {
       const response = await axios.post(
-        `https://api.agrpremiumplan.in/api/auth/register`,
+        `https://agr-backend-m85q.onrender.com/api/auth/register`,
         values
       );
       const data = response.data;

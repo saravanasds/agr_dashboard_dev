@@ -10,7 +10,7 @@ function Activate() {
   useEffect(() => {
     const activateUser = async () => {
       try {
-        const response = await axios.post('https://api.agrpremiumplan.in/api/auth/activate/activateUserEmail', {
+        const response = await axios.post('https://agr-backend-m85q.onrender.com/api/auth/activate/activateUserEmail', {
           activationToken: activationToken
         });
 

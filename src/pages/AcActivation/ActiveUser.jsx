@@ -15,7 +15,7 @@ const ActiveUser = () => {
                 return;
             }
             try {
-                const response = await axios.post('https://api.agrpremiumplan.in/api/admin/activatedUser', {}, {
+                const response = await axios.post('https://agr-backend-m85q.onrender.com/api/admin/activatedUser', {}, {
                     headers: {
                         "Authorization": `Bearer ${token}`
                     }
@@ -135,7 +135,7 @@ const ActiveUser = () => {
 
         try {
             const response = await axios.post(
-                'https://api.agrpremiumplan.in/api/admin/activateUser',
+                'https://agr-backend-m85q.onrender.com/api/admin/activateUser',
                 {
                     email: selectedUser.email,
                     reqMessage: false // Set to true for deactivation
@@ -281,7 +281,7 @@ const ActiveUser = () => {
                                             <div className='hover:bg-gray-200 rounded flex p-2 gap-2'>
                                                 <h2 className='text-md font-semibold'>Adhar proof:</h2>
                                                 <p>
-                                                    <a href={`https://api.agrpremiumplan.in/${selectedUser.adharProof}`} target="_blank" rel="noopener noreferrer">
+                                                    <a href={`https://agr-backend-m85q.onrender.com/${selectedUser.adharProof}`} target="_blank" rel="noopener noreferrer">
                                                         {selectedUser.adharProof}
                                                     </a>
                                                 </p>
@@ -289,7 +289,7 @@ const ActiveUser = () => {
                                             <div className='hover:bg-gray-200 rounded flex p-2 gap-2'>
                                                 <h2 className='text-md font-semibold'>Photo:</h2>
                                                 <p>
-                                                    <a href={`https://api.agrpremiumplan.in/${selectedUser.photo}`} target="_blank" rel="noopener noreferrer">
+                                                    <a href={`https://agr-backend-m85q.onrender.com/${selectedUser.photo}`} target="_blank" rel="noopener noreferrer">
                                                         {selectedUser.photo}
                                                     </a>
                                                 </p>

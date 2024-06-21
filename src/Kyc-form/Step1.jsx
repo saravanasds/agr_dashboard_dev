@@ -33,7 +33,7 @@ export default function Step1({ nextStep, formData = {}, updateFormData }) {
 
     const checkEmailExistence = async (email) => {
         try {
-            const response = await fetch("https://api.agrpremiumplan.in/api/auth/userExist", {
+            const response = await fetch("https://agr-backend-m85q.onrender.com/api/auth/userExist", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

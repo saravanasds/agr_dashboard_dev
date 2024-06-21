@@ -7,7 +7,7 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-        target: 'https://api.agrpremiumplan.in',
+        target: 'https://agr-backend-m85q.onrender.com',
         changeOrigin: true,
         secure: false,
         rewrite: path => path.replace(/^\/api/, '')
