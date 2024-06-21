@@ -3,7 +3,7 @@ import { UserContext } from '../components/UserProvider';
 
 const PaymentHistory = () => {
     const { user, setUser } = useContext(UserContext);
-    const [singleUser, setSingleUser] = useState(null);
+    const [singleUser, setSingleUser] = useState({});
     const [withdrawHistory, setWithdrawHistory] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);

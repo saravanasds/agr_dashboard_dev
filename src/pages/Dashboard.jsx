@@ -10,7 +10,7 @@ import { UserContext } from '../components/UserProvider';
 const Dashboard = () => {
     const { user, setUser } = useContext(UserContext);
     const [notifications, setNotifications] = useState([]);
-    const [singleUser, setSingleUser] = useState(null);
+    const [singleUser, setSingleUser] = useState({});
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 

@@ -4,7 +4,7 @@ import ReferralWithdraw from './ReferralWithdraw';
 
 const WithdrawRequest = () => {
     const { user, setUser } = useContext(UserContext);
-    const [singleUser, setSingleUser] = useState(null);
+    const [singleUser, setSingleUser] = useState({});
     const [withdrawAmount, setWithdrawAmount] = useState("");
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
