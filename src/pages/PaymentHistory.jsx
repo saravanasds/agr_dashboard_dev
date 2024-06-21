@@ -5,6 +5,8 @@ const PaymentHistory = () => {
     const { user, setUser } = useContext(UserContext);
     const [singleUser, setSingleUser] = useState(null);
     const [withdrawHistory, setWithdrawHistory] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
 
     useEffect(() => {
         const storedUser = localStorage.getItem('user');
@@ -31,17 +33,24 @@ const PaymentHistory = () => {
                     });
                     if (response.ok) {
                         const data = await response.json();
-                        setSingleUser(data.data);
+                        setSingleUser(data?.data);
+                        console.log(data);
                     } else {
-                        console.error('Failed to fetch notifications');
+                        console.error('Failed to fetch user data');
+                        setError('Failed to fetch user data');
                     }
                 } catch (error) {
-                    console.error('Error fetching notifications:', error);
+                    console.error('Error fetching user data:', error);
+                    setError('Error fetching user data');
+                } finally {
+                    setLoading(false);
                 }
+            } else {
+                setLoading(false);
             }
         };
         fetchSingleUser();
-    }, [user]);
+    }, [user, email]);
 
 
     useEffect(() => {
@@ -49,6 +58,15 @@ const PaymentHistory = () => {
             setWithdrawHistory(singleUser.withdrawHistory);
         }
     }, [singleUser]);
+
+    if (loading) {
+        return <div>Loading...</div>;
+    }
+
+    if (error) {
+        return <div>{error}</div>;
+    }
+
 
     return (
         <>

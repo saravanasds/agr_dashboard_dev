@@ -31,21 +31,28 @@ const WithdrawRequest = () => {
                             'Content-Type': 'application/json',
                             'Authorization': `Bearer ${token}`
                         },
-                        body: JSON.stringify({email})
+                        body: JSON.stringify({ email })
                     });
                     if (response.ok) {
                         const data = await response.json();
-                        setSingleUser(data.data);
+                        setSingleUser(data?.data);
+                        console.log(data);
                     } else {
-                        console.error('Failed to fetch notifications');
+                        console.error('Failed to fetch user data');
+                        setError('Failed to fetch user data');
                     }
                 } catch (error) {
-                    console.error('Error fetching notifications:', error);
+                    console.error('Error fetching user data:', error);
+                    setError('Error fetching user data');
+                } finally {
+                    setLoading(false);
                 }
+            } else {
+                setLoading(false);
             }
         };
         fetchSingleUser();
-    }, [user]);
+    }, [user, email]);
 
 
    
@@ -117,6 +124,7 @@ const WithdrawRequest = () => {
             setLoading(false);
         }
     };
+
 
     return (
         <>
