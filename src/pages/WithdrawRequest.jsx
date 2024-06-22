@@ -59,14 +59,16 @@ const WithdrawRequest = () => {
     useEffect(() => {
         if (singleUser && singleUser.allChild) {
             const length = singleUser.allChild.length;
-
-            if (length > 0 && length <= 3) {
-                setWithdrawAmount(1500);
-            } else if (length > 3 && length <= 12) {
-                setWithdrawAmount(1500);
+            const amount = singleUser.availableLevelIncome;
+            
+            if (length == 3 || 12 || 39 || 120 || 363 || 1092 || 3279 || 9840 || 29523 || 88572) {
+                setWithdrawAmount(amount);
+            } else{
+                setWithdrawAmount(0);
             }
         }
     }, [singleUser]);
+
 
     if (!singleUser) {
         return <div>Loading...</div>;

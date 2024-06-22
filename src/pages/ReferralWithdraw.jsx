@@ -3,6 +3,7 @@ import { UserContext } from '../components/UserProvider';
 
 const ReferralWithdraw = () => {
     const { user, setUser } = useContext(UserContext);
+    const [singleUser, setSingleUser] = useState({});
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
     const [success, setSuccess] = useState(false);
@@ -14,6 +15,37 @@ const ReferralWithdraw = () => {
         }
     }, [setUser]);
 
+    const email = user?.data?.email;
+
+    useEffect(() => {
+        const fetchSingleUser = async () => {
+            const token = localStorage.getItem('token');
+            if (user && token) {
+                try {
+                    const response = await fetch('http://localhost:8000/api/auth/userData', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${token}`
+                        },
+                        body: JSON.stringify({ email })
+                    });
+                    if (response.ok) {
+                        const data = await response.json();
+                        setSingleUser(data.data);
+                    } else {
+                        console.error('Failed to fetch user data');
+                        setError('Failed to fetch user data');
+                    }
+                } catch (error) {
+                    console.error('Error fetching user data:', error);
+                    setError('Error fetching user data');
+                }
+            }
+        };
+        fetchSingleUser();
+    }, [user, email]);
+
     if (!user) {
         return <div>Loading...</div>;
     }
@@ -24,11 +56,17 @@ const ReferralWithdraw = () => {
         setError(null);
         setSuccess(false);
 
+        if (!singleUser) {
+            setError('User data not loaded.');
+            setLoading(false);
+            return;
+        }
+
         const requestData = {
             name: user.data.firstName,
             email: user.data.email,
             referralId: user.data.referralId,
-            referralIncome: user.data.referralAmount,
+            referralIncome: singleUser.availableReferralIncome,
             mobileNumber: user.data.mobileNumber,
             bankName: user.data.bankName,
             bankAcno: user.data.bankAcno,
@@ -36,7 +74,6 @@ const ReferralWithdraw = () => {
             ifsc: user.data.ifsc
         };
 
-        console.log(requestData);
         const token = localStorage.getItem('token');
         if (!token) {
             setError('Authentication token is missing.');
@@ -45,7 +82,7 @@ const ReferralWithdraw = () => {
         }
 
         try {
-            const response = await fetch('https://agr-backend-m85q.onrender.com/api/auth/referralIncomeWithdrawRequest', {
+            const response = await fetch('http://localhost:8000/api/auth/referralIncomeWithdrawRequest', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -59,7 +96,6 @@ const ReferralWithdraw = () => {
             }
 
             const result = await response.json();
-            console.log('Success:', result);
             setSuccess(true);
         } catch (error) {
             console.error('Error:', error);
@@ -76,7 +112,9 @@ const ReferralWithdraw = () => {
                     <h1 className="text-xl sm:text-2xl font-semibold mb-4">Referral Income</h1>
                     <form onSubmit={handleSubmit} className='flex flex-col lg:flex-row justify-between items-center border-2 p-4 rounded-lg gap-3'>
                         <label htmlFor="withdrawAmount" className='w-full lg:w-auto text-md font-semibold'>Withdrawable Amount:</label>
-                        <p className='w-full lg:w-1/3 border-2 p-2 rounded-lg bg-gray-100'>{user.data.referralAmount}</p>
+                        <p className='w-full lg:w-1/3 border-2 p-2 rounded-lg bg-gray-100'>
+                            {singleUser ? singleUser.availableReferralIncome : 'Loading...'}
+                        </p>
                         <button 
                             type='submit' 
                             className='w-full lg:w-auto p-2 px-4 rounded-lg bg-green-700 text-white'
