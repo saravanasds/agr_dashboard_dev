@@ -118,7 +118,7 @@ const ReferralWithdraw = () => {
                         <button 
                             type='submit' 
                             className='w-full lg:w-auto p-2 px-4 rounded-lg bg-green-700 text-white'
-                            disabled={loading}
+                            disabled={loading || singleUser.availableReferralIncome === "0"}
                         >
                             {loading ? 'Sending...' : 'Send request'}
                         </button>

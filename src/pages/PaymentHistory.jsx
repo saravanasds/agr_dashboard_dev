@@ -90,17 +90,25 @@ const PaymentHistory = () => {
                                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Level Income</th>
                                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Referral Income</th>
                                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Bonus</th>
+                                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
                             </tr>
                         </thead>
                         <tbody className="bg-white divide-y divide-gray-200">
                             {withdrawHistory.map((history, index) => (
                                 <tr key={index}>
                                     <td className="px-6 py-4 whitespace-nowrap">{index + 1}</td>
-                                    <td className="px-6 py-4 whitespace-nowrap">{history.date}</td>
-                                    <td className="px-6 py-4 whitespace-nowrap">{history.transactionNo}</td>
+                                    <td className={`px-6 py-4 whitespace-nowrap ${history.paymentStatus === 'rejected' ? 'text-red-500' : 'text-green-500'}`}>
+                                        {history.date ? history.date : "rejected"}
+                                    </td>
+                                    <td className={`px-6 py-4 whitespace-nowrap ${history.paymentStatus === 'rejected' ? 'text-red-500' : 'text-green-500'}`}>
+                                        {history.transactionNo ? history.transactionNo : "rejected"}
+                                    </td>
                                     <td className="px-6 py-4 whitespace-nowrap">{history.withdrawLevelIncome ? history.withdrawLevelIncome : "0"}</td>
                                     <td className="px-6 py-4 whitespace-nowrap">{history.withdrawRefferalIncome ? history.withdrawRefferalIncome : "0"}</td>
                                     <td className="px-6 py-4 whitespace-nowrap">{history.bonusValue ? history.bonusValue : "0"}</td>
+                                    <td className={`px-6 py-4 whitespace-nowrap ${history.paymentStatus === 'rejected' ? 'text-red-500' : 'text-green-500'}`}>
+                                        {history.paymentStatus}
+                                    </td>
                                 </tr>
                             ))}
                         </tbody>

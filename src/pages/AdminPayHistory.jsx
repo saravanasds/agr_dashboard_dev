@@ -87,20 +87,28 @@ export default function Example() {
                     <th className="px-6 py-3 text-center text-xs font-medium text-white uppercase tracking-wider">Level Income</th>
                     <th className="px-6 py-3 text-center text-xs font-medium text-white uppercase tracking-wider">Referral Income</th>
                     <th className="px-6 py-3 text-center text-xs font-medium text-white uppercase tracking-wider">Bonus</th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
                   </tr>
                 </thead>
                 <tbody className="bg-white divide-y divide-gray-200">
                   {adminHistory.map((payment, index) => (
                     <tr key={index}>
                       <td className="px-6 py-4 whitespace-nowrap text-center text-xs sm:text-sm">{index + 1}</td>
-                      <td className="px-6 py-4 whitespace-nowrap text-center text-xs sm:text-sm">{payment.date}</td>
+                      <td className={`px-6 py-4 whitespace-nowrap ${payment.paymentStatus === 'rejected' ? 'text-red-500' : 'text-green-500'}`}>
+                        {payment.date ? payment.date : "rejected"}
+                      </td>
                       <td className="px-6 py-4 whitespace-nowrap text-center text-xs sm:text-sm">{payment.name}</td>
                       <td className="px-6 py-4 whitespace-nowrap text-center text-xs sm:text-sm">{payment.referralId}</td>
-                      <td className="px-6 py-4 whitespace-nowrap text-center text-xs sm:text-sm">{payment.transactionNo}</td>
+                      <td className={`px-6 py-4 whitespace-nowrap ${payment.paymentStatus === 'rejected' ? 'text-red-500' : 'text-green-500'}`}>
+                        {payment.transactionNo ? payment.transactionNo : "rejected"}
+                      </td>
                       <td className="px-6 py-4 whitespace-nowrap text-center text-xs sm:text-sm">{payment.bankAcno}</td>
                       <td className="px-6 py-4 whitespace-nowrap text-center text-xs sm:text-sm">{payment.withdrawLevelIncome ? payment.withdrawLevelIncome : "0"}</td>
                       <td className="px-6 py-4 whitespace-nowrap text-center text-xs sm:text-sm">{payment.withdrawRefferalIncome ? payment.withdrawRefferalIncome : "0"}</td>
                       <td className="px-6 py-4 whitespace-nowrap text-center text-xs sm:text-sm">{payment.bonusValue ? payment.bonusValue : "0"}</td>
+                      <td className={`px-6 py-4 whitespace-nowrap ${payment.paymentStatus === 'rejected' ? 'text-red-500' : 'text-green-500'}`}>
+                        {payment.paymentStatus}
+                      </td>
                     </tr>
                   ))}
                 </tbody>
