@@ -5,7 +5,7 @@ import ReferralWithdraw from './ReferralWithdraw';
 const WithdrawRequest = () => {
     const { user, setUser } = useContext(UserContext);
     const [singleUser, setSingleUser] = useState({});
-    const [withdrawAmount, setWithdrawAmount] = useState("");
+    const [withdrawAmount, setWithdrawAmount] = useState("0");
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
     const [success, setSuccess] = useState(false);
@@ -60,15 +60,15 @@ const WithdrawRequest = () => {
         if (singleUser && singleUser.allChild) {
             const length = singleUser.allChild.length;
             const amount = singleUser.availableLevelIncome;
+            const validLengths = [3, 12, 39, 120, 363, 1092, 3279, 9840, 29523, 88572];
             
-            if (length == 3 || 12 || 39 || 120 || 363 || 1092 || 3279 || 9840 || 29523 || 88572) {
+            if (validLengths.includes(length)) {
                 setWithdrawAmount(amount);
-            } else{
-                setWithdrawAmount(0);
+            } else {
+                setWithdrawAmount("0");
             }
         }
     }, [singleUser]);
-
 
     if (!singleUser) {
         return <div>Loading...</div>;
@@ -79,7 +79,6 @@ const WithdrawRequest = () => {
         setLoading(true);
         setError(null);
         setSuccess(false);
-        setWithdrawAmount('0');
 
         const requestData = {
             name: singleUser.firstName,
@@ -146,7 +145,7 @@ const WithdrawRequest = () => {
                         <button
                             type='submit'
                             className='w-full lg:w-auto p-2 px-4 rounded-lg bg-green-700 text-white'
-                            disabled={loading}
+                            disabled={loading || withdrawAmount === "0"}
                         >
                             {loading ? 'Sending...' : 'Send request'}
                         </button>
