@@ -85,7 +85,7 @@ const Wallet = () => {
                             </div>
                             <div className="flex justify-center items-center w-full hover:bg-gray-200 p-2 rounded-md">
                                 <div className="w-1/2"><h1 className="text-md sm:text-lg">Total Balance</h1></div>
-                                <div className="w-1/2 h-full bg-gray-200 hover:bg-white px-2 py-1 rounded-md"><p>&#x20B9; {singleUser?.amount - 5000}</p></div>
+                                <div className="w-1/2 h-full bg-gray-200 hover:bg-white px-2 py-1 rounded-md"><p>&#x20B9; {singleUser?.availableLevelIncome + singleUser?.availableReferralIncome}</p></div>
                             </div>
                         </div>
                     </div>

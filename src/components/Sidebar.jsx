@@ -8,6 +8,7 @@ import {
 import { GiWallet } from "react-icons/gi";
 import { FaMoneyCheckDollar } from "react-icons/fa6";
 import { BiMoneyWithdraw } from "react-icons/bi";
+import { RiLogoutCircleRLine } from "react-icons/ri";
 import { NavLink } from 'react-router-dom';
 import agrlogo from '../../public/assets/logos/agr logo.png'
 
@@ -62,11 +63,11 @@ const Sidebar = ({children}) => {
             name:"Payment History",
             icon:<FaMoneyCheckDollar/>
         },
-        // {
-        //     path:"/rewards",
-        //     name:"Rewards",
-        //     icon:<IoGiftSharp/>
-        // },
+        {
+            path:"/userLogin",
+            name:"Logout",
+            icon:<RiLogoutCircleRLine/>
+        },
     ];
 
     return (

@@ -2,13 +2,15 @@ import React, { useState, useEffect } from 'react';
 import {
     FaTh,
     FaBars,
-    FaUserAlt,
     FaRegChartBar,
 }from "react-icons/fa";
 import { GiWallet } from "react-icons/gi";
-import { IoGiftSharp } from "react-icons/io5";
 import { FaMoneyCheckDollar } from "react-icons/fa6";
 import { BiMoneyWithdraw } from "react-icons/bi";
+import { RiLogoutCircleRLine } from "react-icons/ri";
+import { TbListDetails } from "react-icons/tb";
+import { GiProgression } from "react-icons/gi";
+import { IoSettingsOutline } from "react-icons/io5";
 import { NavLink } from 'react-router-dom';
 
 
@@ -54,11 +56,6 @@ const Sidebar = ({children}) => {
             name:"Withdraw Request",
             icon:<BiMoneyWithdraw/>
         },
-        // {
-        //     path:"/profileupdates",
-        //     name:"Profile Updates",
-        //     icon:<FaUserAlt/>
-        // }, 
         {
             path:"/adminpaymentHistory",
             name:"Payment History",
@@ -67,18 +64,23 @@ const Sidebar = ({children}) => {
         {
             path:"/memberdetails",
             name:"Member Details",
-            icon:<IoGiftSharp/>
+            icon:<TbListDetails/>
         },
         {
             path:"/memberstatus",
             name:"Member Status",
-            icon:<IoGiftSharp/>
+            icon:<GiProgression/>
         },
         {
             path:"/settings",
             name:"Settings",
-            icon:<IoGiftSharp/>
+            icon:<IoSettingsOutline/>
         },
+         {
+            path:"/adminLogin",
+            name:"Logout",
+            icon:<RiLogoutCircleRLine/>
+        }, 
     ]
     return (
         <div className="flex w-full">
