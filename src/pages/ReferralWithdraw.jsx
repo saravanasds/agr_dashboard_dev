@@ -22,7 +22,7 @@ const ReferralWithdraw = () => {
             const token = localStorage.getItem('token');
             if (user && token) {
                 try {
-                    const response = await fetch('http://localhost:8000/api/auth/userData', {
+                    const response = await fetch('https://agr-backend-m85q.onrender.com/api/auth/userData', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',
@@ -82,7 +82,7 @@ const ReferralWithdraw = () => {
         }
 
         try {
-            const response = await fetch('http://localhost:8000/api/auth/referralIncomeWithdrawRequest', {
+            const response = await fetch('https://agr-backend-m85q.onrender.com/api/auth/referralIncomeWithdrawRequest', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
