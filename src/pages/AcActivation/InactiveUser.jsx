@@ -9,7 +9,7 @@ const InactiveUser = () => {
 
     useEffect(() => {
         const fetchData = async () => {
-            const token = localStorage.getItem('token');
+            const token = localStorage.getItem('adminToken');
             if (!token) {
                 console.error('No token found');
                 return;
@@ -129,7 +129,7 @@ const InactiveUser = () => {
     };
 
     const handleActivate = async () => {
-        const token = localStorage.getItem('token');
+        const token = localStorage.getItem('adminToken');
         if (!token) {
             console.error('No token found');
             return;

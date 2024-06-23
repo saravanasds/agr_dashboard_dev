@@ -22,7 +22,7 @@ const Dashboard = () => {
 
     useEffect(() => {
         const fetchData = async () => {
-            const token = localStorage.getItem('token');
+            const token = localStorage.getItem('adminToken');
             if (!token) {
                 console.error('No token found');
                 return;
@@ -118,7 +118,7 @@ const Dashboard = () => {
     const handleAddTodo = async () => {
         if (inputText.trim() !== "") {
             const newTodo = { id: Date.now(), text: inputText, dueDate, dueTime };
-            const token = localStorage.getItem('token');
+            const token = localStorage.getItem('adminToken');
             try {
                 const response = await fetch('https://agr-backend-m85q.onrender.com/api/admin/notification', {
                     method: 'POST',
