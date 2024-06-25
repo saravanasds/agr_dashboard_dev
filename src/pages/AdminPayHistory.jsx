@@ -95,19 +95,19 @@ export default function Example() {
                     <tr key={index}>
                       <td className="px-6 py-4 whitespace-nowrap text-center text-xs sm:text-sm">{index + 1}</td>
                       <td className={`px-6 py-4 whitespace-nowrap ${payment.paymentStatus === 'rejected' ? 'text-red-500' : 'text-green-500'}`}>
-                        {payment.date ? payment.date : "rejected"}
+                        {payment.date ? payment.date : "null"}
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-center text-xs sm:text-sm">{payment.name}</td>
                       <td className="px-6 py-4 whitespace-nowrap text-center text-xs sm:text-sm">{payment.referralId}</td>
                       <td className={`px-6 py-4 whitespace-nowrap ${payment.paymentStatus === 'rejected' ? 'text-red-500' : 'text-green-500'}`}>
-                        {payment.transactionNo ? payment.transactionNo : "rejected"}
+                        {payment.transactionNo ? payment.transactionNo : "null"}
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-center text-xs sm:text-sm">{payment.bankAcno}</td>
                       <td className="px-6 py-4 whitespace-nowrap text-center text-xs sm:text-sm">{payment.withdrawLevelIncome ? payment.withdrawLevelIncome : "0"}</td>
                       <td className="px-6 py-4 whitespace-nowrap text-center text-xs sm:text-sm">{payment.withdrawRefferalIncome ? payment.withdrawRefferalIncome : "0"}</td>
                       <td className="px-6 py-4 whitespace-nowrap text-center text-xs sm:text-sm">{payment.bonusValue ? payment.bonusValue : "0"}</td>
                       <td className={`px-6 py-4 whitespace-nowrap ${payment.paymentStatus === 'rejected' ? 'text-red-500' : 'text-green-500'}`}>
-                        {payment.paymentStatus}
+                        {payment.paymentStatus?payment.paymentStatus:"Success"}
                       </td>
                     </tr>
                   ))}

@@ -98,16 +98,16 @@ const PaymentHistory = () => {
                                 <tr key={index}>
                                     <td className="px-6 py-4 whitespace-nowrap">{index + 1}</td>
                                     <td className={`px-6 py-4 whitespace-nowrap ${history.paymentStatus === 'rejected' ? 'text-red-500' : 'text-green-500'}`}>
-                                        {history.date ? history.date : "rejected"}
+                                        {history.date ? history.date : "null"}
                                     </td>
                                     <td className={`px-6 py-4 whitespace-nowrap ${history.paymentStatus === 'rejected' ? 'text-red-500' : 'text-green-500'}`}>
-                                        {history.transactionNo ? history.transactionNo : "rejected"}
+                                        {history.transactionNo ? history.transactionNo : "null"}
                                     </td>
                                     <td className="px-6 py-4 whitespace-nowrap">{history.withdrawLevelIncome ? history.withdrawLevelIncome : "0"}</td>
                                     <td className="px-6 py-4 whitespace-nowrap">{history.withdrawRefferalIncome ? history.withdrawRefferalIncome : "0"}</td>
                                     <td className="px-6 py-4 whitespace-nowrap">{history.bonusValue ? history.bonusValue : "0"}</td>
                                     <td className={`px-6 py-4 whitespace-nowrap ${history.paymentStatus === 'rejected' ? 'text-red-500' : 'text-green-500'}`}>
-                                        {history.paymentStatus}
+                                        {history.paymentStatus ? history.paymentStatus : "Success"}
                                     </td>
                                 </tr>
                             ))}
