@@ -37,7 +37,7 @@ const Step2 = ({ nextStep, prevStep, formData = {}, updateFormData }) => {
     const handleChange = (e) => {
         const { name, value } = e.target;
         // Update form data
-        console.log(name ,":", value)
+        // console.log(name ,":", value)
         updateFormData({
             ...formData,
             [name]: value

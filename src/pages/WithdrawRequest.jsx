@@ -36,7 +36,7 @@ const WithdrawRequest = () => {
                     if (response.ok) {
                         const data = await response.json();
                         setSingleUser(data?.data);
-                        console.log(data);
+                        console.log("user data response", data);
                     } else {
                         console.error('Failed to fetch user data');
                         setError('Failed to fetch user data');
@@ -56,19 +56,27 @@ const WithdrawRequest = () => {
         }
     }, [user, email]);
 
+    // useEffect(() => {
+    //     if (singleUser && singleUser.allChild) {
+    //         const length = singleUser.allChild.length;
+    //         const amount = singleUser.availableLevelIncome;
+    //         const validLengths = [3, 12, 39, 120, 363, 1092, 3279, 9840, 29523, 88572];
+
+    //         if (validLengths.includes(length)) {
+    //             setWithdrawAmount(amount);
+    //         } else {
+    //             setWithdrawAmount("0");
+    //         }
+    //     }
+    // }, [singleUser]);
+
     useEffect(() => {
-        if (singleUser && singleUser.allChild) {
-            const length = singleUser.allChild.length;
-            const amount = singleUser.availableLevelIncome;
-            const validLengths = [3, 12, 39, 120, 363, 1092, 3279, 9840, 29523, 88572];
-            
-            if (validLengths.includes(length)) {
-                setWithdrawAmount(amount);
-            } else {
-                setWithdrawAmount("0");
-            }
+        if (singleUser && singleUser.levelWithdrawableAmount) {
+            setWithdrawAmount(singleUser.levelWithdrawableAmount);
         }
     }, [singleUser]);
+
+    console.log("single user", singleUser);
 
     if (!singleUser) {
         return <div>Loading...</div>;
@@ -123,6 +131,7 @@ const WithdrawRequest = () => {
         } finally {
             setLoading(false);
         }
+        handleSubmit();
     };
 
     return (

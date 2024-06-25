@@ -18,17 +18,21 @@ const Dashboard = () => {
         const storedUser = localStorage.getItem('user');
         if (storedUser) {
             setUser(JSON.parse(storedUser));
+        } else {
+            setLoading(false);
         }
     }, [setUser]);
 
+    console.log(user);
+
     const profilePhoto = user?.data?.photo
-        ? `https://agr-backend-m85q.onrender.com/${user.data.photo}`
+        ? `https://agr-backend-m85q.onrender.com/${user?.data?.photo}`
         : '';
 
     useEffect(() => {
         const fetchSingleUser = async () => {
             const token = localStorage.getItem('token');
-            if (user && token) {
+            if (user && user?.data && token) {
                 try {
                     const response = await fetch('https://agr-backend-m85q.onrender.com/api/auth/userData', {
                         method: 'POST',
@@ -36,7 +40,7 @@ const Dashboard = () => {
                             'Content-Type': 'application/json',
                             'Authorization': `Bearer ${token}`
                         },
-                        body: JSON.stringify({ email: user.data.email })
+                        body: JSON.stringify({ email: user?.data?.email })
                     });
                     if (response.ok) {
                         const data = await response.json();

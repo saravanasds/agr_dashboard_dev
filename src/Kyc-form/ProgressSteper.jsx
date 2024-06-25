@@ -36,27 +36,27 @@ const ProgressSteper = () => {
     amount: "5000",
     paymentScreenshot: "",
   });
-
+  const [message, setMessage] = useState("");
 
   async function sendData() {
     setLoading(true);
     try {
-      console.log(formData);
+      // console.log(formData);
       const formDataObj = new FormData();
       for (let key in formData) {
         formDataObj.append(key, formData[key]);
       }
-      console.log(formDataObj);
 
       const response = await axios.post(
-        // `https://agr-backend-m85q.onrender.com/api/auth/register`,
-        `https://agr-backend-m85q.onrender.com/api/auth/register`,
+        `https://agr-backend-m85q.onrender.com/auth/register`,
         formDataObj
       );
 
       const data = response.data;
       setLoading(false);
-      console.log(response.data);
+      setMessage(data.message); // Set the message
+      console.log(data.message);
+      nextStep();
     } catch (err) {
       // Handle errors
       setLoading(false);
@@ -124,7 +124,9 @@ const ProgressSteper = () => {
         />
       )}
       {currentStep === 6 && (
-        <Step6/>
+        <Step6
+          message={message} // Pass the message to Step6
+        />
       )}
     </div>
   );
