@@ -35,7 +35,7 @@ export default function Info() {
   return (
     <div className=" w-full min-h-screen flex flex-col items-center justify-center py-5 md:py-0" style={{background:'linear-gradient(to right, #3B82F6, #4C1D95'}}>
       <div className="flex justify-center items-center">
-        <div className="w-full md:w-2/3 lg:w-1/2 xl:w-2/5 bg-white rounded-lg shadow-lg  ">
+        <div className="w-[80%] md:w-2/3 lg:w-1/2 xl:w-2/5 bg-white rounded-lg shadow-lg  ">
           <div className="md:w-full bg-white-500">
             <div className="text-center p-5">
               <img

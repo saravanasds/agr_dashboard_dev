@@ -64,9 +64,9 @@ export default function Step1({ nextStep, formData = {}, updateFormData }) {
             <div className="w-full min-h-screen flex flex-col justify-center items-center m-auto" style={{ background: 'linear-gradient(to right, #3B82F6, #4C1D95' }}>
                 <div className="w-full flex flex-col items-center justify-start py-5 md:py-0">
                     <div className="container mx-auto flex justify-center">
-                        <div className="w-full md:w-2/3 lg:w-1/2 xl:w-2/5 bg-white rounded-lg shadow-lg">
+                        <div className="w-[80%] md:w-2/3 lg:w-1/2 xl:w-2/5 bg-white rounded-lg shadow-lg">
                             <div className="px-8 py-8">
-                                <h1 className="text-center text-3xl font-bold text-gray-800 mb-8">
+                                <h1 className="text-center text-xl md:text-3xl font-bold text-gray-800 mb-8">
                                     Register New Account
                                 </h1>
 
@@ -126,12 +126,12 @@ export default function Step1({ nextStep, formData = {}, updateFormData }) {
                                     ) : (
                                         ""
                                     )}
-                                    <button type="submit" className="w-full sm:w-auto bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-10 rounded-lg focus:outline-none focus:shadow-outline">Register</button>
+                                    <button type="submit" className="w-full bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-10 rounded-lg focus:outline-none focus:shadow-outline">Register</button>
                                 </form>
                             </div>
                         </div>
                     </div>
-                    <div className="text-center text-white mt-4 flex gap-3">
+                    <div className="text-center text-white mt-4 flex flex-col md:flex-row gap-3">
                         <p>
                             Already Have An Account?{" "}
                             <Link to="/userLogin" className="font-bold hover:underline">

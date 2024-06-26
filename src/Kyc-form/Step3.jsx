@@ -30,7 +30,7 @@ const Step3 = ({ nextStep, prevStep, formData = {}, updateFormData }) => {
     return (
         <>
             <div className="mx-auto w-full flex justify-center items-center min-h-screen">
-                <div className="w-full px-3 py-6">
+                <div className="w-[90%] px-3 py-6">
                     <h1 className="text-3xl font-bold text-gray-800 mb-16 text-center">
                         Account Details
                     </h1>

@@ -114,7 +114,7 @@ const Step2 = ({ nextStep, prevStep, formData = {}, updateFormData }) => {
                                         name="dob"
                                         value={formData.dob}
                                         onChange={handleChange}
-                                        className="w-full bg-gray-200 rounded-lg py-3 px-4"
+                                        className="w-full bg-gray-200 rounded-lg py-2 px-4"
                                         required
                                     />
                                     {errors.dob && <p className="text-red-500 text-left mb-1">{errors.dob}</p>}
@@ -122,14 +122,9 @@ const Step2 = ({ nextStep, prevStep, formData = {}, updateFormData }) => {
 
 
                                 <div>
-                                    <label
-                                        htmlFor="address"
-                                        className="block text-gray-700 font-semibold mb-1 text-left"
-                                    >
-                                        Address For Communication
-                                    </label>
                                     <textarea
                                         id="address"
+                                        placeholder='Address'
                                         name="address"
                                         value={formData.address}
                                         onChange={handleChange}
@@ -142,7 +137,7 @@ const Step2 = ({ nextStep, prevStep, formData = {}, updateFormData }) => {
                                 <div className='mb-1'>
                                     <input
                                         type="number"
-                                        className="w-full bg-gray-200 rounded-lg py-3 px-4"
+                                        className="w-full bg-gray-200 rounded-lg py-2 px-4"
                                         placeholder="Whatsapp Number"
                                         name="mobileNumber"
                                         onChange={handleChange}
@@ -150,14 +145,11 @@ const Step2 = ({ nextStep, prevStep, formData = {}, updateFormData }) => {
                                     />
                                     {errors.mobileNumber && <p className="text-red-500 text-left mb-1">{errors.mobileNumber}</p>}
                                 </div>
-                            </div>
-
-                            <div className='w-full md:w-1/2'>
 
                                 <div className="mb-4">
                                     <input
                                         type="number"
-                                        className="w-full bg-gray-200 rounded-lg py-3 px-4"
+                                        className="w-full bg-gray-200 rounded-lg py-2 px-4"
                                         placeholder="Alternate Mobile Number"
                                         name="alternateMobileNumber"
                                         onChange={handleChange}
@@ -165,6 +157,11 @@ const Step2 = ({ nextStep, prevStep, formData = {}, updateFormData }) => {
                                     />
                                     {errors.alternateMobileNumber && <p className="text-red-500 text-left mb-1">{errors.alternateMobileNumber}</p>}
                                 </div>
+                                
+                            </div>
+
+                            <div className='w-full md:w-1/2'>
+
 
                                 <div className="mb-4">
                                     <input
@@ -177,6 +174,28 @@ const Step2 = ({ nextStep, prevStep, formData = {}, updateFormData }) => {
                                     />
                                     {errors.aadharNo && <p className="text-red-500 text-left mb-1">{errors.aadharNo}</p>}
                                 </div>
+
+                                <div className="mb-4">
+                                    <input
+                                        type="text"
+                                        className="w-full bg-gray-200 rounded-lg py-3 px-4"
+                                        placeholder="Enter Nominee Name"
+                                        name="nomineeName"
+                                        onChange={handleChange}
+                                        value={formData.nomineeName}
+                                    />
+                                    {errors.nomineeName && <p className="text-red-500 text-left mb-1">{errors.nomineeName}</p>}
+                                </div>
+
+                                <input
+                                    type="text"
+                                    className="w-full bg-gray-200 rounded-lg py-3 px-4 mb-4"
+                                    placeholder="Nominee Relationship"
+                                    name="nomineeRelationship"
+                                    onChange={handleChange}
+                                    value={formData.nomineeRelationship}
+                                />
+                                {errors.nomineeRelationship && <p className="text-red-500 text-left mb-1">{errors.nomineeRelationship}</p>}
 
                                 {/* Input field for address proof upload */}
                                 <div className="mb-4">
@@ -220,32 +239,12 @@ const Step2 = ({ nextStep, prevStep, formData = {}, updateFormData }) => {
                                     {errors.photo && <p className="text-red-500 text-left mb-1">{errors.photo}</p>}
                                 </div>
 
-                                <div className="mb-4">
-                                    <input
-                                        type="text"
-                                        className="w-full bg-gray-200 rounded-lg py-3 px-4"
-                                        placeholder="Enter Nominee Name"
-                                        name="nomineeName"
-                                        onChange={handleChange}
-                                        value={formData.nomineeName}
-                                    />
-                                    {errors.nomineeName && <p className="text-red-500 text-left mb-1">{errors.nomineeName}</p>}
-                                </div>
-
-                                <input
-                                    type="text"
-                                    className="w-full bg-gray-200 rounded-lg py-3 px-4 mb-4"
-                                    placeholder="Nominee Relationship"
-                                    name="nomineeRelationship"
-                                    onChange={handleChange}
-                                    value={formData.nomineeRelationship}
-                                />
-                                {errors.nomineeRelationship && <p className="text-red-500 text-left mb-1">{errors.nomineeRelationship}</p>}
+                                
 
                             </div>
                         </div>
 
-                        <div className='w-full flex justify-center items-center'>
+                        <div className='w-full flex flex-col md:flex-row justify-center items-center gap-3'>
                             <button onClick={prevStep} className="w-full sm:w-auto bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-12 rounded-lg focus:outline-none focus:shadow-outline">Previous</button>
                             <button type="submit" className="w-full sm:w-auto bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-10 rounded-lg focus:outline-none focus:shadow-outline">Next</button>
                         </div>

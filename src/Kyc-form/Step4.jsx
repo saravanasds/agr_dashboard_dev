@@ -12,7 +12,7 @@ const Step4 = ({ nextStep, prevStep }) => {
                     <img
                         src="assets/agr-qr.jpeg"
                         alt="Sample QR Code"
-                        className="w-80"
+                        className="w-90"
                     />
                     <div className='border-2 p-10 text-left leading-10'>
                         <h1 className='text-2xl font-bold text-gray-800 mb-8'>Account Details</h1>

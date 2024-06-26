@@ -131,14 +131,14 @@ export default function Register() {
                       "Submit"
                     )}
                   </button>
+                  {message && <p className="text-green-500 font-semibold text-center w-full">{message}</p>}
                 </form>
               </div>
             </div>
           </div>
-          <div className="text-center text-white mt-4">
-            {message && <p>{message}</p>}
+          <div className="text-center text-white mt-4">  
             <p>
-              <Link to="/login" className="font-bold hover:underline">
+              <Link to="/userLogin" className="font-bold hover:underline">
                 Login Here
               </Link>
             </p>
