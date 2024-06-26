@@ -14,7 +14,7 @@ const Profile = () => {
   }, [setUser]);
 
   if (!user) {
-    return <div>Loading...</div>; // Show loading or redirect to login if no user data is available
+    return <div className='w-full h-[100vh] text-2xl font-semibold'>Loading...</div>; // Show loading or redirect to login if no user data is available
   }
   // console.log(user.data)
 

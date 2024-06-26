@@ -93,11 +93,11 @@ const Dashboard = () => {
     }, [user]);
 
     if (!user) {
-        return <div>Loading...</div>; // Show loading or redirect to login if no user data is available
+        return <div className='w-full h-[100vh] text-2xl font-semibold'>Loading...</div>; // Show loading or redirect to login if no user data is available
     }
 
     if (loading) {
-        return <div>Loading...</div>;
+        return <div className='w-full h-[100vh] text-2xl font-semibold'>Loading...</div>
     }
 
     if (error) {
