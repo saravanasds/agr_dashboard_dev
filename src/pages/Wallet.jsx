@@ -51,7 +51,7 @@ const Wallet = () => {
     }, [user]);
 
     if (loading) {
-        return <div className='w-full h-[100vh] text-2xl font-semibold'>Loading...</div>;
+        return <div className='w-full h-[100vh] text-2xl font-semibold flex justify-center items-center'>Loading...</div>;
     }
 
     if (error) {

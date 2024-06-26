@@ -131,7 +131,7 @@ const Level = () => {
     const levelsCount = calculateLevelCount(singleUser?.allChild?.length || 0);
 
     if (loading) {
-        return <div>Loading...</div>;
+        return <div className='w-full h-[100vh] text-2xl font-semibold flex justify-center items-center'>Loading...</div>;
     }
 
     if (error) {

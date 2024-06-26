@@ -6,7 +6,7 @@ import { BsPersonFillAdd } from "react-icons/bs";
 import { SiMoneygram } from "react-icons/si";
 import { BsFilePersonFill } from "react-icons/bs";
 import { UserContext } from '../components/UserProvider';
-import { useNavigate } from 'react-router-dom';
+
 
 const Dashboard = () => {
     const { user, setUser } = useContext(UserContext);
@@ -93,11 +93,11 @@ const Dashboard = () => {
     }, [user]);
 
     if (!user) {
-        return <div className='w-full h-[100vh] text-2xl font-semibold'>Loading...</div>; // Show loading or redirect to login if no user data is available
+        return <div className='w-full h-[100vh] text-2xl font-semibold flex justify-center items-center'>Loading...</div>; // Show loading or redirect to login if no user data is available
     }
 
     if (loading) {
-        return <div className='w-full h-[100vh] text-2xl font-semibold'>Loading...</div>
+        return <div className='w-full h-[100vh] text-2xl font-semibold flex justify-center items-center'>Loading...</div>
     }
 
     if (error) {
