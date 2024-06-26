@@ -10,8 +10,9 @@ import "react-toastify/dist/ReactToastify.css";
 export default function Register() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-  // const navigate = useNavigate();
   const [message, setMessage] = useState("");
+
+  console.log(message);
 
   useEffect(() => {
     // Apply overflow: hidden to prevent scrolling
@@ -35,25 +36,23 @@ export default function Register() {
         `https://agr-backend-m85q.onrender.com/api/auth/forgotpassword`,
         values
       );
-      if(response.ok){
-        setMessage(response.message);
+
+      // Check if the status is 200 (OK)
+      if (response.status === 200) {
+        setMessage(response.data.message);
+        toast.success("Register Successful. Reset Email Sent.", {
+          position: "top-right",
+          autoClose: 1500,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+        });
       }
-      const data = response.data;
 
       setLoading(false);
-
-      // Handle successful registration
-      toast.success("Register Successfull. Reset Email Send.", {
-        position: "top-right",
-        autoClose: 1500,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "colored",
-      });
-
     } catch (err) {
       // Handle errors
       setLoading(false);
@@ -81,10 +80,6 @@ export default function Register() {
     onSubmit: sendData,
   });
 
-  // function changeBgRegister() {
-  //   document.getElementById("changeR").classList.add("auth");
-  // }
-
   return (
     <>
       <div className="w-full min-h-screen flex flex-col justify-center items-center m-auto" style={{ background: 'linear-gradient(to right, #3B82F6, #4C1D95' }}>
@@ -111,6 +106,7 @@ export default function Register() {
                     onBlur={formik.handleBlur}
                     value={formik.values.email}
                   />
+
                   <button
                     id="change"
                     type="submit"
@@ -132,7 +128,7 @@ export default function Register() {
                         />
                       </div>
                     ) : (
-                      "Sumbit"
+                      "Submit"
                     )}
                   </button>
                 </form>
@@ -140,6 +136,7 @@ export default function Register() {
             </div>
           </div>
           <div className="text-center text-white mt-4">
+            {message && <p>{message}</p>}
             <p>
               <Link to="/login" className="font-bold hover:underline">
                 Login Here
@@ -147,7 +144,6 @@ export default function Register() {
             </p>
           </div>
         </div>
-        {message && <p>{message}</p>}
       </div>
     </>
   );
