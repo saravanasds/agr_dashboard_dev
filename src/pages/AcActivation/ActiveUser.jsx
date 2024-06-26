@@ -281,7 +281,7 @@ const ActiveUser = () => {
                                             <div className='hover:bg-gray-200 rounded flex p-2 gap-2'>
                                                 <h2 className='text-md font-semibold'>Adhar proof:</h2>
                                                 <p>
-                                                    <a href={`https://agr-backend-m85q.onrender.com/${selectedUser.adharProof}`} target="_blank" rel="noopener noreferrer" className='underline'>
+                                                    <a href={selectedUser.adharProof} target="_blank" rel="noopener noreferrer" className='underline'>
                                                         Click here
                                                     </a>
                                                 </p>
@@ -289,7 +289,7 @@ const ActiveUser = () => {
                                             <div className='hover:bg-gray-200 rounded flex p-2 gap-2'>
                                                 <h2 className='text-md font-semibold'>Photo:</h2>
                                                 <p>
-                                                    <a href={`https://agr-backend-m85q.onrender.com/${selectedUser.photo}`} target="_blank" rel="noopener noreferrer" className='underline'>
+                                                    <a href={selectedUser.photo} target="_blank" rel="noopener noreferrer" className='underline'>
                                                         Click here
                                                     </a>
                                                 </p>
@@ -340,7 +340,7 @@ const ActiveUser = () => {
                                             <div className='hover:bg-gray-200 rounded flex p-2 gap-2'>
                                                 <h2 className='text-md font-semibold'>Payment Screenshot:</h2>
                                                 <p>
-                                                    <a href={`https://agr-backend-m85q.onrender.com/${selectedUser.paymentScreenshot}`} target="_blank" rel="noopener noreferrer" className='underline'>
+                                                    <a href={selectedUser.paymentScreenshot} target="_blank" rel="noopener noreferrer" className='underline'>
                                                         Click here
                                                     </a>
                                                 </p>

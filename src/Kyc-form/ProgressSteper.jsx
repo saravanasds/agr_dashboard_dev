@@ -36,7 +36,6 @@ const ProgressSteper = () => {
     amount: "5000",
     paymentScreenshot: "",
   });
-  const [message, setMessage] = useState("");
 
   async function sendData() {
     setLoading(true);
@@ -54,15 +53,13 @@ const ProgressSteper = () => {
 
       const data = response.data;
       setLoading(false);
-      setMessage(data.message); // Set the message
       console.log(data.message);
       nextStep();
     } catch (err) {
       // Handle errors
       setLoading(false);
       const errorMessage = err.response?.data?.error || "Internal Server Error";
-      console.error(errorMessage); // Log error message
-      // You can handle the error response here if needed
+      console.error(errorMessage);
     }
   }
 
@@ -124,9 +121,7 @@ const ProgressSteper = () => {
         />
       )}
       {currentStep === 6 && (
-        <Step6
-          message={message} // Pass the message to Step6
-        />
+        <Step6/>
       )}
     </div>
   );

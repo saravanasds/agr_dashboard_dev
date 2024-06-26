@@ -2,16 +2,16 @@ import axios from "axios";
 import { useFormik } from "formik";
 import React, { useState, useEffect } from "react";
 import { Oval } from "react-loader-spinner";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import * as yup from "yup";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { togglePasswordVisibility } from "../utils/utils";
 
 export default function Register() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
+  const [message, setMessage] = useState("");
 
   useEffect(() => {
     // Apply overflow: hidden to prevent scrolling
@@ -32,9 +32,12 @@ export default function Register() {
     setLoading(true);
     try {
       const response = await axios.post(
-        `https://agr-backend-m85q.onrender.com/api/auth/register`,
+        `https://agr-backend-m85q.onrender.com/api/auth/forgotpassword`,
         values
       );
+      if(response.ok){
+        setMessage(response.message);
+      }
       const data = response.data;
 
       setLoading(false);
@@ -51,7 +54,6 @@ export default function Register() {
         theme: "colored",
       });
 
-      navigate("/kyc");
     } catch (err) {
       // Handle errors
       setLoading(false);
@@ -79,9 +81,9 @@ export default function Register() {
     onSubmit: sendData,
   });
 
-  function changeBgRegister() {
-    document.getElementById("changeR").classList.add("auth");
-  }
+  // function changeBgRegister() {
+  //   document.getElementById("changeR").classList.add("auth");
+  // }
 
   return (
     <>
@@ -110,7 +112,6 @@ export default function Register() {
                     value={formik.values.email}
                   />
                   <button
-                    onClick={() => changeBgLogin()}
                     id="change"
                     type="submit"
                     className="w-full bg-blue-500 rounded-lg text-white py-3 font-bold transition duration-300 ease-in-out hover:bg-blue-600 mb-4"
@@ -131,7 +132,7 @@ export default function Register() {
                         />
                       </div>
                     ) : (
-                      "Register"
+                      "Sumbit"
                     )}
                   </button>
                 </form>
@@ -146,6 +147,7 @@ export default function Register() {
             </p>
           </div>
         </div>
+        {message && <p>{message}</p>}
       </div>
     </>
   );

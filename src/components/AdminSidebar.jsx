@@ -11,12 +11,13 @@ import { RiLogoutCircleRLine } from "react-icons/ri";
 import { TbListDetails } from "react-icons/tb";
 import { GiProgression } from "react-icons/gi";
 import { IoSettingsOutline } from "react-icons/io5";
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 
 
 const Sidebar = ({children}) => {
     const [isOpen, setIsOpen] = useState(window.innerWidth > 568);
     const [isMobile, setIsMobile] = useState(window.innerWidth < 568); // Set isMobile based on window width
+    const navigate = useNavigate();
     const toggle = () => {
         if (!isMobile) { // Toggle sidebar only if it's not in mobile view
             setIsOpen(!isOpen);
@@ -76,10 +77,14 @@ const Sidebar = ({children}) => {
             name:"Settings",
             icon:<IoSettingsOutline/>
         },
-         {
-            path:"/adminLogin",
-            name:"Logout",
-            icon:<RiLogoutCircleRLine/>
+        {
+            name: "Logout",
+            icon: <RiLogoutCircleRLine />,
+            action: () => {
+                localStorage.removeItem("adminToken");
+                localStorage.removeItem("role");
+                navigate("/adminLogin");
+            }
         }, 
     ]
     return (
@@ -92,11 +97,18 @@ const Sidebar = ({children}) => {
                     </div>
                 </div>
                 {
-                    menuItem.map((item, index)=>(
-                        <NavLink to={item.path} key={index} className="link flex items-center py-[10px] px-[18px] gap-[15px] text-green-300 hover:bg-green-400 hover:text-[#000] transition-all duration-500 mb-3 " activeclassName="active" style={{ justifyContent: isOpen? "start" : "center" }}>
-                            <div className="icon" style={{ fontSize: isOpen? "25px" : "20px"}} >{item.icon}</div>
-                            <div style={{ display: isOpen ? "block" : "none" }} className="link_text text-md text-white font-semibold hover:text-black">{item.name}</div>
-                        </NavLink>
+                    menuItem.map((item, index) => (
+                        item.path ? (
+                            <NavLink to={item.path} key={index} className="link flex items-center py-[10px] px-[18px] gap-[15px] text-green-300 hover:bg-green-400 hover:text-[#000] transition-all duration-500 mb-5 " activeClassName="active" style={{ justifyContent: isOpen ? "start" : "center" }}>
+                                <div className="icon" style={{ fontSize: isOpen ? "25px" : "20px" }} >{item.icon}</div>
+                                <div style={{ display: isOpen ? "block" : "none" }} className="link_text text-md text-white font-semibold hover:text-black">{item.name}</div>
+                            </NavLink>
+                        ) : (
+                            <button onClick={item.action} key={index} className="link flex items-center py-[10px] px-[18px] gap-[15px] text-green-300 hover:bg-green-400 hover:text-[#000] transition-all duration-500 mb-5 " style={{ justifyContent: isOpen ? "start" : "center", width: '100%', background: 'transparent', border: 'none', cursor: 'pointer' }}>
+                                <div className="icon" style={{ fontSize: isOpen ? "25px" : "20px" }} >{item.icon}</div>
+                                <div style={{ display: isOpen ? "block" : "none" }} className="link_text text-md text-white font-semibold hover:text-black">{item.name}</div>
+                            </button>
+                        )
                     ))
                 }
             </div>

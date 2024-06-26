@@ -23,6 +23,7 @@ const Dashboard = () => {
     const [totalBonusPaid, setTotalBonusPaid] = useState("");
     const [totalLevelIncomePaid, setTotalLevelIncomePaid] = useState("");
     const [totalReferralIncomePaid, setTotalReferralIncomePaid] = useState("");
+    const [error, setError] = useState("");
 
     const adminToken = localStorage.getItem("adminToken");
 
@@ -36,7 +37,7 @@ const Dashboard = () => {
             try {
                 const token = localStorage.getItem('adminToken');
                 console.log(token);
-                const response = await axios.get('http://localhost:9000/api/admin/allUsers', {
+                const response = await axios.get('https://agr-backend-m85q.onrender.com/api/admin/allUsers', {
                     headers: {
                         'Authorization': `Bearer ${token}`
                     }

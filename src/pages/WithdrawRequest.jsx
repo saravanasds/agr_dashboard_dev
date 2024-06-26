@@ -18,7 +18,7 @@ const WithdrawRequest = () => {
     }, [setUser]);
 
     const email = user?.data?.email;
-    const profilePhoto = user?.data ? `https://agr-backend-m85q.onrender.com/${user.data.photo}` : '';
+    const profilePhoto = user?.data ? user.data.photo : '';
 
     useEffect(() => {
         const fetchSingleUser = async () => {

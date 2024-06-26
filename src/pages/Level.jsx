@@ -17,7 +17,7 @@ const Level = () => {
 
     const email = user?.data?.email;
     const profilePhoto = user?.data?.photo 
-        ? `https://agr-backend-m85q.onrender.com/${user.data.photo}` 
+        ? user.data.photo
         : '';
 
     useEffect(() => {

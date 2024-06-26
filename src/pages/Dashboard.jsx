@@ -6,6 +6,7 @@ import { BsPersonFillAdd } from "react-icons/bs";
 import { SiMoneygram } from "react-icons/si";
 import { BsFilePersonFill } from "react-icons/bs";
 import { UserContext } from '../components/UserProvider';
+import { useNavigate } from 'react-router-dom';
 
 const Dashboard = () => {
     const { user, setUser } = useContext(UserContext);
@@ -18,15 +19,13 @@ const Dashboard = () => {
         const storedUser = localStorage.getItem('user');
         if (storedUser) {
             setUser(JSON.parse(storedUser));
-        } else {
-            setLoading(false);
         }
     }, [setUser]);
 
     console.log(user);
 
     const profilePhoto = user?.data?.photo
-        ? `https://agr-backend-m85q.onrender.com/${user?.data?.photo}`
+        ? user?.data?.photo
         : '';
 
     useEffect(() => {

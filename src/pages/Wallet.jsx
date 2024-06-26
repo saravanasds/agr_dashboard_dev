@@ -58,7 +58,7 @@ const Wallet = () => {
         return <div>{error}</div>;
     }
 
-    const profilePhoto = user ? `https://agr-backend-m85q.onrender.com/${user.data.photo}` : '';
+    const profilePhoto = user ? user.data.photo : '';
 
     return (
         <>

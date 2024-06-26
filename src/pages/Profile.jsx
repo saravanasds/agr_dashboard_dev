@@ -18,7 +18,7 @@ const Profile = () => {
   }
   // console.log(user.data)
 
-  const profilePhoto = `https://agr-backend-m85q.onrender.com/${user.data.photo}`
+  const profilePhoto = user.data.photo
 
 
   return (

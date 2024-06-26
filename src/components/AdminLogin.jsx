@@ -41,9 +41,9 @@ export default function AdminLogin({ setRole }) { // Receive setRole as a prop
       console.log(data.data.email);
 
       localStorage.setItem("adminToken", data.token);
-      localStorage.setItem("role", data.role);
+      localStorage.setItem("adminRole", data.role);
       localStorage.setItem("firstName", data.firstName);
-      localStorage.setItem("adminEmail", data.data.email)
+      localStorage.setItem("adminEmail", data.data.email);
 
       toast.success("Welcome To Home Page", {
         position: "top-right",

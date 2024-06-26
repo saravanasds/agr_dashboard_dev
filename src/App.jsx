@@ -30,6 +30,7 @@ import Settings from './pages/Settings.jsx';
 import MemberStatus from './pages/MemberStatus.jsx';
 import MemberDetails from './pages/MemberDetails.jsx';
 import Adminpanel from './pages/Adminpanel.jsx';
+import ResetPassword from "./pages/ResetPassword";
 
 function App() {
   const [role, setRole] = useState(localStorage.getItem("role"));
@@ -46,6 +47,7 @@ function App() {
     }
   }, []); // Load the role from local storage when the component mounts
 
+
   return (
     <UserProvider>
       <Router>
@@ -57,6 +59,7 @@ function App() {
           <Route path="/adminLogin" element={<AdminLogin setRole={handleSetRole} />} />
           <Route path="/forgotPassword" element={<ForgotPassword />} />
           <Route path="/activate/:activationToken" element={<Activate />} />
+          <Route path="/verifyRandomString/:randomString" element={<ResetPassword />} />
         </Routes>
 
 
@@ -69,7 +72,6 @@ function App() {
               <Route path="/wallet" element={<Wallet />} />
               <Route path="/withdrawRequest" element={<WithdrawRequest />} />
               <Route path="/paymentHistory" element={<PaymentHistory />} />
-              {/* <Route path="/rewards" element={<Rewards />} /> */}
             </Routes>
           </Sidebar>
         )}
