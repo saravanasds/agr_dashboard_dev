@@ -147,7 +147,7 @@ const Dashboard = () => {
                     <div className='w-[90%] gap-4 grid grid-cols-1 lg:grid-cols-3  py-6 min-h-[150px]'>
                         <div className='bg-blue-300 rounded-lg py-5 flex justify-around items-center px-4 shadow-md shadow-gray-500'>
                             <div className='text-center'>
-                                <p className='text-xl sm:text-xl font-semibold mb-2'>Add New Admin</p>
+                                <p className='text-xs sm:text-xl font-semibold mb-2'>Add New Admin</p>
                                 <Link to="/adminRegister" className="font-bold hover:underline text-center ">
                                     Register Here
                                 </Link>
@@ -157,7 +157,7 @@ const Dashboard = () => {
 
                         <div className='bg-red-300 rounded-lg py-5 flex justify-around items-center px-4 shadow-md shadow-gray-500'>
                             <div>
-                                <p className='text-xl sm:text-xl font-semibold mb-2'>Total Payment Received</p>
+                                <p className='text-xs sm:text-xl font-semibold mb-2'>Total Payment Received</p>
                                 <p className='text-xl sm:text-xl font-bold text-center'>&#x20B9; {totalReceivedAmount}</p>
                             </div>
                             <div><GiTakeMyMoney className='text-[40px] md:text-[65px] opacity-80' /></div>
@@ -165,7 +165,7 @@ const Dashboard = () => {
 
                         <div className='bg-[#66bfbf] rounded-lg py-5 flex justify-around items-center px-4 shadow-md shadow-gray-500'>
                             <div>
-                                <p className='text-xl sm:text-xl font-semibold mb-2'>Total Amount Paid</p>
+                                <p className='text-xs sm:text-xl font-semibold mb-2'>Total Amount Paid</p>
                                 <p className='text-xl sm:text-xl font-bold text-center'>&#x20B9; {totalAmountPaid}</p>
                             </div>
                             <div><BiMoneyWithdraw className='text-[40px] md:text-[65px] opacity-80' /></div>
@@ -173,7 +173,7 @@ const Dashboard = () => {
 
                         <div className='bg-green-300 rounded-lg py-5 flex justify-around items-center px-4 shadow-md shadow-gray-500'>
                             <div>
-                                <p className='text-xl sm:text-xl font-semibold mb-2'>Total Level Income Paid</p>
+                                <p className='text-xs sm:text-xl font-semibold mb-2'>Total Level Income Paid</p>
                                 <p className='text-xl sm:text-xl font-bold text-center'>&#x20B9; {totalLevelIncomePaid}</p>
                             </div>
                             <div><RiMoneyDollarBoxLine className='text-[40px] md:text-[65px] opacity-80' /></div>
@@ -181,7 +181,7 @@ const Dashboard = () => {
 
                         <div className='bg-yellow-200 rounded-lg py-5 flex justify-around items-center px-4 shadow-md shadow-gray-500'>
                             <div>
-                                <p className='text-xl sm:text-xl font-semibold mb-2'>Total Referral Paid</p>
+                                <p className='text-xs sm:text-xl font-semibold mb-2'>Total Referral Paid</p>
                                 <p className='text-xl sm:text-xl font-bold text-center'>&#x20B9; {totalReferralIncomePaid}</p>
                             </div>
                             <div><FaPersonArrowUpFromLine className='text-[40px] md:text-[65px] opacity-80' /></div>
@@ -189,7 +189,7 @@ const Dashboard = () => {
 
                         <div className='bg-pink-300 rounded-lg py-5 flex justify-around items-center px-4 shadow-md shadow-gray-500'>
                             <div>
-                                <p className='text-xl sm:text-xl font-semibold mb-2'>Total Bonus Paid</p>
+                                <p className='text-xs sm:text-xl font-semibold mb-2'>Total Bonus Paid</p>
                                 <p className='text-xl sm:text-xl font-bold text-center'>&#x20B9; {totalBonusPaid}</p>
                             </div>
                             <div><GiPayMoney className='text-[40px] md:text-[65px] opacity-80' /></div>
