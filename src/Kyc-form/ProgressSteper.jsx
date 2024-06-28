@@ -36,38 +36,8 @@ const ProgressSteper = () => {
     amount: "5000",
     paymentScreenshot: "",
   });
+  const [message, setMessage] = useState("");
 
-
-  // async function sendData() {
-  //   setLoading(true);
-  //   const token = localStorage.getItem('token');
-  //   try {
-  //     const formDataObj = new FormData();
-  //     for (let key in formData) {
-  //       formDataObj.append(key, formData[key]);
-  //     }
-  //     const response = await axios.post(
-  //       `https://agr-backend-m85q.onrender.com/api/admin/registeredUsers`,
-  //       formDataObj,
-  //       {
-  //         headers: {
-  //           Authorization: `Bearer ${token}`
-  //         }
-  //       }
-  //     );
-  
-  //     const data = response.data;
-  //     setLoading(false);
-  //     console.log(data.message);
-  //     nextStep();
-  //   } catch (err) {
-  //     // Handle errors
-  //     setLoading(false);
-  //     const errorMessage = err.response?.data?.error || "Internal Server Error";
-  //     console.error(errorMessage);
-  //   }
-  // }
-  
 
   async function sendData() {
     setLoading(true);
@@ -86,6 +56,7 @@ const ProgressSteper = () => {
       const data = response.data;
       setLoading(false);
       console.log(data.message);
+      setMessage(data.message);
       nextStep();
     } catch (err) {
       // Handle errors
@@ -153,7 +124,9 @@ const ProgressSteper = () => {
         />
       )}
       {currentStep === 6 && (
-        <Step6/>
+        <Step6
+          message={message}
+        />
       )}
     </div>
   );

@@ -4,6 +4,7 @@ import axios from 'axios';
 const ActivationRequest = () => {
     const [isOpen, setIsOpen] = useState(false);
     const [actOpen, setActOpen] = useState(false);
+    const [rejOpen, setRejOpen] = useState(false);
     const [activations, setActivations] = useState([]);
     const [selectedUser, setSelectedUser] = useState(null);
 
@@ -29,11 +30,6 @@ const ActivationRequest = () => {
 
         fetchData();
     }, []);
-
-    // useEffect(() => {
-    //     const waitingUsers = activations.length;
-    //     localStorage.setItem('waitingUsers', waitingUsers);
-    // }, [activations]);
 
     const printUserDetails = () => {
         const printContents = document.getElementById("printUserDetails").innerHTML;
@@ -87,37 +83,64 @@ const ActivationRequest = () => {
         setActOpen(true);
     };
 
+    const rejPopup = (user) => {
+        setSelectedUser(user);
+        setRejOpen(true);
+    };
+
     const handleActivate = async () => {
         const token = localStorage.getItem('adminToken');
         if (!token) {
-            console.error('No token found');
-            return;
+          console.error('No token found');
+          return;
         }
-
+      
         try {
-            const response = await axios.post(
-                'https://agr-backend-m85q.onrender.com/api/admin/approveUser',
-                {
-                    email: selectedUser.email,
-                },
-                {
-                    headers: {
-                        "Authorization": `Bearer ${token}`
-                    }
-                }
-            );
-            console.log('Activation response:', response.data);
-            // Update the activation status in the state
-            // setActivations(prevActivations =>
-            //     prevActivations.map(user =>
-            //         user.email === selectedUser.email ? { ...user, isActivate: true } : user
-            //     )
-            // );
-            setActOpen(false);
+          const response = await axios.post(
+            'https://agr-backend-m85q.onrender.com/api/admin/approveUser',
+            {
+              email: selectedUser.email,
+            },
+            {
+              headers: {
+                "Authorization": `Bearer ${token}`
+              }
+            }
+          );
+          console.log('Activation response:', response.data);
+          window.alert('User action successfully!');
+          setActOpen(false);
         } catch (error) {
-            console.error('Error activating user:', error);
+          console.error('Error activating user:', error);
         }
-    };
+      };
+
+      const handleReject = async () => {
+        const token = localStorage.getItem('adminToken');
+        if (!token) {
+          console.error('No token found');
+          return;
+        }
+      
+        try {
+          const response = await axios.post(
+            'https://agr-backend-m85q.onrender.com/api/admin/deleteUserRegister',
+            {
+              email: selectedUser.email,
+            },
+            {
+              headers: {
+                "Authorization": `Bearer ${token}`
+              }
+            }
+          );
+          console.log('Activation response:', response.data);
+          window.alert('User action successfully!');
+          setRejOpen(false);
+        } catch (error) {
+          console.error('Error activating user:', error);
+        }
+      };
 
     return (
         <div className='w-full overflow-x-hidden'>
@@ -146,11 +169,10 @@ const ActivationRequest = () => {
                                             <td className="px-6 py-4 text-center text-xs sm:text-sm whitespace-nowrap">{activate.transactionId}</td>
                                             <td className="px-6 py-4 text-center text-xs sm:text-sm whitespace-nowrap">{activate.mobileNumber}</td>
                                             <td className="noprint px-6 py-4 text-center whitespace-nowrap">
-                                                {!activate.isActivate ? (
-                                                    <button className='bg-green-600 p-1 px-3 mr-3 rounded-md hover:bg-green-400 text-white text-xs sm:text-sm' onClick={() => actPopup(activate)}>Approve</button>
-                                                ) : (
-                                                    <span className='text-green-600 font-semibold mr-4'>Activated</span>
-                                                )}
+
+                                                <button className='bg-green-600 p-1 px-3 mr-3 rounded-md hover:bg-green-400 text-white text-xs sm:text-sm' onClick={() => actPopup(activate)}>Approve</button>
+                                                <button className='bg-green-600 p-1 px-3 mr-3 rounded-md hover:bg-green-400 text-white text-xs sm:text-sm' onClick={() => rejPopup(activate)}>Reject</button>
+
                                                 <button
                                                     className='bg-blue-800 p-1 px-3 mr-3 rounded-md hover:bg-blue-600 text-white text-xs sm:text-sm'
                                                     onClick={() => togglePopup(activate)}
@@ -179,6 +201,26 @@ const ActivationRequest = () => {
                                 <p className="mb-4">Are you sure you want to approve {selectedUser.firstName}?</p>
                                 <div className="flex items-center justify-center gap-3">
                                     <button className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600" onClick={handleActivate}>Approve</button>
+                                    <button className="bg-gray-300 text-gray-700 px-4 py-2 rounded-md hover:bg-gray-400" onClick={() => setActOpen(false)}>Cancel</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )}
+            {rejOpen && (
+                <div className="fixed z-10 inset-0 overflow-y-auto">
+                    <div className="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+                        <div className="fixed inset-0 transition-opacity" aria-hidden="true">
+                            <div className="absolute inset-0 bg-gray-900 opacity-75"></div>
+                        </div>
+                        <span className="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+                        <div className="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-3xl sm:w-full">
+                            <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                                <h3 className="text-lg leading-6 font-medium text-gray-900 mb-4">Activate User</h3>
+                                <p className="mb-4">Are you sure you want to reject {selectedUser.firstName}?</p>
+                                <div className="flex items-center justify-center gap-3">
+                                    <button className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600" onClick={handleReject}>Approve</button>
                                     <button className="bg-gray-300 text-gray-700 px-4 py-2 rounded-md hover:bg-gray-400" onClick={() => setActOpen(false)}>Cancel</button>
                                 </div>
                             </div>

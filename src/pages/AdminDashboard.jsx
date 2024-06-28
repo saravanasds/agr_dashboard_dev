@@ -28,12 +28,13 @@ const Dashboard = () => {
                 return;
             }
             try {
-                const response = await axios.post('https://agr-backend-m85q.onrender.com/api/admin/deactivatedUser', {}, {
+                const response = await axios.post('https://agr-backend-m85q.onrender.com/api/admin/registeredUsers', {}, {
                     headers: {
                         "Authorization": `Bearer ${token}`
                     }
                 });
-                setActReq(response.data.activatedUsers);
+                setActReq(response.data.data);
+                console.log(response.data.data);
             } catch (error) {
                 console.error('Error fetching data:', error);
             }
@@ -41,7 +42,6 @@ const Dashboard = () => {
 
         fetchData();
     }, []);
-
     useEffect(() => {
         const fetchData = async () => {
             try {
