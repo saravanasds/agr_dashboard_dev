@@ -148,7 +148,7 @@ const Dashboard = () => {
                     <div className='bg-blue-300 rounded-lg py-5 flex justify-around items-center px-4 shadow-sm shadow-gray-800'>
                         <div>
                             <p className='text-md sm:text-xl font-semibold'>Total Earning</p>
-                            <p className='text-xl sm:text-2xl font-semibold text-center'> &#x20B9; {singleUser?.amount - 5000}</p>
+                            <p className='text-xl sm:text-2xl font-semibold text-center'> &#x20B9; {singleUser?.amount}</p>
                         </div>
                         <div><GiTakeMyMoney className='text-[40px] md:text-[65px] opacity-80' /></div>
                     </div>

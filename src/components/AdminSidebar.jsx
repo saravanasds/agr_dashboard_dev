@@ -10,7 +10,6 @@ import { BiMoneyWithdraw } from "react-icons/bi";
 import { RiLogoutCircleRLine } from "react-icons/ri";
 import { TbListDetails } from "react-icons/tb";
 import { GiProgression } from "react-icons/gi";
-import { IoSettingsOutline } from "react-icons/io5";
 import { NavLink, useNavigate } from 'react-router-dom';
 
 const Sidebar = ({ children }) => {
@@ -52,8 +51,13 @@ const Sidebar = ({ children }) => {
             icon: <FaRegChartBar />
         },
         {
-            path: "/accountactivation",
-            name: "Account Activation",
+            path: "/activationRequest",
+            name: "Activation Request",
+            icon: <GiWallet />
+        },
+        {
+            path: "/accountStatus",
+            name: "Account Status",
             icon: <GiWallet />
         },
         {
@@ -76,11 +80,11 @@ const Sidebar = ({ children }) => {
             name: "Member Status",
             icon: <GiProgression />
         },
-        {
-            path: "/settings",
-            name: "Settings",
-            icon: <IoSettingsOutline />
-        },
+        // {
+        //     path: "/settings",
+        //     name: "Settings",
+        //     icon: <IoSettingsOutline />
+        // },
         {
             name: "Logout",
             icon: <RiLogoutCircleRLine />,
@@ -93,7 +97,7 @@ const Sidebar = ({ children }) => {
     ];
 
     return (
-        <div className="flex w-full">
+        <div className="flex w-full ">
             <div
                 style={{
                     width: isOpen ? (isMobile ? "100%" : "250px") : "40px",
@@ -102,7 +106,7 @@ const Sidebar = ({ children }) => {
                 className="sidebar bg-black min-h-screen text-white transition-all duration-500 fixed z-10"
             >
                 <div className="top_section flex items-center py-[10px]" style={{ marginBottom: isOpen ? "10px" : "60px" }}>
-                    <img src="assets/logos/agr logo.png" alt="" style={{ display: isOpen ? "block" : "none" }} className="logo w-[85px] sm:w-[100px] ml-14 sm:ml-16 mt-5" />
+                   <a href="/settings"> <img src="assets/logos/agr logo.png" alt="" style={{ display: isOpen ? "block" : "none" }} className="logo w-[85px] sm:w-[100px] ml-14 sm:ml-16 mt-5" /></a>
                     <div style={{ marginTop: isOpen ? "15px" : "30px", fontSize: isOpen ? "30px" : "25px", marginLeft: isOpen ? "16px" : "7px" }} className="bars flex justify-center items-center text-3xl cursor-pointer hover:text-blue-400 absolute">
                         <FaBars onClick={toggle} />
                     </div>
@@ -113,7 +117,7 @@ const Sidebar = ({ children }) => {
                             <NavLink 
                                 to={item.path} 
                                 key={index} 
-                                className="link flex items-center py-[10px] px-[18px] gap-[15px] text-green-300 hover:bg-green-400 hover:text-[#000] transition-all duration-500 mb-5" 
+                                className="link flex items-center py-[10px] px-[18px] gap-[15px] text-green-300 hover:bg-green-400 hover:text-[#000] transition-all duration-500 mb-3" 
                                 activeClassName="active" 
                                 style={{ justifyContent: isOpen ? "start" : "center" }} 
                                 onClick={handleMenuClick}

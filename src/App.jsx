@@ -31,6 +31,7 @@ import MemberStatus from './pages/MemberStatus.jsx';
 import MemberDetails from './pages/MemberDetails.jsx';
 import Adminpanel from './pages/Adminpanel.jsx';
 import ResetPassword from "./pages/ResetPassword";
+import ActivationRequest from "./pages/ActivationRequest";
 
 function App() {
   const [role, setRole] = useState(localStorage.getItem("role"));
@@ -81,8 +82,9 @@ function App() {
               <Route path="/adminDashboard" element={<AdminDashboard />} />
               {/* <Route path="/profileupdates" element={<ProfileUpdate />} /> */}
               <Route path="/adminLevels" element={<AdminLevels />} />
+              <Route path="/activationRequest" element={<ActivationRequest />} />
               <Route path="/withdrawReq" element={<AdminWithdrawReq />} />
-              <Route path="/accountactivation" element={<AcActivation />} />
+              <Route path="/accountStatus" element={<AcActivation />} />
               <Route path="/adminpaymentHistory" element={<AdminPayHistory />} />
               <Route path="/settings" element={<Settings />} />
               <Route path="/memberstatus" element={<MemberStatus />} />

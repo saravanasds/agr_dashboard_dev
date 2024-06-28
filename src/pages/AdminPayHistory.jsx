@@ -3,26 +3,46 @@ import axios from 'axios';
 
 export default function Example() {
   const [adminHistory, setAdminHistory] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(0);
 
   const adminToken = localStorage.getItem("adminToken");
 
   useEffect(() => {
-    const fetchReferralHistory = async () => {
-      try {
-        const response = await axios.get('https://agr-backend-m85q.onrender.com/api/admin/referralHistory', {
-          headers: {
-            Authorization: `Bearer ${adminToken}`,
-          },
-        });
-        setAdminHistory(response.data);
-      } catch (error) {
-        console.error('Error fetching bonus history:', error);
-      }
-    };
     fetchReferralHistory();
-  }, [adminToken]);
+  }, [currentPage]);
 
-  console.log(adminHistory);
+  const fetchReferralHistory = async () => {
+    try {
+      const response = await axios.get('https://agr-backend-m85q.onrender.com/api/admin/referralHistory', {
+        headers: {
+          Authorization: `Bearer ${adminToken}`,
+        },
+        params: {
+          page: currentPage,
+          limit: 20,
+        },
+      });
+      setAdminHistory(response.data);
+      setTotalPages(Math.ceil(response.data.totalCount / 20));
+    } catch (error) {
+      console.error('Error fetching bonus history:', error);
+      setAdminHistory([]);
+      setTotalPages(0);
+    }
+  };
+
+  const handleNextPage = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage(prevPage => prevPage + 1);
+    }
+  };
+
+  const handlePrevPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage(prevPage => prevPage - 1);
+    }
+  };
 
   const printPaymentHistory = () => {
     const printContents = document.getElementById("printPaymentHistory").innerHTML;
@@ -54,7 +74,6 @@ export default function Example() {
                 background-color: #ddd;
                 color: #333;
             }
-
         </style>
         </head>
         <body>${printContents}</body>
@@ -91,9 +110,9 @@ export default function Example() {
                   </tr>
                 </thead>
                 <tbody className="bg-white divide-y divide-gray-200">
-                  {adminHistory.map((payment, index) => (
+                  {adminHistory && adminHistory.map((payment, index) => (
                     <tr key={index}>
-                      <td className="px-6 py-4 whitespace-nowrap text-center text-xs sm:text-sm">{index + 1}</td>
+                      <td className="px-6 py-4 whitespace-nowrap text-center text-xs sm:text-sm">{index + 1 + (currentPage - 1) * 20}</td>
                       <td className={`px-6 py-4 whitespace-nowrap ${payment.paymentStatus === 'rejected' ? 'text-red-500' : 'text-green-500'}`}>
                         {payment.date ? payment.date : "null"}
                       </td>
@@ -107,13 +126,30 @@ export default function Example() {
                       <td className="px-6 py-4 whitespace-nowrap text-center text-xs sm:text-sm">{payment.withdrawRefferalIncome ? payment.withdrawRefferalIncome : "0"}</td>
                       <td className="px-6 py-4 whitespace-nowrap text-center text-xs sm:text-sm">{payment.bonusValue ? payment.bonusValue : "0"}</td>
                       <td className={`px-6 py-4 whitespace-nowrap ${payment.paymentStatus === 'rejected' ? 'text-red-500' : 'text-green-500'}`}>
-                        {payment.paymentStatus?payment.paymentStatus:"Success"}
+                        {payment.paymentStatus ? payment.paymentStatus : "Success"}
                       </td>
                     </tr>
                   ))}
                 </tbody>
               </table>
             </div>
+          </div>
+          <div className="mt-4 flex justify-center">
+            <button 
+              className="bg-gray-300 text-gray-700 px-4 py-2 rounded-l-md hover:bg-gray-400"
+              onClick={handlePrevPage}
+              disabled={currentPage === 1}
+            >
+              Prev
+            </button>
+            <span className="px-4 py-2">{currentPage} / {totalPages}</span>
+            <button 
+              className="bg-gray-300 text-gray-700 px-4 py-2 rounded-r-md hover:bg-gray-400"
+              onClick={handleNextPage}
+              disabled={currentPage === totalPages}
+            >
+              Next
+            </button>
           </div>
           <button className="bg-blue-500 text-white px-8 py-2 mt-4 rounded-md hover:bg-blue-600 font-semibold uppercase shadow-sm shadow-gray-900" onClick={printPaymentHistory}>Print</button>
         </div>
