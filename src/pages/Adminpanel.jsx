@@ -132,6 +132,7 @@ const Dashboard = () => {
                 setDate('');
                 alert(response.data.message);
             }
+            window.location.reload();
         } catch (error) {
             console.error('Error assigning bonus:', error);
             alert('Failed to assign bonus');

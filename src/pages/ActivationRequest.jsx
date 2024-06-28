@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { ClipLoader } from 'react-spinners';
 
 const ActivationRequest = () => {
     const [isOpen, setIsOpen] = useState(false);
@@ -7,6 +8,7 @@ const ActivationRequest = () => {
     const [rejOpen, setRejOpen] = useState(false);
     const [activations, setActivations] = useState([]);
     const [selectedUser, setSelectedUser] = useState(null);
+    const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -30,6 +32,7 @@ const ActivationRequest = () => {
 
         fetchData();
     }, []);
+
 
     const printUserDetails = () => {
         const printContents = document.getElementById("printUserDetails").innerHTML;
@@ -91,56 +94,66 @@ const ActivationRequest = () => {
     const handleActivate = async () => {
         const token = localStorage.getItem('adminToken');
         if (!token) {
-          console.error('No token found');
-          return;
+            console.error('No token found');
+            return;
         }
-      
-        try {
-          const response = await axios.post(
-            'https://agr-backend-m85q.onrender.com/api/admin/approveUser',
-            {
-              email: selectedUser.email,
-            },
-            {
-              headers: {
-                "Authorization": `Bearer ${token}`
-              }
-            }
-          );
-          console.log('Activation response:', response.data);
-          window.alert('User action successfully!');
-          setActOpen(false);
-        } catch (error) {
-          console.error('Error activating user:', error);
-        }
-      };
 
-      const handleReject = async () => {
+        setIsLoading(true);
+
+        try {
+            const response = await axios.post(
+                'https://agr-backend-m85q.onrender.com/api/admin/approveUser',
+                {
+                    email: selectedUser.email,
+                },
+                {
+                    headers: {
+                        "Authorization": `Bearer ${token}`
+                    }
+                }
+            );
+            console.log('Activation response:', response.data);
+            window.alert('User action successfully!');
+            setActOpen(false);
+            window.location.reload();
+        } catch (error) {
+            console.error('Error activating user:', error);
+        } finally {
+            setIsLoading(false);
+        }
+    };
+
+    const handleReject = async () => {
         const token = localStorage.getItem('adminToken');
         if (!token) {
-          console.error('No token found');
-          return;
+            console.error('No token found');
+            return;
         }
-      
+
+        setIsLoading(true);
+
         try {
-          const response = await axios.post(
-            'https://agr-backend-m85q.onrender.com/api/admin/deleteUserRegister',
-            {
-              email: selectedUser.email,
-            },
-            {
-              headers: {
-                "Authorization": `Bearer ${token}`
-              }
-            }
-          );
-          console.log('Activation response:', response.data);
-          window.alert('User action successfully!');
-          setRejOpen(false);
+            const response = await axios.post(
+                'https://agr-backend-m85q.onrender.com/api/admin/deleteUserRegister',
+                {
+                    email: selectedUser.email,
+                },
+                {
+                    headers: {
+                        "Authorization": `Bearer ${token}`
+                    }
+                }
+            );
+            console.log('Activation response:', response.data);
+            window.alert('User action successfully!');
+            setRejOpen(false);
+            window.location.reload();
         } catch (error) {
-          console.error('Error activating user:', error);
+            console.error('Error activating user:', error);
+        } finally {
+            setIsLoading(false);
         }
-      };
+    };
 
     return (
         <div className='w-full overflow-x-hidden'>
@@ -161,27 +174,26 @@ const ActivationRequest = () => {
                                     </tr>
                                 </thead>
                                 <tbody className="bg-white divide-y divide-gray-300">
-                                    {activations.map((activate, index) => (
-                                        <tr key={activate._id}>
-                                            <td className="px-6 py-4 text-center text-xs sm:text-sm whitespace-nowrap">{index + 1}</td>
-                                            <td className="px-6 py-4 text-center text-xs sm:text-sm whitespace-nowrap">{new Date(activate.paymentDate).toLocaleDateString()}</td>
-                                            <td className="px-6 py-4 text-center text-xs sm:text-sm whitespace-nowrap">{activate.firstName}</td>
-                                            <td className="px-6 py-4 text-center text-xs sm:text-sm whitespace-nowrap">{activate.transactionId}</td>
-                                            <td className="px-6 py-4 text-center text-xs sm:text-sm whitespace-nowrap">{activate.mobileNumber}</td>
-                                            <td className="noprint px-6 py-4 text-center whitespace-nowrap">
-
-                                                <button className='bg-green-600 p-1 px-3 mr-3 rounded-md hover:bg-green-400 text-white text-xs sm:text-sm' onClick={() => actPopup(activate)}>Approve</button>
-                                                <button className='bg-green-600 p-1 px-3 mr-3 rounded-md hover:bg-green-400 text-white text-xs sm:text-sm' onClick={() => rejPopup(activate)}>Reject</button>
-
-                                                <button
-                                                    className='bg-blue-800 p-1 px-3 mr-3 rounded-md hover:bg-blue-600 text-white text-xs sm:text-sm'
-                                                    onClick={() => togglePopup(activate)}
-                                                >
-                                                    View
-                                                </button>
-                                            </td>
+                                    {activations.length > 0 ? (
+                                        activations.map((activate, index) => (
+                                            <tr key={activate._id}>
+                                                <td className="px-6 py-4 text-center text-xs sm:text-sm whitespace-nowrap">{index + 1}</td>
+                                                <td className="px-6 py-4 text-center text-xs sm:text-sm whitespace-nowrap">{new Date(activate.paymentDate).toLocaleDateString()}</td>
+                                                <td className="px-6 py-4 text-center text-xs sm:text-sm whitespace-nowrap">{activate.firstName}</td>
+                                                <td className="px-6 py-4 text-center text-xs sm:text-sm whitespace-nowrap">{activate.transactionId}</td>
+                                                <td className="px-6 py-4 text-center text-xs sm:text-sm whitespace-nowrap">{activate.mobileNumber}</td>
+                                                <td className="noprint px-6 py-4 text-center whitespace-nowrap">
+                                                    <button className='bg-green-600 p-1 px-3 mr-3 rounded-md hover:bg-green-400 text-white text-xs sm:text-sm' onClick={() => actPopup(activate)}>Approve</button>
+                                                    <button className='bg-red-600 p-1 px-3 mr-3 rounded-md hover:bg-red-400 text-white text-xs sm:text-sm' onClick={() => rejPopup(activate)}>Reject</button>
+                                                    <button className='bg-blue-800 p-1 px-3 mr-3 rounded-md hover:bg-blue-600 text-white text-xs sm:text-sm' onClick={() => togglePopup(activate)}>View</button>
+                                                </td>
+                                            </tr>
+                                        ))
+                                    ) : (
+                                        <tr>
+                                            <td colSpan="6" className="px-6 py-4 text-center text-xs sm:text-sm whitespace-nowrap">No records found</td>
                                         </tr>
-                                    ))}
+                                    )}
                                 </tbody>
                             </table>
                         </div>
@@ -200,8 +212,20 @@ const ActivationRequest = () => {
                                 <h3 className="text-lg leading-6 font-medium text-gray-900 mb-4">Activate User</h3>
                                 <p className="mb-4">Are you sure you want to approve {selectedUser.firstName}?</p>
                                 <div className="flex items-center justify-center gap-3">
-                                    <button className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600" onClick={handleActivate}>Approve</button>
-                                    <button className="bg-gray-300 text-gray-700 px-4 py-2 rounded-md hover:bg-gray-400" onClick={() => setActOpen(false)}>Cancel</button>
+                                    <button
+                                        className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600"
+                                        onClick={handleActivate}
+                                        disabled={isLoading}
+                                    >
+                                        {isLoading ? <ClipLoader size={20} color={"#fff"} /> : "Approve"}
+                                    </button>
+                                    <button
+                                        className="bg-gray-300 text-gray-700 px-4 py-2 rounded-md hover:bg-gray-400"
+                                        onClick={() => setActOpen(false)}
+                                        disabled={isLoading}
+                                    >
+                                        Cancel
+                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -217,11 +241,23 @@ const ActivationRequest = () => {
                         <span className="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
                         <div className="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-3xl sm:w-full">
                             <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-                                <h3 className="text-lg leading-6 font-medium text-gray-900 mb-4">Activate User</h3>
+                                <h3 className="text-lg leading-6 font-medium text-gray-900 mb-4">Reject User</h3>
                                 <p className="mb-4">Are you sure you want to reject {selectedUser.firstName}?</p>
                                 <div className="flex items-center justify-center gap-3">
-                                    <button className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600" onClick={handleReject}>Approve</button>
-                                    <button className="bg-gray-300 text-gray-700 px-4 py-2 rounded-md hover:bg-gray-400" onClick={() => setActOpen(false)}>Cancel</button>
+                                    <button
+                                        className="bg-red-600 text-white px-4 py-2 rounded-md hover:bg-blue-600"
+                                        onClick={handleReject}
+                                        disabled={isLoading}
+                                    >
+                                        {isLoading ? <ClipLoader size={20} color={"#fff"} /> : "Reject"}
+                                    </button>
+                                    <button
+                                        className="bg-gray-300 text-gray-700 px-4 py-2 rounded-md hover:bg-gray-400"
+                                        onClick={() => setRejOpen(false)}
+                                        disabled={isLoading}
+                                    >
+                                        Cancel
+                                    </button>
                                 </div>
                             </div>
                         </div>
