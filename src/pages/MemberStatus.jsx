@@ -149,7 +149,7 @@ function MemberStatus() {
                                                     <td className="px-6 py-4 whitespace-nowrap text-center text-xs sm:text-sm">{member.firstName}</td>
                                                     <td className="px-6 py-4 whitespace-nowrap text-center text-xs sm:text-sm">{member.level}</td>
                                                     <td className="px-6 py-4 whitespace-nowrap text-center text-xs sm:text-sm">{member.referredPeoples.length} members</td>
-                                                    <td className="px-6 py-4 whitespace-nowrap text-center text-xs sm:text-sm">{member.amount - 5000}</td>
+                                                    <td className="px-6 py-4 whitespace-nowrap text-center text-xs sm:text-sm">{member.amount}</td>
                                                 </tr>
                                             ))}
                                         </tbody>
