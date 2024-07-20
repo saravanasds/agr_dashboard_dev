@@ -176,6 +176,13 @@ const ActiveUser = () => {
         handleActivation(false);
     };
 
+    const formatDate = (dateString) => {
+        const date = new Date(dateString);
+        const day = String(date.getDate()).padStart(2, '0');
+        const month = String(date.getMonth() + 1).padStart(2, '0');
+        const year = String(date.getFullYear()).slice(-2);
+        return `${day}/${month}/${year}`;
+    };
 
     return (
         <div className='w-full overflow-x-hidden'>
@@ -200,7 +207,7 @@ const ActiveUser = () => {
                                     {activations.map((activate, index) => (
                                         <tr key={activate._id}>
                                             <td className="px-6 py-4 text-center text-xs sm:text-sm whitespace-nowrap">{index + 1}</td>
-                                            <td className="px-6 py-4 text-center text-xs sm:text-sm whitespace-nowrap">{new Date(activate.paymentDate).toLocaleDateString()}</td>
+                                            <td className="px-6 py-4 text-center text-xs sm:text-sm whitespace-nowrap">{formatDate(activate.paymentDate)}</td>
                                             <td className="px-6 py-4 text-center text-xs sm:text-sm whitespace-nowrap">{activate.firstName}</td>
                                             <td className="px-6 py-4 text-center text-xs sm:text-sm whitespace-nowrap">{activate.transactionId}</td>
                                             <td className="px-6 py-4 text-center text-xs sm:text-sm whitespace-nowrap">{activate.referralId}</td>
@@ -221,14 +228,14 @@ const ActiveUser = () => {
                         </div>
                     </div>
                     <div className="mt-4 flex justify-center">
-                        <button 
+                        <button
                             className="bg-gray-300 text-gray-700 px-4 py-2 rounded-l-md hover:bg-gray-400"
                             onClick={handlePrevPage}
                             disabled={currentPage === 1}
                         >
                             Prev
                         </button>
-                        <button 
+                        <button
                             className="bg-gray-300 text-gray-700 px-4 py-2 rounded-r-md hover:bg-gray-400"
                             onClick={handleNextPage}
                             disabled={currentPage === totalPages}

@@ -193,7 +193,8 @@ const MemberDetails = () => {
                 <thead className="bg-[#455d7a]">
                   <tr>
                     <th className="px-6 py-3 text-center text-xs font-medium text-white uppercase tracking-wider">Sl.no</th>
-                    <th className="px-6 py-3 text-center text-xs font-medium text-white uppercase tracking-wider">Date</th>
+                    <th className="px-6 py-3 text-center text-xs font-medium text-white uppercase tracking-wider">Created</th>
+                    <th className="px-6 py-3 text-center text-xs font-medium text-white uppercase tracking-wider">Updated</th>
                     <th className="px-6 py-3 text-center text-xs font-medium text-white uppercase tracking-wider">Member ID</th>
                     <th className="px-6 py-3 text-center text-xs font-medium text-white uppercase tracking-wider">Name</th>
                     <th className="px-6 py-3 text-center text-xs font-medium text-white uppercase tracking-wider">Phone</th>
@@ -204,6 +205,7 @@ const MemberDetails = () => {
                   {currentMembers.map((member, index) => (
                     <tr key={member.memberId}>
                       <td className="px-6 py-4 whitespace-nowrap text-center text-xs sm:text-sm">{startIndex + index + 1}</td>
+                      <td className="px-6 py-4 whitespace-nowrap text-center text-xs sm:text-sm">{formatDate(member.createdAt)}</td>
                       <td className="px-6 py-4 whitespace-nowrap text-center text-xs sm:text-sm">{formatDate(member.updatedAt)}</td>
                       <td className="px-6 py-4 whitespace-nowrap text-center text-xs sm:text-sm">{member.referralId}</td>
                       <td className="px-6 py-4 whitespace-nowrap text-center text-xs sm:text-sm">{member.firstName}</td>
